@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
+import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
 import InputField from '../components/auth/InputField';
+import Sidebar from '../components/auth/Sidebar';
 
 const ResetPassword = (props) => {
 
@@ -34,15 +35,18 @@ const ResetPassword = (props) => {
 
     return(
         <Container>
-            <Form onSubmit={handleSubmit} noValidate>
-                <HeadingWrapper>
-                    <h1>Reset Password</h1>
-                    <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
-                </HeadingWrapper>
-                <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                <SecondLink><Link to='/login'>Log In</Link></SecondLink>
-                <SubmitButton type='submit' value='Reset password' />
-            </Form>
+            <Wrapper>
+                <Sidebar />
+                <Form onSubmit={handleSubmit} noValidate>
+                    <HeadingWrapper>
+                        <h1>Reset Password</h1>
+                        <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
+                    </HeadingWrapper>
+                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
+                    <SecondLink>Back to <Link to='/login'>Log In</Link></SecondLink>
+                    <SubmitButton disabled={loading} type='submit' value='Reset password' />
+                </Form>
+            </Wrapper>
         </Container>
     )
 }

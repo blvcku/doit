@@ -4,8 +4,9 @@ import { useHistory, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Form, HeadingWrapper, SubmitButton } from '../components/auth/Auth.styles';
+import { Container, Wrapper, Form, HeadingWrapper, SubmitButton } from '../components/auth/Auth.styles';
 import InputField from '../components/auth/InputField';
+import Sidebar from '../components/auth/Sidebar';
 
 const SignUp = (props) => {
 
@@ -19,6 +20,7 @@ const SignUp = (props) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        console.log('click')
         if(!emailRef.current.value.trim()){
             return dispatchError({type: 'auth/invalid-email'});
         }
@@ -41,16 +43,19 @@ const SignUp = (props) => {
 
     return(
         <Container>
-            <Form onSubmit={handleSubmit} noValidate>
-                <HeadingWrapper>
-                    <h1>Sign Up</h1>
-                    <h3>Already a member? <Link to='/login'>Log in</Link></h3>
-                </HeadingWrapper>
-                <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                <InputField placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
-                <SubmitButton type='submit' value='Sign Up' />
-            </Form>
+            <Wrapper>
+                <Sidebar />
+                <Form onSubmit={handleSubmit} noValidate>
+                    <HeadingWrapper>
+                        <h1>Register</h1>
+                        <h3>Already a member? <Link to='/login'>Log in</Link></h3>
+                    </HeadingWrapper>
+                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
+                    <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
+                    <InputField placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
+                    <SubmitButton disabled={loading} type='submit' value='Sign Up' />
+                </Form>
+            </Wrapper>
         </Container>
     )
 }

@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const InputWrapper = styled.div`
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     position: relative;
 `;
 
 export const Input = styled.input`
     border:none;
     border-bottom: 1px solid black;
+    max-width:450px;
     width:100%;
 
     &::placeholder{

@@ -4,8 +4,9 @@ import { useHistory, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
+import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
 import InputField from '../components/auth/InputField';
+import Sidebar from '../components/auth/Sidebar';
 
 const Login = () => {
 
@@ -18,6 +19,9 @@ const Login = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        if(passwordRef.current.value.length === 0){
+            return dispatchError({type: 'auth/invalid-password'});
+        }
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
@@ -31,16 +35,19 @@ const Login = () => {
 
     return(
         <Container>
-            <Form onSubmit={handleSubmit} noValidate>
-                <HeadingWrapper>
-                    <h1>Log In</h1>
-                    <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
-                </HeadingWrapper>
-                <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                <SecondLink>Forgot password? <Link to='/resetpassword'>Reset Password</Link></SecondLink>
-                <SubmitButton type='submit' value='Log In' />
-            </Form>
+            <Wrapper>
+                <Sidebar />
+                <Form onSubmit={handleSubmit} noValidate>
+                    <HeadingWrapper>
+                        <h1>Log In</h1>
+                        <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
+                    </HeadingWrapper>
+                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
+                    <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
+                    <SecondLink>Forgot password? <Link to='/resetpassword'>Reset Password</Link></SecondLink>
+                    <SubmitButton disabled={loading} type='submit' value='Log In' />
+                </Form>
+            </Wrapper>
         </Container>
     )
 }
