@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
         --colorLightBlue: hsl(249, 82%, 78%);
         --colorWhite: #fff;
         --colorMuted: hsl(0, 0%, 60%);
+        --colorRed: hsl(0, 89%, 41%);
     }
     *{
         box-sizing: border-box;

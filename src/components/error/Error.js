@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import useError from '../../hooks/useError';
 
@@ -8,6 +10,11 @@ const Error = (props) => {
 
     const { error, dispatchError } = useError();
     const [resetAnimation, setResetAnimation] = useState(false);
+
+    const handleCloseError = e => {
+        e.preventDefault();
+        dispatchError({type: 'reset'});
+    }
 
     useEffect(() => {
         let timer;
@@ -33,7 +40,10 @@ const Error = (props) => {
             {error ? (!resetAnimation &&
                 <Wrapper>
                     <Card>
-                        {error}
+                        <FontAwesomeIcon onClick={handleCloseError} size='2x' icon={faTimes} />
+                        <FontAwesomeIcon size='2x' icon={faExclamationTriangle} />
+                        <p>{error}</p>
+                        <div className='error-bar'></div>
                     </Card>
                 </Wrapper>
             ) : null}
