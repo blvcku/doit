@@ -6,11 +6,12 @@ const GlobalStyle = createGlobalStyle`
         --fontBig: 1.5rem;
         --fontMed: 1rem;
         --fontSmall: 0.7rem;
-        --colorBlue: hsl(249, 87%, 69%);
+        --colorBlue: hsl(249, 87%, 66%);
         --colorLightBlue: hsl(249, 82%, 78%);
         --colorWhite: #fff;
         --colorMuted: hsl(0, 0%, 60%);
         --colorRed: hsl(0, 89%, 41%);
+        --colorDarkerWhite: hsl(270, 11%, 96%);
     }
     *{
         box-sizing: border-box;
@@ -18,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 400;
     }
     body{
+        background-color: var(--colorDarkerWhite);
         margin: 0;
         padding: 0;
         h1{

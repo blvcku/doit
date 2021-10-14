@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 100vw;
+    max-width: 100vw;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 
     @media (min-width:920px){
         display:flex;
-        margin:100px 300px;
+        margin:80px 300px;
     }
 `;
 
@@ -40,6 +40,8 @@ export const Form = styled.form`
     padding:1.5rem;
     border: 2px solid var(--colorBlue);
     flex-grow:2;
+    min-height:80vh;
+    justify-content:center;
 
     @media (min-width:920px){
         min-width:500px;
@@ -73,7 +75,7 @@ export const SubmitButton = styled.input`
         background-color: var(--colorLightBlue);
     }
 
-    @media (min-width:920px){
+    @media (min-width:400px){
         align-self:start;
     }
 `;

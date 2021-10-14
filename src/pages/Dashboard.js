@@ -1,30 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-router-dom';
 
-import useAuth from '../hooks/useAuth';
-import useError from '../hooks/useError';
+import Navbar from '../components/navbar/Navbar';
+import ProjectsList from '../components/projectsList/ProjectsList';
+import Profile from '../components/profile/Profile';
 
 const Dashboard = (props) => {
 
-    const { currentUser, logout } = useAuth();
-    const { dispatchError } = useError();
-
-    const handleLogout = async e => {
-        e.preventDefault();
-        try{
-            logout();
-        }
-        catch{
-            dispatchError();
-        }
-    }
+    const { path } = useRouteMatch();
 
     return(
-        <div>
-            <h1>Dashboard</h1>
-            <h3>{currentUser.email}</h3>
-            <h4>{currentUser.displayName}</h4>
-            <button type='button' onClick={handleLogout}>Logout</button>
-        </div>
+        <Router>
+            <Navbar />
+            <Switch>
+                <Route exact path={`${path}/profile`} component={Profile} />
+                <Route path={path} component={ProjectsList} />
+            </Switch>
+        </Router>
     )
 }
 

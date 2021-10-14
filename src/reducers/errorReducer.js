@@ -2,7 +2,11 @@ const errorReducer = (state, action) => {
     switch(action.type){
         case 'auth/email-already-exists':
             return state = 'This email address is already being used.';
+        case 'auth/email-already-in-use':
+            return state = 'This email address is already being used.';
         case 'auth/invalid-password':
+            return state = 'Invalid email or password.';
+        case 'auth/wrong-password':
             return state = 'Invalid email or password.';
         case 'auth/user-not-found':
             switch(action.cat){

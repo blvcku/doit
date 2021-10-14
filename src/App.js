@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
@@ -18,10 +19,11 @@ function App() {
             <AuthProvider>
                 <ErrorProvider>
                     <Switch>
-                        <PrivateRoute exact path='/' component={Dashboard} />
+                        <PrivateRoute path='/dashboard' component={Dashboard} />
                         <Route path='/signup' component={SignUp} />
                         <Route path='/login' component={Login} />
                         <Route path='/resetpassword' component={ResetPassword} />
+                        <Route path='*' render={() => <Redirect to='/dashboard' />} />
                     </Switch>
                     <Error />
                     <GlobalStyle />

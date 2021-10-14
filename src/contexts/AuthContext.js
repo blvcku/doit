@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth, storage } from '../firebase';
 
 export const AuthContext = React.createContext();
 
@@ -8,11 +8,16 @@ const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
 
-    const signUp = (email, password) => {
-        return auth.createUserWithEmailAndPassword(email, password).then((res) => {
-            const username = email.split('@');
-            return res.user.updateProfile({displayName:username[0]})
-        });
+    const signUp = async (email, password) => {
+        try{
+            const { user } = await auth.createUserWithEmailAndPassword(email, password);
+            const [username] = email.split('@');
+            const photoURL = await storage.ref('users/default/default.jpg').getDownloadURL();
+            return await user.updateProfile({displayName: username, photoURL: photoURL});
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
     }
 
     const login = (email, password) => {

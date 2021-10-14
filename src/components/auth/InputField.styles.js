@@ -10,6 +10,7 @@ export const Input = styled.input`
     border-bottom: 1px solid black;
     max-width:450px;
     width:100%;
+    background:transparent;
 
     &::placeholder{
         color: transparent;

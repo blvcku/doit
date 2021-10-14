@@ -10,7 +10,6 @@ export const Wrapper = styled.div`
     max-width:300px;
     max-height:140px;
     height:100%;
-    overflow:hidden;
     font-size:var(--fontSmall);
     color: var(--colorWhite);
 
@@ -35,9 +34,11 @@ export const Card = styled.div`
     overflow:hidden;
     gap:6px;
     color: var(--colorRed);
+    animation: appear-animation .5s ease forwards;
 
     p{
         color: var(--colorWhite);
+        line-height:1.5;
     }
 
     div{
@@ -58,6 +59,10 @@ export const Card = styled.div`
         top:5px;
         right:8px;
         cursor:pointer;
+
+        :hover{
+            color: var(--colorWhite);
+        }
     }
 
     div:before{
@@ -75,5 +80,10 @@ export const Card = styled.div`
     @keyframes error-bar-animation{
         from {transform:translateX(-100%)}
         to {transform:translateX(0%)}
+    }
+
+    @keyframes appear-animation{
+        from {transform:translateY(-200%)}
+        to {transform:translateY(0)}
     }
 `;

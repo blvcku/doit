@@ -25,7 +25,7 @@ const Login = () => {
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
-            return history.push('/');
+            return history.push('/dashboard');
         }
         catch(error){
             dispatchError({type: error.code});
@@ -43,7 +43,7 @@ const Login = () => {
                         <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
                     </HeadingWrapper>
                     <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
+                    <InputField autoComplete='on' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
                     <SecondLink>Forgot password? <Link to='/resetpassword'>Reset Password</Link></SecondLink>
                     <SubmitButton disabled={loading} type='submit' value='Log In' />
                 </Form>

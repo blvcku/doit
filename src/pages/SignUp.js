@@ -20,7 +20,6 @@ const SignUp = (props) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log('click')
         if(!emailRef.current.value.trim()){
             return dispatchError({type: 'auth/invalid-email'});
         }
@@ -33,7 +32,7 @@ const SignUp = (props) => {
         try{
             setLoading(true);
             await signUp(emailRef.current.value, passwordRef.current.value);
-            return history.push('/');
+            return history.push('/dashboard');
         }
         catch(error){
             dispatchError({type: error.code});
@@ -51,8 +50,8 @@ const SignUp = (props) => {
                         <h3>Already a member? <Link to='/login'>Log in</Link></h3>
                     </HeadingWrapper>
                     <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <InputField placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                    <InputField placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
+                    <InputField autoComplete='on' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
+                    <InputField autoComplete='on' placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
                     <SubmitButton disabled={loading} type='submit' value='Sign Up' />
                 </Form>
             </Wrapper>

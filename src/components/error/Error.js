@@ -17,15 +17,14 @@ const Error = (props) => {
     }
 
     useEffect(() => {
-        let timer;
         if(error){
             setResetAnimation(true);
-            timer = setTimeout(() => {
+            const timer = setTimeout(() => {
                 dispatchError({type: 'reset'});
             }, 10000);
-        }
-        return () => {
-            clearTimeout(timer)
+            return () => {
+                clearTimeout(timer);
+            }
         }
     }, [error, dispatchError])
 
