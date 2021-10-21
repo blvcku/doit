@@ -21,6 +21,14 @@ const errorReducer = (state, action) => {
             return state = 'Given email address is not valid.';
         case 'auth/password-too-short':
             return state = 'Your password is too short. Minimum 6 characters.';
+        case 'auth/failed-to-log-out':
+            return state = 'Failed to log out. Try again later.';
+        case 'auth/requires-recent-login':
+            return state = 'Login once again to be able to change your profile settings.';
+        case 'update/wrong-image-type':
+            return state = 'Unaccepted file type. We accept only JPEG or PNG.';
+        case 'update/change-image-failed':
+            return state = 'Failed to change your profile picture. Try again later.';
         case 'reset':
             return state = '';
         default:

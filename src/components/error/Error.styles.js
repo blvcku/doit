@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
     height:100%;
     font-size:var(--fontSmall);
     color: var(--colorWhite);
+    z-index:999;
 
     @media (min-width: 768px){
         right:0;
@@ -22,7 +23,7 @@ export const Wrapper = styled.div`
 export const Card = styled.div`
     display:flex;
     align-items:center;
-    text-align: center;
+    text-align:center;
     padding:0 35px;
     background-color:hsl(200, 21%, 9%);
     opacity:0.9;
@@ -32,7 +33,7 @@ export const Card = styled.div`
     font-weight:700;
     position:relative;
     overflow:hidden;
-    gap:6px;
+    gap:10px;
     color: var(--colorRed);
     animation: appear-animation .5s ease forwards;
 

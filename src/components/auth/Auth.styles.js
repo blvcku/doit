@@ -9,7 +9,6 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
     display:block;
-    margin:30px 10px;
     width:100%;
 
     @media (min-width:920px){
@@ -38,7 +37,6 @@ export const Form = styled.form`
     display:flex;
     flex-direction:column;
     padding:1.5rem;
-    border: 2px solid var(--colorBlue);
     flex-grow:2;
     min-height:80vh;
     justify-content:center;
@@ -46,6 +44,7 @@ export const Form = styled.form`
     @media (min-width:920px){
         min-width:500px;
         padding:4rem;
+        border: 2px solid var(--colorBlue);
     }
 `;
 
@@ -83,4 +82,11 @@ export const SubmitButton = styled.input`
 export const SecondLink = styled.h3`
     font-size: var(--fontSmall);
     margin-top:10px;
+`;
+
+export const SuccessMessage = styled.h3`
+    font-size: var(--fontSmall);
+    color: limegreen;
+    margin-top:5px;
+    transform:translateY(100%);
 `;

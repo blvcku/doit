@@ -27,6 +27,11 @@ const GlobalStyle = createGlobalStyle`
             font-weight: 700;
             margin:0;
         }
+        h2{
+            font-size: var(--fontBig);
+            font-weight: 700;
+            margin: 0;
+        }
         h3{
             font-size: var(--fontMed);
             font-weight: 400;

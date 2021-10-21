@@ -32,6 +32,7 @@ const SignUp = (props) => {
         try{
             setLoading(true);
             await signUp(emailRef.current.value, passwordRef.current.value);
+            dispatchError({type: 'reset'});
             return history.push('/dashboard');
         }
         catch(error){
@@ -50,8 +51,8 @@ const SignUp = (props) => {
                         <h3>Already a member? <Link to='/login'>Log in</Link></h3>
                     </HeadingWrapper>
                     <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <InputField autoComplete='on' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                    <InputField autoComplete='on' placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
+                    <InputField autoComplete='off' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
+                    <InputField autoComplete='off' placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
                     <SubmitButton disabled={loading} type='submit' value='Sign Up' />
                 </Form>
             </Wrapper>

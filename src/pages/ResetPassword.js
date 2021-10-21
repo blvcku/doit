@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
+import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink, SuccessMessage } from '../components/auth/Auth.styles';
 import InputField from '../components/auth/InputField';
 import Sidebar from '../components/auth/Sidebar';
 
@@ -25,7 +25,8 @@ const ResetPassword = (props) => {
             setMessage('');
             setLoading(true);
             await resetPassword(emailRef.current.value);
-            setMessage('Check your inbox for further instructions');
+            dispatchError({type: 'reset'});
+            setMessage('Success! Check your inbox for further instructions.');
         }
         catch(error){
             dispatchError({type: error.code, cat: 'resetpassword'});
@@ -44,6 +45,7 @@ const ResetPassword = (props) => {
                     </HeadingWrapper>
                     <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
                     <SecondLink>Back to <Link to='/login'>Log In</Link></SecondLink>
+                    {message ? <SuccessMessage>{message}</SuccessMessage> : null}
                     <SubmitButton disabled={loading} type='submit' value='Reset password' />
                 </Form>
             </Wrapper>
