@@ -4,9 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink } from '../components/auth/Auth.styles';
-import InputField from '../components/auth/InputField';
-import Sidebar from '../components/auth/Sidebar';
+import { Container, Form, Wrapper, Paragraph, SubmitButton } from '../components/auth/Auth.styles';
 
 const Login = () => {
 
@@ -37,16 +35,21 @@ const Login = () => {
     return(
         <Container>
             <Wrapper>
-                <Sidebar />
+                <h1>Login</h1>
                 <Form onSubmit={handleSubmit} noValidate>
-                    <HeadingWrapper>
-                        <h1>Log In</h1>
-                        <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
-                    </HeadingWrapper>
-                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <InputField autoComplete='on' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                    <SecondLink>Forgot password? <Link to='/resetpassword'>Reset Password</Link></SecondLink>
-                    <SubmitButton disabled={loading} type='submit' value='Log In' />
+                    <label htmlFor='email'>E-mail</label>
+                    <input placeholder='example@mail.com' type='email' name='email' id='email' ref={emailRef}/>
+                    <label htmlFor='password'>Password</label>
+                    <input placeholder='Password' type='password' autoComplete='on' name='password' id='password' ref={passwordRef} />
+                    <Paragraph>
+                        <u>Don't have an account?</u>
+                        <b>
+                            <Link to='/signup'> Sign Up</Link>
+                            <br/>
+                            <Link to='/resetpassword'>I forgot my password</Link>
+                        </b>
+                    </Paragraph>
+                    <SubmitButton type='submit'>Submit</SubmitButton>
                 </Form>
             </Wrapper>
         </Container>

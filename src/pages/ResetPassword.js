@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Wrapper, Form, HeadingWrapper, SubmitButton, SecondLink, SuccessMessage } from '../components/auth/Auth.styles';
-import InputField from '../components/auth/InputField';
-import Sidebar from '../components/auth/Sidebar';
+import { Container, Form, Wrapper, Paragraph, SubmitButton, SuccessMessage } from '../components/auth/Auth.styles';
 
 const ResetPassword = (props) => {
 
@@ -37,16 +35,21 @@ const ResetPassword = (props) => {
     return(
         <Container>
             <Wrapper>
-                <Sidebar />
+                <h1>Reset Password</h1>
                 <Form onSubmit={handleSubmit} noValidate>
-                    <HeadingWrapper>
-                        <h1>Reset Password</h1>
-                        <h3>Need an account? <Link to='/signup'>Sign Up</Link></h3>
-                    </HeadingWrapper>
-                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <SecondLink>Back to <Link to='/login'>Log In</Link></SecondLink>
-                    {message ? <SuccessMessage>{message}</SuccessMessage> : null}
-                    <SubmitButton disabled={loading} type='submit' value='Reset password' />
+                    <label htmlFor='email'>E-mail</label>
+                    <input placeholder='example@mail.com' type='email' name='email' id='email' ref={emailRef}/>
+                    <Paragraph>
+                        <b>
+                            <Link to='/signup'>Back to Log In</Link>
+                        </b>
+                    </Paragraph>
+                    <SubmitButton type='submit'>Submit</SubmitButton>
+                    <SuccessMessage>
+                        <p>
+                            {message}
+                        </p>
+                    </SuccessMessage>
                 </Form>
             </Wrapper>
         </Container>

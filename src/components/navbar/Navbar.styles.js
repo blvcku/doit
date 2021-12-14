@@ -53,6 +53,7 @@ export const Nav = styled.nav`
 
     @media(min-width:900px){
         display:block;
+        animation: none;
     }
 
     ul{

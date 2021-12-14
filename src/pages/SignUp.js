@@ -4,9 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
 
-import { Container, Wrapper, Form, HeadingWrapper, SubmitButton } from '../components/auth/Auth.styles';
-import InputField from '../components/auth/InputField';
-import Sidebar from '../components/auth/Sidebar';
+import { Container, SignUpForm, Wrapper, Paragraph, SubmitButton } from '../components/auth/Auth.styles';
 
 const SignUp = (props) => {
 
@@ -44,17 +42,22 @@ const SignUp = (props) => {
     return(
         <Container>
             <Wrapper>
-                <Sidebar />
-                <Form onSubmit={handleSubmit} noValidate>
-                    <HeadingWrapper>
-                        <h1>Register</h1>
-                        <h3>Already a member? <Link to='/login'>Log in</Link></h3>
-                    </HeadingWrapper>
-                    <InputField placeholder='Email' type='email' name='email' id='email' ref={emailRef} />
-                    <InputField autoComplete='off' placeholder='Password' type='password' name='password' id='password' ref={passwordRef} />
-                    <InputField autoComplete='off' placeholder='Confirm Password' type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
-                    <SubmitButton disabled={loading} type='submit' value='Sign Up' />
-                </Form>
+                <h1>Sign Up</h1>
+                <SignUpForm onSubmit={handleSubmit} noValidate>
+                    <label htmlFor='email'>E-mail</label>
+                    <input placeholder='example@mail.com' type='email' name='email' id='email' ref={emailRef}/>
+                    <label htmlFor='password'>Password</label>
+                    <input placeholder='Password' type='password' autoComplete='off' name='password' id='password' ref={passwordRef} />
+                    <label htmlFor='confirmPassword'>Confirm Password</label>
+                    <input placeholder='Confirm Password' type='password' autoComplete='off' name='ConfirmPassword' id='ConfirmPassword' ref={confirmPasswordRef} />
+                    <Paragraph>
+                        <u>Already have an account?</u>
+                        <b>
+                            <Link to='/login'> Log In</Link>
+                        </b>
+                    </Paragraph>
+                    <SubmitButton type='submit'>Submit</SubmitButton>
+                </SignUpForm>
             </Wrapper>
         </Container>
     )

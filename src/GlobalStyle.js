@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
         --colorRed: hsl(0, 89%, 41%);
         --colorDarkerWhite: #E4F3F5;
         --colorMain: #23ACA8;
+        --colorSecondary: #09728C;
     }
     *{
         box-sizing: border-box;
@@ -38,17 +39,11 @@ const GlobalStyle = createGlobalStyle`
             font-weight: 400;
             margin:0;
         }
-        p{
-            font-size:var(--fontSmall);
+        b{
+            font-weight:700;
         }
         a{
             color: var(--colorLightBlue);
-        }
-        label{
-            font-size: var(--fontMed);
-        }
-        input{
-            font-size: var(--fontMed);
         }
     }
     html{

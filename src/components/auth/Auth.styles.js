@@ -1,92 +1,116 @@
 import styled from "styled-components";
+import backgroundImage from './background.png';
 
 export const Container = styled.main`
-    max-width: 100vw;
+    width:100%;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background-image: url(${backgroundImage});
+    background-size: cover;
+
 `;
 
 export const Wrapper = styled.div`
-    display:block;
+    box-shadow: 0px 3px 6px #00000040;
+    background:var(--colorWhite);
+    opacity:0.9;
+    padding:110px 30px 60px;
+    max-width:600px;
     width:100%;
+    border-radius:15px;
+    margin: 50px 0;
 
-    @media (min-width:920px){
-        display:flex;
-        margin:80px 300px;
-    }
-`;
-
-export const ASide = styled.aside`
-    width:100%;
-    padding:1.5rem;
-    background-color: var(--colorBlue);
-    color: var(--colorWhite);
-    h3{
-        font-size: var(--fontMed);
-        margin-top:15px;
+    @media(min-width:600px){
+        padding:110px 80px 60px;
     }
 
-    @media (min-width:920px){
-        width:max-content;
-        padding:4rem;
+    h1{
+        font-weight:500;
+        color: var(--colorSecondary);
+        font-size:2rem;
+        text-align:center;
     }
 `;
 
 export const Form = styled.form`
     display:flex;
     flex-direction:column;
-    padding:1.5rem;
-    flex-grow:2;
-    min-height:80vh;
-    justify-content:center;
+    position:relative;
+    label{
+        margin-top:70px;
+        color: var(--colorSecondary);
+        font-weight:700;
+        font-size:1rem;
+    }
+    input{
+        width:100%;
+        color: var(--colorSecondary);
+        border:2px solid var(--colorSecondary);
+        border-radius:10px;
+        padding: 16px 22px;
+        font-size:1rem;
+        margin-top:10px;
 
-    @media (min-width:920px){
-        min-width:500px;
-        padding:4rem;
-        border: 2px solid var(--colorBlue);
+        &::placeholder{
+            color: var(--colorSecondary);
+        }
+
+        &:focus{
+            outline:none;
+        }
     }
 `;
 
-export const HeadingWrapper = styled.div`
-    margin:0 0 20px;
-    h1{
-        margin-bottom: 15px;
-    }
-    h3{
-        margin-bottom: 50px;
-    }
-`;
-
-export const SubmitButton = styled.input`
-    background-color: var(--colorBlue);
-    border:none;
-    padding:10px 60px;
-    color: var(--colorWhite);
+export const Paragraph = styled.p`
+    font-size:.8rem;
     margin-top:30px;
-    margin-bottom:60px;
-    border-radius:10px;
-    cursor: pointer;
+    color: var(--colorSecondary);
+    a{
+        color: var(--colorSecondary);
+        font-weight:700;
+        text-decoration:none;
+    }
+`;
+
+export const SubmitButton = styled.button`
     width:max-content;
     align-self:center;
+    margin-top:30px;
+    font-size:1rem;
+    padding: 10px 35px;
+    font-weight:700;
+    background:var(--colorSecondary);
+    border:none;
+    color:var(--colorWhite);
+    border-radius:10px;
+    transition: transform .3s ease;
 
-    &:disabled{
-        background-color: var(--colorLightBlue);
+    &:active{
+        transform:scale(0.95);
     }
 
-    @media (min-width:400px){
-        align-self:start;
+`;
+
+export const SignUpForm = styled(Form)`
+    label{
+        margin-top:30px;
+        color: var(--colorSecondary);
+        font-weight:700;
+        font-size:1rem;
     }
 `;
 
-export const SecondLink = styled.h3`
-    font-size: var(--fontSmall);
-    margin-top:10px;
-`;
-
-export const SuccessMessage = styled.h3`
-    font-size: var(--fontSmall);
+export const SuccessMessage = styled.div`
+    font-size: .7rem;
     color: limegreen;
     margin-top:5px;
-    transform:translateY(100%);
+    position:absolute;
+    width:100%;
+    bottom: -2rem;
+    text-align:center;
+    @media (min-width:330px){
+        bottom:-1.3rem;
+    }
 `;
