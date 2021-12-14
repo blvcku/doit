@@ -56,7 +56,7 @@ const SignUp = (props) => {
                             <Link to='/login'> Log In</Link>
                         </b>
                     </Paragraph>
-                    <SubmitButton type='submit'>Submit</SubmitButton>
+                    <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                 </SignUpForm>
             </Wrapper>
         </Container>

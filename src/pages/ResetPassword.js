@@ -44,7 +44,7 @@ const ResetPassword = (props) => {
                             <Link to='/signup'>Back to Log In</Link>
                         </b>
                     </Paragraph>
-                    <SubmitButton type='submit'>Submit</SubmitButton>
+                    <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                     <SuccessMessage>
                         <p>
                             {message}

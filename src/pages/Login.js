@@ -49,7 +49,7 @@ const Login = () => {
                             <Link to='/resetpassword'>I forgot my password</Link>
                         </b>
                     </Paragraph>
-                    <SubmitButton type='submit'>Submit</SubmitButton>
+                    <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                 </Form>
             </Wrapper>
         </Container>

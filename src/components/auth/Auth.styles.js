@@ -81,7 +81,7 @@ export const SubmitButton = styled.button`
     font-size:1rem;
     padding: 10px 35px;
     font-weight:700;
-    background:var(--colorSecondary);
+    background:${({loading}) => loading ? 'var(--colorMain)' : 'var(--colorSecondary)'};
     border:none;
     color:var(--colorWhite);
     border-radius:10px;
