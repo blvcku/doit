@@ -11,3 +11,16 @@ service firebase.storage {
     }
   }
 }
+
+//Firestore
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /projects/{project} {
+      allow read: if request.auth.uid in resource.data.members;
+      allow update: if request.auth.uid in resource.data.members;
+      allow create: if request.auth != null && request.resource.data.createdAt == request.time;
+    }
+  }
+}

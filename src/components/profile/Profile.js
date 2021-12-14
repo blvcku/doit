@@ -59,9 +59,7 @@ const Profile = (props) => {
                 <EmailEdit isLoading={loading} isEditing={editEmail} setEditEmail={setEditEmail} onEdit={handleEditEmail} setLoadingState={setLoading} />
                 <PasswordEdit isLoading={loading} isEditing={editPassword} setEditPassword={setEditPassword} onEdit={handleEditPassword} setLoadingState={setLoading} />
                 <LogoutButtonWrapper>
-                    <LogoutButton onClick={handleLogout} disabled={loading} type='button'>
-                        Log Out
-                    </LogoutButton>
+                    <LogoutButton onClick={handleLogout} disabled={loading} type='button'>Log Out</LogoutButton>
                 </LogoutButtonWrapper>
             </Wrapper>
         </Container>

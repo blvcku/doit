@@ -11,17 +11,18 @@ const GlobalStyle = createGlobalStyle`
         --colorWhite: #fff;
         --colorMuted: hsl(0, 0%, 60%);
         --colorRed: hsl(0, 89%, 41%);
-        --colorDarkerWhite: hsl(270, 11%, 96%);
+        --colorDarkerWhite: #E4F3F5;
+        --colorMain: #23ACA8;
     }
     *{
         box-sizing: border-box;
-        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Rubik', sans-serif;
         font-weight: 400;
+        margin: 0;
+        padding: 0;
     }
     body{
         background-color: var(--colorDarkerWhite);
-        margin: 0;
-        padding: 0;
         h1{
             font-size: var(--fontSuperBig);
             font-weight: 700;

@@ -24,7 +24,7 @@ function App() {
                         <Route path='/signup' component={SignUp} />
                         <Route path='/login' component={Login} />
                         <Route path='/resetpassword' component={ResetPassword} />
-                        <Route path='*' render={() => <Redirect to='/dashboard' />} />
+                        <Route path='*' render={() => <Redirect to='/dashboard/projects' />} />
                     </Switch>
                     <Portal>
                         <Error />
