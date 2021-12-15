@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import './navbar.css';
 import ProjectsLogo from './projects.svg';
 import CalendarLogo from './calendar.svg';
@@ -6,7 +7,7 @@ import FilesLogo from './files.svg';
 import SettingsLogo from './settings.svg';
 import Arrow from './arrow.svg';
 
-import { Header, Nav, CustomNavLink, Button } from './Navbar.styles';
+import { Header, Nav, CustomNavLink, Button, Heading } from './Navbar.styles';
 
 const Navbar = (props) => {
 
@@ -19,7 +20,7 @@ const Navbar = (props) => {
     return(
         <Header>
             <div>
-                <h2>doit</h2>
+                <Heading><Link to='/dashboard/projects'>doit</Link></Heading>
                 <Button onClick={toggleNavState} aria-label='Expand or condense menu' aria-expanded={expanded} expanded={expanded} type='button'>
                     <img src={Arrow} alt='Arrow'></img>
                 </Button>

@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
         --colorDarkerWhite: #E4F3F5;
         --colorMain: #23ACA8;
         --colorSecondary: #09728C;
+        --colorThird: #0e8e8c;
     }
     *{
         box-sizing: border-box;

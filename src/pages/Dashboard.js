@@ -6,6 +6,7 @@ import Navbar from '../components/navbar/Navbar';
 import ProjectsList from '../components/projectsList/ProjectsList';
 import Profile from '../components/profile/Profile';
 import Project from '../components/project/Project';
+import ProjectEdit from '../components/projectEdit/ProjectEdit';
 
 const Dashboard = (props) => {
 
@@ -18,6 +19,7 @@ const Dashboard = (props) => {
                 <main>
                     <Switch>
                         <Route exact path={path} render={() => <Redirect to='/dashboard/projects' />} />
+                        <Route exact path={`${path}/projects/create`} component={ProjectEdit} />
                         <Route path={`${path}/profile`} component={Profile} />
                         <Route path={`${path}/projects/:id`} component={Project} />
                         <Route path={`${path}/projects`} component={ProjectsList} />

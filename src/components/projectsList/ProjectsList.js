@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { db, fb } from '../../firebase';
+import SearchIcon from './search.svg';
+import PlusIcon from './plus.svg';
+import DefaultImage from './default.jpg';
 
 import useAuth from "../../hooks/useAuth";
+
+import { Container, SearchBar, ProjectsContainer, CreateProject, Project } from "./ProjectsList.styles";
 
 const ProjectsList = (props) => {
 
     const { currentUser: {uid} } = useAuth();
-    const { url } = useRouteMatch();
     const projectTitle = useRef();
     const [projects, setProjects] = useState([]);
 
@@ -38,22 +42,29 @@ const ProjectsList = (props) => {
     }, [uid])
 
     return(
-        <>
-            <h1>Dashboard</h1>
-            <form onSubmit={createProject}>
-                <input type='text' name='projectTitle' id='projectTitle' ref={projectTitle} />
-                <input type='submit' value='Create Project' /> 
-            </form>
-            <ul>
-                {projects.map(({title, id}, index) => (
-                    <li key={index}>
-                        <Link to={`${url}/${id}`}>
+        <Container>
+            <nav>
+                <SearchBar noValidate>
+                    <input placeholder='Search' type='text' name='search' id='search'/>
+                    <img src={SearchIcon} alt='Search' />
+                </SearchBar>
+            </nav>
+            <ProjectsContainer>
+                <CreateProject>
+                    <Link to='/dashboard/projects/create'>
+                        <img src={PlusIcon} alt='Plus icon'/>
+                        <p>Create Project</p>
+                    </Link>
+                </CreateProject>
+                {projects.map(({title, id, photoURL}, index) => (
+                    <Project background={photoURL ? photoURL : DefaultImage} key={index}>
+                        <Link to={`/dashboard/projects/${id}`}>
                             <p>{title}</p>
                         </Link>
-                    </li>
+                    </Project>
                 ))}
-            </ul>
-        </>
+            </ProjectsContainer>
+        </Container>
     )
 }
 

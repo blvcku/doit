@@ -31,13 +31,6 @@ export const Header = styled.header`
             margin: 110px 0;
         }
     }
-
-    h2{
-        font-size: 50px;
-        @media (min-width:900px){
-            display:block;
-        }
-    }
 `;
 
 export const Nav = styled.nav`
@@ -97,5 +90,17 @@ export const Button = styled.button`
     }
     img{
         display:block;
+    }
+`;
+
+export const Heading = styled.h2`
+    a{
+        color: var(--colorWhite);
+        text-decoration:none;
+        font-size: 60px;
+        font-weight:700;
+        @media (min-width:900px){
+            display:block;
+        }
     }
 `;
