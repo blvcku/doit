@@ -1,35 +1,46 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { db, fb } from '../../firebase';
 import SearchIcon from './search.svg';
 import PlusIcon from './plus.svg';
 import DefaultImage from './default.jpg';
 
 import useAuth from "../../hooks/useAuth";
+import useError from '../../hooks/useError';
 
 import { Container, SearchBar, ProjectsContainer, CreateProject, Project } from "./ProjectsList.styles";
 
-const ProjectsList = (props) => {
+const ProjectsList = () => {
 
     const { currentUser: {uid} } = useAuth();
-    const projectTitle = useRef();
+    const { dispatchError } = useError();
+    const history = useHistory();
     const [projects, setProjects] = useState([]);
+    const [searchFilter, setFilter] = useState('');
+    const [filteredProjects, setFilteredProjects] = useState([]);
 
     const createProject = async e => {
         e.preventDefault();
         try{
-            await db.collection('projects').add({
-                title: projectTitle.current.value, 
+            const { id } = await db.collection('projects').add({
+                title: 'Project Title',
+                description: 'Description', 
                 authorID: uid,
                 createdAt: fb.firestore.FieldValue.serverTimestamp(), 
                 members: [
                     uid
                 ]
             });
+            return history.push(`/dashboard/projects/${id}`);
         }
         catch(error){
-            console.log(error);
+            dispatchError({type: 'projects/failed'});
         }
+    }
+
+    const handleFilterChange = e => {
+        e.preventDefault();
+        setFilter(e.target.value);
     }
 
     useEffect(() => {
@@ -41,22 +52,28 @@ const ProjectsList = (props) => {
         return unsubscribe;
     }, [uid])
 
+    useEffect(() => {
+        const matchesFilter = new RegExp(searchFilter.trim(), 'i');
+        const items = projects.filter(({title}) => matchesFilter.test(title));
+        setFilteredProjects(items);
+    }, [searchFilter, projects]);
+
     return(
         <Container>
             <nav>
                 <SearchBar noValidate>
-                    <input placeholder='Search' type='text' name='search' id='search'/>
+                    <input placeholder='Search' type='text' name='search' id='search' value={searchFilter} onChange={handleFilterChange} />
                     <img src={SearchIcon} alt='Search' />
                 </SearchBar>
             </nav>
             <ProjectsContainer>
                 <CreateProject>
-                    <Link to='/dashboard/projects/create'>
+                    <button aria-label='Create new project' type='button' onClick={createProject}>
                         <img src={PlusIcon} alt='Plus icon'/>
                         <p>Create Project</p>
-                    </Link>
+                    </button>
                 </CreateProject>
-                {projects.map(({title, id, photoURL}, index) => (
+                {filteredProjects.map(({title, id, photoURL}, index) => (
                     <Project background={photoURL ? photoURL : DefaultImage} key={index}>
                         <Link to={`/dashboard/projects/${id}`}>
                             <p>{title}</p>

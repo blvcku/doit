@@ -29,6 +29,8 @@ const errorReducer = (state, action) => {
             return state = 'Unaccepted file type. We accept only JPEG or PNG.';
         case 'update/change-image-failed':
             return state = 'Failed to change your profile picture. Try again later.';
+        case 'projects/failed':
+            return state = 'Failed to create project. Try again later.';
         case 'reset':
             return state = '';
         default:

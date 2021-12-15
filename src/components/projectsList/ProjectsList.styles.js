@@ -92,11 +92,18 @@ export const CreateProject = styled(Project)`
         margin-top:10px;
         color:var(--colorWhite);
         font-weight:700;
+        font-size:1rem;
     }
     img{
         max-width:70px;
         width:100%;
         height:auto;
         aspect-ratio: 1/1;
+    }
+    button{
+        background:none;
+        border:none;
+        display:block;
+        grid-area: 1 / 1 / 2 / 2;
     }
 `;
