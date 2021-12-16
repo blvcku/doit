@@ -31,6 +31,8 @@ const errorReducer = (state, action) => {
             return state = 'Failed to change your profile picture. Try again later.';
         case 'projects/failed':
             return state = 'Failed to create project. Try again later.';
+        case 'projects/edit':
+            return state = 'Failed to edit your project. Try again later.';
         case 'reset':
             return state = '';
         default:

@@ -8,12 +8,13 @@ const GlobalStyle = createGlobalStyle`
         --fontSmall: 0.7rem;
         --colorBlue: hsl(249, 87%, 66%);
         --colorLightBlue: hsl(249, 82%, 78%);
-        --colorWhite: #fff;
+        --colorWhite: #F3FEFF;
         --colorMuted: hsl(0, 0%, 60%);
         --colorRed: hsl(0, 89%, 41%);
         --colorDarkerWhite: #E4F3F5;
         --colorMain: #23ACA8;
         --colorSecondary: #09728C;
+        --darkerSecondary: #155883;
         --colorThird: #0e8e8c;
     }
     *{
@@ -24,6 +25,9 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
     body{
+        max-width:1920px;
+        margin:auto;
+        inset:0;
         background-color: var(--colorDarkerWhite);
         h1{
             font-size: var(--fontSuperBig);

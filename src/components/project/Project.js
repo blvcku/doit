@@ -1,20 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { db } from '../../firebase'; 
 
-import Task from './Task';
+import useAuth from '../../hooks/useAuth';
+import useError from '../../hooks/useError';
 
-const Project = (props) => {
+import { NotFound, Form, Container } from './Project.styles';
+import { MainContainer } from './MainContainer.styles';
+import Banner from './Banner';
+import Aside from './Aside';
+
+const Project = () => {
 
     const { id } = useParams();
+    const { currentUser } = useAuth();
+    const { dispatchError } = useError();
     const [project, setProject] = useState({});
-    const [todo, setTodo] = useState([]);
-    const [doing, setDoing] = useState([]);
-    const [done, setDone] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isOwner, setIsOwner] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const titleRef = useRef();
-    const textRef = useRef();
-    const performerRef = useRef();
 
     useEffect(() => {
         const unsubscribe = db.collection('projects').doc(id).onSnapshot(project => {
@@ -26,69 +31,93 @@ const Project = (props) => {
     }, [id])
 
     useEffect(() => {
-        if(project.todo){
-            setTodo(project.todo);
+        if(project.authorID === currentUser.uid){
+            setIsOwner(true);
         }
-        if(project.doing){
-            setDoing(project.doing);
+        else{
+            setIsOwner(false);
         }
-        if(project.done){
-            setDone(project.done);
-        }
-    }, [project])
+    }, [project, currentUser])
 
-    const createTask = async e => {
+    useEffect(() => {
+        if(isEditing){
+            titleRef.current.focus();
+        }
+    }, [isEditing])
+
+    const turnOnEdit = e => {
         e.preventDefault();
-        const tempTodo = todo;
-        tempTodo.unshift({title: titleRef.current.value, text: textRef.current.value, performer: performerRef.current.value});
+        e.stopPropagation();
+        setIsEditing(true);
+    }
+    
+    const handleSubmit = e => {
+        e.preventDefault();
+        const form = e.target;
+        const { value:title } = form.elements['title'];
+        const { value:description } = form.elements['description'];
+        const { value:date } = form.elements['date'];
+        editProject(title, description, date);
+    }
+
+    const editProject = async(title, description, date) => {
         try{
-            await db.collection('projects').doc(id).update({todo: tempTodo});
-            titleRef.current.value = '';
-            textRef.current.value = ''; 
+            await db.collection('projects').doc(id).update({
+                title: title,
+                description: description,
+                date: date
+            });
         }
         catch(error){
-            console.log(error.code);
+            dispatchError({type: 'projects/edit'});
         }
+        setIsEditing(false);
     }
+
+    // const createTask = async e => {
+    //     e.preventDefault();
+    //     const tempTodo = todo;
+    //     tempTodo.unshift({title: titleRef.current.value, text: textRef.current.value, performer: performerRef.current.value});
+    //     try{
+    //         await db.collection('projects').doc(id).update({todo: tempTodo});
+    //         titleRef.current.value = '';
+    //         textRef.current.value = ''; 
+    //     }
+    //     catch(error){
+    //         console.log(error.code);
+    //     }
+    // }
 
     return(
         <>
             {!loading ? (
                 project.title ? (
-                    <div>
-                        <h1>Title: {project.title}</h1>
-                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}} >
-                            <ul>
-                                <li>
-                                    <form onSubmit={createTask} noValidate>
-                                        <input ref={titleRef} type='text' name='title' id='title' placeholder='Title' />
-                                        <input ref={textRef} type='text' name='text' id='text' placeholder='Text..' />
-                                        <select ref={performerRef} name='performer' id='performer'>
-                                            {project.members.map((member, index) => (
-                                                <option key={index} value={member}>{member}</option>
-                                            ))}
-                                        </select>
-                                        <input type='submit' value='Create task' />
-                                    </form>
-                                </li>
-                                {todo.map(({title, text, performer}, index) => (
-                                    <Task key={index} title={title} text={text} performer={performer}/>
-                                ))}
-                            </ul>
-                            <ul>
-                                {doing.map(({title, text, performer}, index) => (
-                                    <Task key={index} title={title} text={text} performer={performer}/>
-                                ))}
-                            </ul>
-                            <ul>
-                                {done.map(({title, text, performer}, index) => (
-                                    <Task key={index} title={title} text={text} performer={performer}/>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+                    <Router>
+                        <Container>
+                            <Form noValidate onSubmit={handleSubmit}>
+                                <Banner 
+                                    isOwner={isOwner}
+                                    isEditing={isEditing}
+                                    titleRef={titleRef}
+                                    turnOnEdit={turnOnEdit}
+                                    title={project.title} 
+                                    description={project.description}
+                                />
+                                <Aside 
+                                    isEditing={isEditing}
+                                    isOwner={isOwner}
+                                    date={project.date}
+                                />
+                                <MainContainer>
+                                    <Switch>
+
+                                    </Switch>
+                                </MainContainer>
+                            </Form>
+                        </Container>
+                    </Router>
                 ) : (
-                    <h1>Not found</h1>
+                    <NotFound>404: Not found</NotFound>
                 )
             ) : (
                 null
