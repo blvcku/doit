@@ -1,12 +1,12 @@
 import ReactDom from "react-dom";
 
-const Portal = ({children}) => (
+const ErrorPortal = ({children}) => (
     ReactDom.createPortal(
         <>
             {children}
         </>,
-        document.getElementById('portal')
+        document.getElementById('error')
     )
 )
 
-export default Portal;
+export default ErrorPortal;

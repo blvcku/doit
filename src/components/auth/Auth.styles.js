@@ -86,6 +86,7 @@ export const SubmitButton = styled.button`
     color:var(--colorWhite);
     border-radius:10px;
     transition: transform .3s ease;
+    cursor:pointer;
 
     &:active{
         transform:scale(0.95);

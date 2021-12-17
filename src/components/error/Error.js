@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Triangle from './triangle.svg';
+import XIcon from './x.svg';
 
 import useError from '../../hooks/useError';
 
@@ -39,9 +39,11 @@ const Error = (props) => {
             {error ? (!resetAnimation &&
                 <Wrapper>
                     <Card>
-                        <FontAwesomeIcon onClick={handleCloseError} size='2x' icon={faTimes} />
-                        <FontAwesomeIcon size='2x' icon={faExclamationTriangle} />
-                        <p>{error}</p>
+                        <button onClick={handleCloseError} type='button'>
+                            <img src={XIcon} alt='Close' />
+                        </button>
+                        <img src={Triangle} alt='Error triangle' />
+                        <p role='alert'>{error}</p>
                         <div className='error-bar'></div>
                     </Card>
                 </Wrapper>

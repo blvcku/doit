@@ -7,8 +7,8 @@ export const Wrapper = styled.div`
     transform:translateX(50%);
     padding:5px;
     width:100%;
-    max-width:300px;
-    max-height:140px;
+    max-width:340px;
+    max-height:170px;
     height:100%;
     font-size:var(--fontSmall);
     color: var(--colorWhite);
@@ -22,48 +22,48 @@ export const Wrapper = styled.div`
 
 export const Card = styled.div`
     display:flex;
+    flex-direction: column;
     align-items:center;
     text-align:center;
-    padding:0 35px;
-    background-color:hsl(200, 21%, 9%);
+    padding:15px 14px;
+    background-color:var(--colorWhite);
     opacity:0.9;
-    border-radius:7px;
+    border-radius:13px;
     width:100%;
     height:100%;
-    font-weight:700;
-    position:relative;
     overflow:hidden;
-    gap:10px;
     color: var(--colorRed);
     animation: appear-animation .5s ease forwards;
 
+    button{
+        align-self:start;
+        background:none;
+        border:none;
+        img{
+            width:22px;
+            height:22px;
+        }
+        cursor:pointer;
+    }
+
     p{
-        color: var(--colorWhite);
-        line-height:1.5;
+        color: var(--colorSecondary);
+        font-weight:700;
+        margin:9px 0px;
+        max-height:50px;
+        height:100%;
+        font-size: clamp(.7rem,4vw,.8rem);
+        max-width:80%;
     }
 
     div{
-        background-color: hsl(0, 0%, 24%);
-        position: absolute;
-        bottom:10px;
-        width:85%;
-        height: 10px;
+        background-color: var(--colorSecondary);
+        position: relative;
+        width:90%;
+        height: 7px;
         border-radius:10px;
-        left:50%;
-        transform:translateX(-50%);
         overflow:hidden;
-    }
-
-    .fa-times{
-        color: var(--colorMuted);
-        position:absolute;
-        top:5px;
-        right:8px;
-        cursor:pointer;
-
-        :hover{
-            color: var(--colorWhite);
-        }
+        border:2px solid var(--colorSecondary);
     }
 
     div:before{

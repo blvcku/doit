@@ -10,7 +10,7 @@ import AuthProvider from './contexts/AuthContext';
 import ErrorProvider from './contexts/ErrorContext';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Error from './components/error/Error';
-import Portal from './components/portal/Portal';
+import ErrorPortal from './portals/ErrorPortal';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -26,9 +26,9 @@ function App() {
                         <Route path='/resetpassword' component={ResetPassword} />
                         <Route path='*' render={() => <Redirect to='/dashboard/projects' />} />
                     </Switch>
-                    <Portal>
+                    <ErrorPortal>
                         <Error />
-                    </Portal>
+                    </ErrorPortal>
                     <GlobalStyle />
                 </ErrorProvider>
             </AuthProvider>
