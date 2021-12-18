@@ -41,7 +41,7 @@ const ResetPassword = (props) => {
                     <input placeholder='example@mail.com' type='email' name='email' id='email' ref={emailRef}/>
                     <Paragraph>
                         <b>
-                            <Link to='/signup'>Back to Log In</Link>
+                            <Link to='/login'>Back to Log In</Link>
                         </b>
                     </Paragraph>
                     <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>

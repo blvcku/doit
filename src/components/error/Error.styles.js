@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     height:100%;
     font-size:var(--fontSmall);
     color: var(--colorWhite);
-    z-index:999;
+    z-index:500;
 
     @media (min-width: 768px){
         right:0;

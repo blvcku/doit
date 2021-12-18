@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useParams, Route, Switch } from 'react-router-dom';
 import { db } from '../../firebase'; 
 
 import useAuth from '../../hooks/useAuth';
 import useError from '../../hooks/useError';
 
-import { NotFound, Form, Container } from './Project.styles';
+import { NotFound, Form, Container, SubContainer } from './Project.styles';
 import { MainContainer } from './MainContainer.styles';
 import Banner from './Banner';
 import Aside from './Aside';
@@ -53,6 +53,7 @@ const Project = () => {
     
     const handleSubmit = e => {
         e.preventDefault();
+        if(!isOwner) return;
         const form = e.target;
         const { value:title } = form.elements['title'];
         const { value:description } = form.elements['description'];
@@ -92,9 +93,9 @@ const Project = () => {
         <>
             {!loading ? (
                 project.title ? (
-                    <Router>
-                        <Container>
-                            <Form noValidate onSubmit={handleSubmit}>
+                    <Container>
+                        <SubContainer>
+                            <Form id='main-form' noValidate onSubmit={handleSubmit}>
                                 <Banner 
                                     isOwner={isOwner}
                                     isEditing={isEditing}
@@ -103,19 +104,20 @@ const Project = () => {
                                     title={project.title} 
                                     description={project.description}
                                 />
-                                <Aside 
-                                    isEditing={isEditing}
-                                    isOwner={isOwner}
-                                    date={project.date}
-                                />
-                                <MainContainer>
-                                    <Switch>
-
-                                    </Switch>
-                                </MainContainer>
                             </Form>
-                        </Container>
-                    </Router>
+                            <Aside
+                                id={id} 
+                                isEditing={isEditing}
+                                isOwner={isOwner}
+                                date={project.date}
+                            />
+                            <MainContainer>
+                                <Switch>
+
+                                </Switch>
+                            </MainContainer>
+                        </SubContainer>
+                    </Container>
                 ) : (
                     <NotFound>404: Not found</NotFound>
                 )

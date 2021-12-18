@@ -14,7 +14,7 @@ export const Container = styled.div`
     }
 `;
 
-export const Form = styled.form`
+export const SubContainer = styled.div`
     max-width:1250px;
     width:100%;
     display:grid;
@@ -30,6 +30,10 @@ export const Form = styled.form`
         'banner banner'
         'aside main';
     }
+`
+
+export const Form = styled.form`
+    grid-area:banner;
 `;
 
 export const BannerContainer = styled.div`
@@ -37,7 +41,6 @@ export const BannerContainer = styled.div`
     background: var(--colorSecondary);
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 43px 43px 13px 13px;
-    grid-area: banner;
     @media(min-width:700px){
         padding: 120px 0px 20px;
     }
@@ -184,6 +187,7 @@ export const SecondContainer = styled.div`
 `;
 
 export const DeleteButton = styled.button`
+    box-shadow: 0px 3px 6px #00000029;
     background: #DB382C;
     border:none;
     border-radius: 10px;
@@ -193,9 +197,11 @@ export const DeleteButton = styled.button`
     box-shadow: 0px 3px 6px #00000029;
     max-width:9rem;
     width:100%;
+    cursor:pointer;
 `;
 
 export const PeopleAssignedButton = styled.button`
+    cursor:pointer;
     background: var(--colorSecondary);
     box-shadow: 0px 3px 6px #0000005E;
     border:none;

@@ -33,6 +33,8 @@ const errorReducer = (state, action) => {
             return state = 'Failed to create project. Try again later.';
         case 'projects/edit':
             return state = 'Failed to edit your project. Try again later.';
+        case 'projects/delete':
+            return state = 'Failed to delete your project. Try again later.';
         case 'reset':
             return state = '';
         default:

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.section`
     @media(min-width:900px){
         margin:85px 20px 0px 0px;
     }
@@ -101,6 +101,7 @@ export const CreateProject = styled(Project)`
         aspect-ratio: 1/1;
     }
     button{
+        cursor:pointer;
         background:none;
         border:none;
         display:block;
