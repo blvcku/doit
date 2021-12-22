@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Route, Switch } from 'react-router-dom';
+import { useParams, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { db } from '../../firebase'; 
 
 import useAuth from '../../hooks/useAuth';
@@ -9,10 +9,13 @@ import { NotFound, Form, Container, SubContainer } from './Project.styles';
 import { MainContainer } from './MainContainer.styles';
 import Banner from './Banner';
 import Aside from './Aside';
+import MembersList from './MembersList';
+import TasksList from './tasks/TasksList';
 
 const Project = () => {
 
     const { id } = useParams();
+    const { path } = useRouteMatch();
     const { currentUser } = useAuth();
     const { dispatchError } = useError();
     const [project, setProject] = useState({});
@@ -48,6 +51,7 @@ const Project = () => {
     const turnOnEdit = e => {
         e.preventDefault();
         e.stopPropagation();
+        if(!isOwner) return;
         setIsEditing(true);
     }
     
@@ -62,32 +66,23 @@ const Project = () => {
     }
 
     const editProject = async(title, description, date) => {
+        if(title.trim().length > 20) return dispatchError({type: 'projects/title-too-long'});
+        if(title.trim().length < 6) return dispatchError({type: 'projects/title-too-short'});
+        if(description.trim().length > 80) return dispatchError({type: 'projects/description-too-long'});
+        if(description.trim().length < 6) return dispatchError({type: 'projects/description-too-short'});
         try{
             await db.collection('projects').doc(id).update({
-                title: title,
-                description: description,
+                title: title.trim(),
+                description: description.trim(),
                 date: date
             });
+            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/edit'});
         }
         setIsEditing(false);
     }
-
-    // const createTask = async e => {
-    //     e.preventDefault();
-    //     const tempTodo = todo;
-    //     tempTodo.unshift({title: titleRef.current.value, text: textRef.current.value, performer: performerRef.current.value});
-    //     try{
-    //         await db.collection('projects').doc(id).update({todo: tempTodo});
-    //         titleRef.current.value = '';
-    //         textRef.current.value = ''; 
-    //     }
-    //     catch(error){
-    //         console.log(error.code);
-    //     }
-    // }
 
     return(
         <>
@@ -96,13 +91,15 @@ const Project = () => {
                     <Container>
                         <SubContainer>
                             <Form id='main-form' noValidate onSubmit={handleSubmit}>
-                                <Banner 
+                                <Banner
+                                    id={id}
                                     isOwner={isOwner}
                                     isEditing={isEditing}
                                     titleRef={titleRef}
                                     turnOnEdit={turnOnEdit}
                                     title={project.title} 
                                     description={project.description}
+                                    background={project.photoURL}
                                 />
                             </Form>
                             <Aside
@@ -113,7 +110,8 @@ const Project = () => {
                             />
                             <MainContainer>
                                 <Switch>
-
+                                    <Route exact path={path} render={() => (<TasksList members={project.members} isOwner={isOwner} id={id} />)} />
+                                    <Route path={`${path}/members`} render={() => (<MembersList membersIDs={project.members}/>)} />
                                 </Switch>
                             </MainContainer>
                         </SubContainer>

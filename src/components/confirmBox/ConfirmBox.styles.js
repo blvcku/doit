@@ -18,7 +18,7 @@ export const Box = styled.div`
     background: var(--colorWhite);
     padding:30px;
     border-radius:13px;
-    max-width:500px;
+    max-width:480px;
     width:100%;
     text-align:center;
     p{

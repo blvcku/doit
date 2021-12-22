@@ -28,15 +28,17 @@ const Aside = ({isEditing, isOwner, date, id}) => {
         }
     }, [date])
 
-    const handleDeleteProject = () => {
+    const handleDeleteProject = e => {
+        e.preventDefault();
         if(!isOwner) return;
-        setConfirmInfo({message: 'delete this project', action: deleteProject})
+        setConfirmInfo({message: 'delete this project', action: deleteProject});
     }
 
     const deleteProject = async () => {
         try{
+            history.push('/dashboard');
             await db.collection('projects').doc(id).delete();
-            return history.push('/dashboard');
+            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/delete'});
@@ -62,7 +64,7 @@ const Aside = ({isEditing, isOwner, date, id}) => {
                     ) : (
                         null
                 )}
-                <PeopleAssignedButton isOwner={isOwner}>
+                <PeopleAssignedButton to={`/dashboard/projects/${id}/members`} isOwner={isOwner}>
                     <img src={PersonIcon} alt='Person' />
                     <p>People Assigned</p>
                 </PeopleAssignedButton>

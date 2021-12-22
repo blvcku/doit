@@ -58,11 +58,12 @@ export const ProjectsContainer = styled.ul`
 export const Project = styled.li`
     background: url(${({background}) => background});
     background-size:cover;
-    background-position: center 0;
+    background-position: center center;
     box-shadow: 2px 3px 6px #00403F82;
     border-radius:30px;
     display:grid;
     overflow:hidden;
+    height:max-content;
 
     &::before{
         background:rgba(14, 142, 140, 0.8);
@@ -83,6 +84,10 @@ export const Project = styled.li`
     p{
         color:var(--colorWhite);
         font-weight:700;
+        text-overflow: ellipsis;
+        word-break:break-word;
+        padding:0px 10px;
+        text-align:center;
     }
 `;
 
@@ -95,7 +100,7 @@ export const CreateProject = styled(Project)`
         font-size:1rem;
     }
     img{
-        max-width:70px;
+        max-width:3.5rem;
         width:100%;
         height:auto;
         aspect-ratio: 1/1;

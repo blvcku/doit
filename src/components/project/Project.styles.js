@@ -1,16 +1,19 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NotFound = styled.h1`
     position:absolute;
-    left:50%;
-    top:50%;
+    top:50vh;
+    left:50vw;
     transform:translate(-50%,-50%);
+    width:100%;
+    text-align:center;
 `;
 
 export const Container = styled.div`
-    margin: 20px 20px 0 20px;
+    margin: 20px 20px 20px 20px;
     @media(min-width:900px){
-        margin: 90px 30px 0 0;
+        margin: 80px 30px 20px 0;
     }
 `;
 
@@ -37,8 +40,10 @@ export const Form = styled.form`
 `;
 
 export const BannerContainer = styled.div`
+    background: ${({background}) => background ? `url(${background})` : 'var(--colorSecondary)'};
+    background-size:cover;
+    background-position: center center;
     padding: 40px 0px 0px;
-    background: var(--colorSecondary);
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 43px 43px 13px 13px;
     @media(min-width:700px){
@@ -138,12 +143,13 @@ export const AsideContainer = styled.aside`
     grid-area: aside;
     background:var(--colorWhite);
     box-shadow: 0px 3px 6px #00000066;
-    padding: 30px 0px;
+    padding: 30px 0;
     border-radius:13px;
     display:flex;
     gap:20px;
     flex-direction:column;
     align-items:center;
+    max-height:527px;
     @media(min-width:${({isOwner}) => isOwner ? '370px' : '300px'}){
         justify-content:center;
         flex-direction:row;
@@ -151,7 +157,7 @@ export const AsideContainer = styled.aside`
     @media(min-width:1300px){
         flex-direction:column;
         gap:${({isOwner}) => isOwner ? '50px' : '120px'};
-        padding:0;
+        padding:0 8px;
     }
 `;
 
@@ -200,7 +206,8 @@ export const DeleteButton = styled.button`
     cursor:pointer;
 `;
 
-export const PeopleAssignedButton = styled.button`
+export const PeopleAssignedButton = styled(Link)`
+    text-decoration:none;
     cursor:pointer;
     background: var(--colorSecondary);
     box-shadow: 0px 3px 6px #0000005E;

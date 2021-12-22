@@ -3,7 +3,6 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 import 'firebase/compat/functions';
-import {connectFunctionsEmulator} from 'firebase/functions';
 
 const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,5 +20,4 @@ export const db = firebase.firestore();
 export const storage = firebase.storage();
 export const fb = firebase;
 export const functions = firebase.functions(app);
-connectFunctionsEmulator(functions, 'localhost', 5001);
 export default app;

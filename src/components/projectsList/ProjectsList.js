@@ -31,6 +31,7 @@ const ProjectsList = () => {
                     uid
                 ]
             });
+            dispatchError({type: 'reset'});
             return history.push(`/dashboard/projects/${id}`);
         }
         catch(error){
