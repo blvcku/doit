@@ -11,10 +11,6 @@ export const TasksListContainer = styled.ul`
     list-style:none;
     position:relative;
     min-height:250px;
-    overflow:auto;
-    @media(min-width:1300px){
-        max-height:528px;
-    }
     &:empty{
         font-size:1.5rem;
         font-weight:500;
@@ -60,7 +56,7 @@ export const CreateTaskButton = styled.button`
 `;
 
 export const TaskContainer = styled.li`
-    padding: 33px 10px 0px 10px;
+    padding: 33px 20px 0px 20px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
     background:var(--colorWhite);
@@ -68,10 +64,7 @@ export const TaskContainer = styled.li`
     hr{
         opacity:0;
     }
-    @media(min-width:340px){
-        padding: 33px 15px 0px 15px;
-    }
-    @media(min-width:670px){
+    @media(min-width:560px){
         padding: 33px 41px 0px 41px;
     }
 `;
@@ -81,7 +74,6 @@ export const FirstGroup = styled.div`
     border-bottom: 1px solid #707070;
     margin-bottom:33px;
     flex-direction:column;
-    align-items:center;
     div{
         display:flex;
         align-items:center;
@@ -91,12 +83,16 @@ export const FirstGroup = styled.div`
     }
     div:nth-child(1){
         gap:15px;
+        @media(max-width:500px){
+            justify-content:start;
+        }
     }
     div:nth-child(2){
         flex:1;
         gap:30px;
-        @media(max-width:560px){
+        @media(max-width:500px){
             width:100%;
+            gap:0px;
         }
     }
     h2{
@@ -112,12 +108,9 @@ export const FirstGroup = styled.div`
             font-size:1rem;
         }
     }
-    @media(min-width:560px){
+    @media(min-width:500px){
         flex-direction:row;
         gap:15px;
-    }
-    @media(min-width:670px){
-        margin-right:41px;
     }
 `;
 
@@ -171,14 +164,21 @@ export const SecondGroup = styled.div`
 
 export const Group = styled(FirstGroup)`
     flex-direction:column;
-    gap:13px;
+    gap:10px;
     @media(min-width:450px){
         flex-direction:row;
+        gap:13px;
+    }
+    div:nth-child(1){
+        @media(max-width:450px){
+            margin-bottom:0px;
+        }
     }
     div:nth-child(2){
-        justify-content:space-around;
-        @media(min-width:450px){
-            justify-content:space-between;
+        width:100%;
+        @media(max-width:450px){
+            justify-content:start;
+            gap:15px;
         }
     }
 `
@@ -308,7 +308,10 @@ export const GridList = styled.ul`
     margin:auto;
     inset:0;
     column-gap: 80px;
-    padding:0px 0px 10px;
+    padding:0px 5px 10px;
+    max-height:300px;
+    min-height:100px;
+    overflow:auto;
     @media(min-width:340px){
         padding:0px 20px 10px;
     }
@@ -319,10 +322,6 @@ export const GridList = styled.ul`
     @media(min-width:900px){
         grid-template-columns: 1fr;
         max-width:500px;
-    }
-    @media(min-width:1300px){
-        max-height:300px;
-        overflow:auto;
     }
     @media(min-width:1470px){
         grid-template-columns: 1fr 1fr;
@@ -339,13 +338,22 @@ export const Member = styled.li`
     margin-bottom:25px;
     margin-top:5px;
     gap:10px;
+    height:max-content;
     img{
-        width:40px;
-        height:40px;
+        width:20px;
+        height:20px;
         object-fit:cover;
         aspect-ratio:1/1;
         outline:1px solid var(--darkerSecondary);
         border-radius:50%;
+        @media(min-width:300px){
+            width:30px;
+            height:30px;
+        }
+        @media(min-width:320px){
+            width:40px;
+            height:40px;
+        }
     }
     p{
         font-size:.8rem;
@@ -378,7 +386,7 @@ export const CloseButton = styled.button`
     background:none;
     border:none;
     position:absolute;
-    left:5px;
+    left:-10px;
     top:-20px;
     cursor:pointer;
     padding:5px;
@@ -398,22 +406,25 @@ export const GridContainer = styled.div`
     gap:10px;
     margin:auto;
     inset:0;
-    padding-bottom:40px;
+    padding-bottom:20px;
     padding-top:20px;
     button{
         display:block;
         cursor:pointer;
-        padding:2px;
+        padding:4px;
         aspect-ratio:1/1;
         background:none;
         box-shadow: 0px 3px 6px #00000029;
         border: 1px solid #707070;
         border-radius: 13px;
         color: #676767;
-        font-size: .5rem;
+        font-size: .4rem;
         font-weight:bold;
         text-align:center;
-        @media(min-width:410px){
+        @media(min-width:310px){
+            font-size:.5rem;
+        }
+        @media(min-width:360px){
             padding:10px;
         }
         @media(min-width:470px){
@@ -444,5 +455,6 @@ export const GridContainer = styled.div`
     }
     @media(min-width:450px){
         gap:40px;
+        padding-bottom:40px;
     }
 `;
