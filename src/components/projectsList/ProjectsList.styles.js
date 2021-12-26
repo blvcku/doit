@@ -32,7 +32,7 @@ export const SearchBar = styled.form`
 
 export const ProjectsContainer = styled.ul`
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
     justify-content:center;
     list-style:none;
     margin-top:15px;
@@ -51,6 +51,9 @@ export const ProjectsContainer = styled.ul`
         gap:100px;
     }
     @media(min-width:1020px){
+        grid-template-columns: repeat(auto-fill, minmax(220px, 250px));
+    }
+    @media(min-width:1330px){
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
 `;

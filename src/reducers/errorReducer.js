@@ -21,6 +21,10 @@ const errorReducer = (state, action) => {
             return state = 'Given email address is not valid.';
         case 'auth/password-too-short':
             return state = 'Your password is too short. Minimum 6 characters.';
+        case 'auth/username-too-short':
+            return state = 'Your username is too short. Minimum 6 characters.';
+        case 'auth/username-too-long':
+            return state = 'Your username is too long. Maximum 20 characters';
         case 'auth/failed-to-log-out':
             return state = 'Failed to log out. Try again later.';
         case 'auth/requires-recent-login':
@@ -38,7 +42,7 @@ const errorReducer = (state, action) => {
         case 'projects/title-too-long':
             return state = 'Title too long. Maximum 20 characters.';
         case 'projects/title-too-short':
-            return state = 'Title too short. Maximum 6 characters.';
+            return state = 'Title too short. Minimum 6 characters.';
         case 'projects/description-too-long':
             return state = 'Description too long. Maximum 80 characters.';
         case 'projects/description-too-short':

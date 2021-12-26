@@ -32,6 +32,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
 
     const changeStatus = async(e, status) => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(!isOwner && !isPerformer) return;
         try{
             setIsChangingStatus(false);
@@ -76,6 +77,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
 
     const deleteTask = async() => {
         try{
+            dispatchError({type: 'reset'});
             await db.collection('tasks').doc(taskID).delete();
             dispatchError({type: 'reset'});
         }

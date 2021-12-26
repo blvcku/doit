@@ -39,6 +39,7 @@ const TaskEdit = ({performer, members: membersIDs, title, description, taskID, i
 
     const createUpdateTask = async e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(!isOwner) return;
         const form = e.target;
         const { value:newTitle } = form.elements['title'];

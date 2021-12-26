@@ -21,6 +21,7 @@ const ProjectsList = () => {
 
     const createProject = async e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         try{
             const { id } = await db.collection('projects').add({
                 title: 'Project Title',

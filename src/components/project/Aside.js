@@ -36,6 +36,7 @@ const Aside = ({isEditing, isOwner, date, id}) => {
 
     const deleteProject = async () => {
         try{
+            dispatchError({type: 'reset'});
             history.push('/dashboard');
             await db.collection('projects').doc(id).delete();
             dispatchError({type: 'reset'});

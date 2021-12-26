@@ -18,6 +18,7 @@ const SignUp = (props) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(!emailRef.current.value.trim()){
             return dispatchError({type: 'auth/invalid-email'});
         }

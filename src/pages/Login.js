@@ -17,6 +17,7 @@ const Login = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(passwordRef.current.value.length === 0){
             return dispatchError({type: 'auth/invalid-password'});
         }

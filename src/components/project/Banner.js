@@ -13,6 +13,7 @@ const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, i
 
     const handleChangeImage = e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(!isOwner) return;
         const file = e.target.files[0];
         if(!file) return;

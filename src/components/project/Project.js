@@ -66,6 +66,7 @@ const Project = () => {
     }
 
     const editProject = async(title, description, date) => {
+        dispatchError({type: 'reset'});
         if(title.trim().length > 20) return dispatchError({type: 'projects/title-too-long'});
         if(title.trim().length < 6) return dispatchError({type: 'projects/title-too-short'});
         if(description.trim().length > 80) return dispatchError({type: 'projects/description-too-long'});

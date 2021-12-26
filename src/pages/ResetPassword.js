@@ -16,6 +16,7 @@ const ResetPassword = (props) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        dispatchError({type: 'reset'});
         if(!emailRef.current.value.trim().length){
             return dispatchError({type: 'auth/invalid-email'});
         }
