@@ -41,5 +41,10 @@ service cloud.firestore {
       allow create: if request.auth.uid == getOwner(request.resource.data.projectID);
       allow delete: if request.auth.uid == getOwner(resource.data.projectID);
     }
+    match /users/{user}{
+    	allow read;
+      allow create: if request.auth.uid != null && user == request.auth.uid;
+      allow update: if request.auth.uid == resource.data.uid;
+    }
   }
 }

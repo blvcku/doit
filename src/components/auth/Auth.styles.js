@@ -105,7 +105,7 @@ export const SignUpForm = styled(Form)`
 
 export const SuccessMessage = styled.div`
     font-size: .7rem;
-    color: limegreen;
+    color: #018c5c;
     margin-top:5px;
     position:absolute;
     width:100%;

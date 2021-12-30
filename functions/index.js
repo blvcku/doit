@@ -7,6 +7,7 @@ admin.initializeApp({
 const bucket = admin.storage().bucket();
 const projectsRef = admin.firestore().collection('projects');
 const tasksRef = admin.firestore().collection('tasks');
+const usersRef = admin.firestore().collection('users');
 
 exports.getUserData = functions.https.onCall(async (data, context) => {
     try{
@@ -53,7 +54,7 @@ exports.changeProjectPhoto = functions.https.onCall(async (data, context) => {
         const { authorID } = project.data();
         if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
         const base64EncodedImageString = data.file.replace(/^data:image\/\w+;base64,/, '');
-        const imageBuffer = new Buffer(base64EncodedImageString, 'base64');
+        const imageBuffer = new Buffer.from(base64EncodedImageString, 'base64');
         const file = bucket.file(`projects/${data.id}/banner.jpg`);
         await file.save(imageBuffer, {
             contentType: `${data.filetype}` 
@@ -73,6 +74,20 @@ exports.setTaskStatus = functions.https.onCall(async (data, context) => {
         if(uid !== context.auth.uid) return Promise.reject('unauthorized');
         await tasksRef.doc(data.id).update({
             status: data.status
+        });
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+});
+
+exports.newUserSignup = functions.auth.user().onCreate(async user => {
+    try{
+        const [username] = user.email.split('@');
+        await usersRef.doc(user.uid).set({
+            uid: user.uid,
+            displayName: username, 
         });
         return;
     }

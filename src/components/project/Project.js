@@ -111,8 +111,8 @@ const Project = () => {
                             />
                             <MainContainer>
                                 <Switch>
-                                    <Route exact path={path} render={() => (<TasksList members={project.members} isOwner={isOwner} id={id} />)} />
-                                    <Route path={`${path}/members`} render={() => (<MembersList membersIDs={project.members}/>)} />
+                                    <Route exact path={`${path}/members`} render={() => (<MembersList membersIDs={project.members}/>)} />
+                                    <Route path={path} render={() => (<TasksList members={project.members} isOwner={isOwner} id={id} />)} />
                                 </Switch>
                             </MainContainer>
                         </SubContainer>

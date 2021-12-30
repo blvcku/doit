@@ -1,0 +1,7 @@
+.activeFriends svg{
+    fill:var(--colorWhite)!important;
+}
+.activeFriends{
+    color:var(--colorWhite)!important;
+    background: var(--colorSecondary)!important;
+}

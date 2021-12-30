@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PersonIcon from './person.svg';
-import { storage } from "../../firebase";
+import { storage, db } from "../../firebase";
 
 import useAuth from "../../hooks/useAuth";
 import useError from "../../hooks/useError";
 
 import { Container, GridContainer, Aside, Form, InputsWrapper, Button, SuccesMessage, Figure, Label } from './Profile.styles';
+import Loader from '../loading/Loader';
 
 const Profile = () => {
 
@@ -45,6 +46,9 @@ const Profile = () => {
             setEmailLoading(true);
             await currentUser.updateEmail(email.trim());
             await currentUser.updateProfile({displayName: username.trim()});
+            await db.collection('users').doc(uid).update({
+                displayName: username.trim()
+            });
             dispatchError({type: 'reset'});
             setEmailMessage('Success! Your username and email have been changed!')
         }
@@ -87,6 +91,9 @@ const Profile = () => {
             await storage.ref(`users/${uid}/profile.jpg`).put(file);
             const url = await storage.ref(`users/${uid}/profile.jpg`).getDownloadURL();
             await currentUser.updateProfile({photoURL: url});
+            await db.collection('users').doc(uid).update({
+                photoURL: url
+            })
             dispatchError({type: 'reset'});
         }
         catch(error){
@@ -105,6 +112,7 @@ const Profile = () => {
                     </div>
                 </Aside>
                 <Form onSubmit={handleSubmitEmail} noValidate>
+                    {emailLoading && <Loader />}
                     <h3>Personal Information</h3>
                     <InputsWrapper>
                         <label htmlFor="username">Username</label>
@@ -116,6 +124,7 @@ const Profile = () => {
                     <Button type='submit'>Save</Button>
                 </Form>
                 <Form noValidate>
+                    {logoutLoading && <Loader />}
                     <Figure>
                         <img src={photoURL} alt={displayName} />
                         <figcaption>{displayName}</figcaption>
@@ -125,6 +134,7 @@ const Profile = () => {
                     <Button style={{background: '#DB382C'}} type='button' onClick={handleLogout}>Log out</Button>
                 </Form>
                 <Form onSubmit={handleSubmitPassword} noValidate>
+                    {passwordLoading && <Loader />}
                     <h3>Password Information</h3>
                     <InputsWrapper>
                         <label htmlFor='password'>Password</label>

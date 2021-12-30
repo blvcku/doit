@@ -23,7 +23,8 @@ export const SearchBar = styled.form`
         border-radius:20px;
         border:none;
         background:var(--colorDarkerWhite);
-        padding: 7px 0px 7px 25px;
+        padding: 7px 0px 7px 20px;
+        color: #676767;
     }
     input:focus{
         outline:none;
@@ -91,6 +92,7 @@ export const Project = styled.li`
         word-break:break-word;
         padding:0px 10px;
         text-align:center;
+        text-shadow: 0px 3px 6px #00000063;
     }
 `;
 

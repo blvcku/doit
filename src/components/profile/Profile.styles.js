@@ -66,6 +66,8 @@ export const Form = styled.form`
     border-radius: 13px;
     text-align:center;
     padding:45px 0px;
+    position:relative;
+    overflow:hidden;
     h3{
         color: var(--colorSecondary);
         font-size:1.2rem;
@@ -127,7 +129,7 @@ export const Button = styled.button`
     color: var(--colorWhite);
     border:none;
     padding: 9px 50px;
-    margin-top:30px;
+    margin-top:35px;
     cursor:pointer;
     font-weight:400;
     transition: transform .3s ease;
@@ -142,10 +144,10 @@ export const Button = styled.button`
 export const SuccesMessage = styled.p`
     position:absolute;
     left:50%;
-    bottom:-25px;
+    bottom:-30px;
     transform:translateX(-50%);
     font-size: .7rem;
-    color: limegreen;
+    color: #018c5c;
     width:100%;
     padding: 0 5px;
     text-align:center;
@@ -177,6 +179,7 @@ export const Figure = styled.figure`
         @media(min-width:400px){
             font-size:2.1rem;
         }
+        padding: 0px 10px;
     }
 `;
 

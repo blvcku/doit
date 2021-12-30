@@ -67,12 +67,12 @@ export const CustomNavLink = styled(NavLink)`
     display:flex;
     align-items:center;
     gap:13px;
-    padding: 8px 40px;
+    padding: 8px 45px;
     border-radius:15px;
-    margin: 4px 0;
+    margin: 8px 0;
 
     img{
-        width:27px;
+        width:30px;
         height:30px;
     }
 `;
