@@ -20,6 +20,7 @@ const Profile = () => {
 
     const handleLogout = async e => {
         e.preventDefault();
+        if(logoutLoading) return;
         dispatchError({type: 'reset'});
         try{
             setLogoutLoading(true);
@@ -34,6 +35,7 @@ const Profile = () => {
 
     const handleSubmitEmail = async e => {
         e.preventDefault();
+        if(emailLoading) return;
         dispatchError({type: 'reset'});
         setEmailMessage('');
         const form = e.target;
@@ -46,7 +48,7 @@ const Profile = () => {
             setEmailLoading(true);
             await currentUser.updateEmail(email.trim());
             await currentUser.updateProfile({displayName: username.trim()});
-            await db.collection('users').doc(uid).update({
+            await db.collection('users').doc(currentUser.uid).update({
                 displayName: username.trim()
             });
             dispatchError({type: 'reset'});
@@ -60,6 +62,7 @@ const Profile = () => {
 
     const handleSubmitPassword = async e => {
         e.preventDefault();
+        if(passwordLoading) return;
         dispatchError({type: 'reset'});
         setPasswordMessage('');
         const form = e.target;
@@ -82,6 +85,7 @@ const Profile = () => {
 
     const handleChangeImage = async e => {
         e.preventDefault();
+        if(logoutLoading) return;
         dispatchError({type: 'reset'});
         const file = e.target.files[0];
         if(!file) return;
@@ -91,7 +95,7 @@ const Profile = () => {
             await storage.ref(`users/${uid}/profile.jpg`).put(file);
             const url = await storage.ref(`users/${uid}/profile.jpg`).getDownloadURL();
             await currentUser.updateProfile({photoURL: url});
-            await db.collection('users').doc(uid).update({
+            await db.collection('users').doc(currentUser.uid).update({
                 photoURL: url
             })
             dispatchError({type: 'reset'});

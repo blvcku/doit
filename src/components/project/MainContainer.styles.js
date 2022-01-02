@@ -212,6 +212,7 @@ export const ImageContainer = styled.figure`
             left:0;
             transform:none;
         }
+        white-space:nowrap;
     }
 
     &:hover{

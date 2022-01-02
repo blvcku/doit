@@ -1,5 +1,7 @@
 const errorReducer = (state, action) => {
     switch(action.type){
+        case 'reset':
+            return state = '';
         case 'auth/email-already-exists':
             return state = 'This email address is already being used.';
         case 'auth/email-already-in-use':
@@ -65,8 +67,16 @@ const errorReducer = (state, action) => {
             return state = 'Failed to create task. Try again later.';
         case 'projects/task-status':
             return state = 'Failed to change task status. Try again later.';
-        case 'reset':
-            return state = '';
+        case 'friends/delete':
+            return state = 'Failed to delete user from friend list. Try again later.';
+        case 'friends/request':
+            return state = 'Failed to request friend. Try again later.';
+        case 'friends/request-delete':
+            return state = 'Failed to delete friend request. Try again later.';
+        case 'friends/invite-decline':
+            return state = 'Failed to decline friend request. Try again later';
+        case 'friends/accept':
+            return state = 'Failed to accept friend request. Try again later.';
         default:
             return state = 'Something went wrong. Try again later.';
     }

@@ -16,13 +16,13 @@ export const Container = styled.div`
 export const Box = styled.div`
     box-shadow: 0px 3px 6px #0000005E;
     background: var(--colorWhite);
-    padding:30px;
+    padding:40px 30px;
     border-radius:13px;
     max-width:480px;
     width:100%;
     text-align:center;
     p{
-        font-size: clamp(1.1rem, 2vw, 1.3rem);
+        font-size: clamp(.9rem, 2vw, 1.1rem);
         color: var(--colorSecondary);
         font-weight:500;
         margin-bottom:30px;
@@ -42,6 +42,6 @@ export const Box = styled.div`
         cursor:pointer;
     }
     @media(min-width:400px){
-        padding: 50px;
+        padding: 50px 40px;
     }
 `;
