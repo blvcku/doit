@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { NavLink, useRouteMatch, Switch, Route, Redirect } from "react-router-dom";
-import './friends.css';
-import SearchIcon from './search.svg';
+import SearchIcon from '../../images/friends/search.svg';
 
 import { Container, Wrapper, Nav, Section } from "./Friends.styles";
 import FriendsList from './FriendsList';

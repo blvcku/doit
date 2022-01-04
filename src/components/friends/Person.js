@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { functions } from "../../firebase";
-import DefaultImage from './default.jpg';
-import AcceptIcon from './accept.svg';
-import RequestIcon from './request.svg';
+import DefaultImage from '../../images/default.jpg';
+import AcceptIcon from '../../images/friends/accept.svg';
+import RequestIcon from '../../images/friends/request.svg';
+import ApprovedIcon from '../../images/friends/approved.svg';
+import DeleteIcon from '../../images/delete.svg';
 
 import useConfirmBox from "../../hooks/useConfirmBox";
 import useError from '../../hooks/useError';
 
 import { FriendContainer, SmallButton, ImageContainer, ApprovedButton, Button } from "./Friends.styles";
-import ApprovedIcon from './approved.svg';
-import DeleteIcon from '../project/tasks/delete.svg';
 import Loader from '../loading/Loader';
 
 const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) => {

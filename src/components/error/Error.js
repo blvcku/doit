@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Triangle from './triangle.svg';
-import XIcon from './x.svg';
+import Triangle from '../../images/error/triangle.svg';
+import XIcon from '../../images/x.svg';
 
 import useError from '../../hooks/useError';
 

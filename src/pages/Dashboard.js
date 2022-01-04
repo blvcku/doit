@@ -6,7 +6,7 @@ import Navbar from '../components/navbar/Navbar';
 import ProjectsList from '../components/projectsList/ProjectsList';
 import Profile from '../components/profile/Profile';
 import Project from '../components/project/Project';
-import Friends from '../components/friendsList/Friends';
+import Friends from '../components/friends/Friends';
 
 const Dashboard = (props) => {
 

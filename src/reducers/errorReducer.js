@@ -67,10 +67,20 @@ const errorReducer = (state, action) => {
             return state = 'Failed to create task. Try again later.';
         case 'projects/task-status':
             return state = 'Failed to change task status. Try again later.';
+        case 'projects/accept-invite':
+            return state = 'Failed to accept project invitation. Try again later.';
+        case 'projects/decline-invite':
+            return state = 'Failed to decline project invitation. Try again later.';
+        case 'projects/delete-member':
+            return state = 'Failed to delete member. Try again later';
+        case 'projects/delete-invite':
+            return state = 'Failed to cancel project invitation. Try again later.';
+        case 'projects/invite':
+            return state = 'Failed to send project invitation. Try again later.';
         case 'friends/delete':
             return state = 'Failed to delete user from friend list. Try again later.';
         case 'friends/request':
-            return state = 'Failed to request friend. Try again later.';
+            return state = 'Failed to send friend request. Try again later.';
         case 'friends/request-delete':
             return state = 'Failed to delete friend request. Try again later.';
         case 'friends/invite-decline':

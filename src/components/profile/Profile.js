@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PersonIcon from './person.svg';
+import PersonIcon from '../../images/profile/person.svg';
 import { storage, db } from "../../firebase";
 
 import useAuth from "../../hooks/useAuth";

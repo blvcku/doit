@@ -18,9 +18,11 @@ export const Box = styled.div`
     background: var(--colorWhite);
     padding:40px 30px;
     border-radius:13px;
+    margin: 0px 10px;
     max-width:480px;
     width:100%;
     text-align:center;
+    animation: pop-up .5s cubic-bezier(0,.67,.29,1.3) forwards;
     p{
         font-size: clamp(.9rem, 2vw, 1.1rem);
         color: var(--colorSecondary);
@@ -43,5 +45,10 @@ export const Box = styled.div`
     }
     @media(min-width:400px){
         padding: 50px 40px;
+    }
+
+    @keyframes pop-up{
+        from{transform:scale(0)}
+        to{transform:scale(1)}
     }
 `;

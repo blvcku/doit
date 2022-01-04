@@ -42,6 +42,17 @@ const GlobalStyle = createGlobalStyle`
     html{
         font-size:16px;
     }
+
+    .active{
+        background: #70cfca;
+    }
+    .activeFriends svg{
+        fill:var(--colorWhite)!important;
+    }
+    .activeFriends{
+        color:var(--colorWhite)!important;
+        background: var(--colorSecondary)!important;
+    }
     
     @media (min-width: 600px){
         html{

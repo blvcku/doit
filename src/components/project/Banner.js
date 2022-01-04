@@ -1,6 +1,6 @@
-import EditIcon from './edit.svg';
-import ChangePhotoIcon from './photo.svg';
-import SubmitIcon from './submit.svg';
+import EditIcon from '../../images/project/edit.svg';
+import ChangePhotoIcon from '../../images/project/photo.svg';
+import SubmitIcon from '../../images/project/submit.svg';
 import { storage, db, functions } from '../../firebase';
 
 import useError from '../../hooks/useError';

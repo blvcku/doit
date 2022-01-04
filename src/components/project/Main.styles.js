@@ -10,13 +10,12 @@ export const MainContainer = styled.section`
 export const TasksListContainer = styled.ul`
     list-style:none;
     position:relative;
-    min-height:250px;
+    min-height:200px;
     &:empty{
-        font-size:1.5rem;
-        font-weight:500;
+        font-size:1rem;
         background: var(--colorWhite);
         border-radius:13px;
-        box-shadow: 0px 3px 6px #00000029;
+        box-shadow: 0px 3px 6px #00000066;
         &::before{
             content: 'No tasks';
             position:absolute;
@@ -56,11 +55,13 @@ export const CreateTaskButton = styled.button`
 `;
 
 export const TaskContainer = styled.li`
+    overflow:hidden;
     padding: 33px 20px 0px 20px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
     background:var(--colorWhite);
     margin-bottom:30px;
+    position:relative;
     hr{
         opacity:0;
     }
@@ -330,15 +331,14 @@ export const GridList = styled.ul`
     }
 `;
 
-export const Member = styled.li`
+export const MemberContainer = styled.li`
     border-bottom: 1px solid #707070;
     display:flex;
     align-items:center;
-    padding-bottom:16px;
+    padding-bottom:13px;
     justify-content:space-between;
     margin-bottom:25px;
     margin-top:5px;
-    gap:10px;
     height:max-content;
     img{
         width:20px;
@@ -352,8 +352,8 @@ export const Member = styled.li`
             height:30px;
         }
         @media(min-width:320px){
-            width:40px;
-            height:40px;
+            width:35px;
+            height:35px;
         }
     }
     p{
@@ -367,19 +367,43 @@ export const Member = styled.li`
         display:flex;
         align-items:center;
         gap:7px;
+        position:relative;
+        &::before{
+            content: '';
+            position:absolute;
+            width:19px;
+            left:0;
+            height:5px;
+            background:var(--colorWhite);
+            bottom:-17px;
+            @media(min-width:300px){
+                width:29px;
+            }
+            @media(min-width:320px){
+                width:34px;
+            }
+        }
     }
 `;
 
-export const AssignButton = styled.button`
+export const MemberButton = styled.button`
     border:none;
     background:none;
     cursor:pointer;
-    padding:7px;
+    padding:0px;
     img{
         display:block;
-        width:25px;
-        height:25px;
+        width:20px;
+        height:20px;
         outline:none;
+        @media(min-width:300px){
+            width:25px;
+            height:25px;
+        }
+    }
+
+    &::disabled{
+        opacity:0.7;
     }
 `;
 
@@ -458,4 +482,147 @@ export const GridContainer = styled.div`
         gap:40px;
         padding-bottom:40px;
     }
+`;
+
+export const MembersContainer = styled.div`
+    background:var(--colorWhite);
+    box-shadow: 0px 3px 6px #00000066;
+    border-radius:13px;
+    position:relative;
+    text-align:center;
+    overflow:hidden;
+    padding: 35px 7px 25px;
+    
+    @media(min-width:490px){
+        padding: 35px 60px 40px;
+    }
+    @media(min-width:1000px){
+        padding: 35px 18px 40px;
+    }
+
+    @media(min-width:1550px){
+        height:550px;
+        padding: 35px 75px 40px;
+    }
+    h1{
+        font-weight:800;
+        font-size:1.15rem;
+        text-transform: uppercase;
+        color:var(--colorSecondary);
+    }
+`;
+
+export const MembersWrapper = styled.div`
+    margin-top:14px;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #707070;
+    border-radius: 13px;
+    gap:30px;
+    position:relative;
+    display:block;
+
+    ul{
+        list-style:none;
+    }
+
+    h2{
+        font-weight:800;
+        color: var(--colorSecondary);
+        text-transform: uppercase;
+        font-size:.9rem;
+        margin-top:25px;
+    }
+
+    &::before{
+        visibility:hidden;
+        position:absolute;
+        content:'';
+        height:80%;
+        width:${({isOwner}) => isOwner ? '1px' : '0px'};
+        background: #707070;
+        left:50%;
+        top:15%;
+        transform:translateX(-50%);
+    }
+
+    @media(min-width:720px){
+        display:flex;
+        &::before{
+            visibility:visible;
+        }
+    }
+    @media(min-width:900px){
+        display:block;
+        &::before{
+            visibility:hidden;
+        }
+    }
+    @media(min-width:1000px){
+        display:flex;
+        &::before{
+            visibility:visible;
+        }
+    }
+`;
+
+export const CloseMembers = styled(CloseButton)`
+    top:10px;
+    left:10px;
+`;
+
+export const MembersGroup = styled.div`
+    width:100%;
+`;
+
+export const OverflowContainer = styled.div`
+    overflow:auto;
+    margin:auto;
+    margin-top:18px;
+    max-width:400px;
+
+    h3, h4{
+        font-weight:500;
+        color: var(--colorSecondary);
+        text-transform: uppercase;
+        font-size:.7rem;
+        text-align:start;
+        margin-left:40px;
+    }
+
+    ${({isOwner}) => isOwner ? `
+        @media(min-width:720px){
+            height:350px;
+        }
+        @media(min-width:900px){
+            height:auto;
+        }
+        @media(min-width:1000px){
+            height:350px;
+        }
+    ` : `
+        @media(min-width:1300px){
+            height:350px;
+        }
+    `}
+`;
+
+export const List = styled.ul`
+    padding: 0px 15px;
+
+    ${({emptyInformation}) => emptyInformation && `
+        &:empty{
+            height:70px;
+            position:relative;
+            &::before{
+                content:'${emptyInformation}';
+                display:block;
+                position:absolute;
+                font-size:.8rem;
+                color:var(--colorSecondary);
+                top:40%;
+                left:50%;
+                transform:translate(-50%,-50%);
+            }
+        }
+    `}
 `;

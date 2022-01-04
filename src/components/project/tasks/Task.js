@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
-import PendingIcon from './pending.svg';
-import InProgressIcon from './inprogress.svg';
-import CompletedIcon from './completed.svg';
-import DeleteIcon from './delete.svg';
-import EditIcon from './editsmall.svg';
-import ArrowIcon from './arrow.svg';
-import PendingColorIcon from './pendingcolor.svg';
-import InProgressColorIcon from './inprogresscolor.svg';
-import CompletedColorIcon from './completedcolor.svg';
-import StatusIcon from './status.svg';
-import CloseIcon from '../../error/x.svg';
+import PendingIcon from '../../../images/project/tasks/pending.svg';
+import InProgressIcon from '../../../images/project/tasks/inprogress.svg';
+import CompletedIcon from '../../../images/project/tasks/completed.svg';
+import DeleteIcon from '../../../images/delete.svg';
+import EditIcon from '../../../images/project/tasks/editsmall.svg';
+import ArrowIcon from '../../../images/project/tasks/arrow.svg';
+import PendingColorIcon from '../../../images/project/tasks/pendingcolor.svg';
+import InProgressColorIcon from '../../../images/project/tasks/inprogresscolor.svg';
+import CompletedColorIcon from '../../../images/project/tasks/completedcolor.svg';
+import StatusIcon from '../../../images/project/tasks/status.svg';
+import CloseIcon from '../../../images/x.svg';
 import { db, functions } from '../../../firebase';
 
 import useError from '../../../hooks/useError';
 import useConfirmBox from '../../../hooks/useConfirmBox';
 import useAuth from '../../../hooks/useAuth';
 
-import { TaskContainer, FirstGroup, SecondGroup, ImageContainer, StatusButton, FlexContainer, SmallButton, Button, SelectMenu, CloseButton, GridContainer } from "../MainContainer.styles";
+import { TaskContainer, FirstGroup, SecondGroup, ImageContainer, StatusButton, FlexContainer, SmallButton, Button, SelectMenu, CloseButton, GridContainer } from "../Main.styles";
 import TaskEdit from './TaskEdit';
+import Loader from '../../loading/Loader';
 
 const Task = ({isOwner, status, title, description, members, taskID, performer, id}) => {
 
@@ -29,6 +30,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
     const { setConfirmInfo } = useConfirmBox();
     const { currentUser } = useAuth();
     const [isPerformer, setIsPerformer] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const changeStatus = async(e, status) => {
         e.preventDefault();
@@ -135,6 +137,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
 
     return(
         <TaskContainer>
+            {loading && <Loader />}
             {isEditing ? (
                 <TaskEdit 
                     performer={performer}
@@ -146,6 +149,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                     creating={false}
                     id={id}
                     setIsEditing={setIsEditing}
+                    setLoading={setLoading}
                 />
             ) : (
                 isChangingStatus ? (

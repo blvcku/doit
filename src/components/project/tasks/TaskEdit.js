@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import SaveIcon from './save.svg';
-import AssingIcon from './ppladd.svg';
-import PersonIcon from './person.svg';
-import PlusIcon from './assign.svg';
-import XIcon from '../../error/x.svg';
+import SaveIcon from '../../../images/project/tasks/save.svg';
+import AssingIcon from '../../../images/project/tasks/ppladd.svg';
+import PersonIcon from '../../../images/project/tasks/person.svg';
+import PlusIcon from '../../../images/project/plus.svg';
+import XIcon from '../../../images/x.svg';
 import { db, fb, functions } from '../../../firebase';
 
 import useAuth from '../../../hooks/useAuth';
 import useError from '../../../hooks/useError';
 
-import { Group, FlexContainer, ImageContainer, SmallButton, SaveButton, SecondGroup, SelectMenu, GridList, Member, AssignButton, CloseButton } from "../MainContainer.styles";
+import { Group, FlexContainer, ImageContainer, SmallButton, SaveButton, SecondGroup, SelectMenu, GridList, MemberContainer, MemberButton, CloseButton } from "../Main.styles";
 
-const TaskEdit = ({performer, members: membersIDs, title, description, taskID, isOwner, creating, id, setIsEditing}) => {
+const TaskEdit = ({setLoading, performer, members: membersIDs, title, description, taskID, isOwner, creating, id, setIsEditing}) => {
 
     const [selectedPerformer, setSelectedPerformer] = useState();
     const [isSelectingPerformer, setIsSelectingPerformer] = useState(false);
@@ -99,15 +99,17 @@ const TaskEdit = ({performer, members: membersIDs, title, description, taskID, i
         const getUsersData = functions.httpsCallable('getUsersData');
         const getData = async () => {
             try{
+                setLoading(true);
                 const { data } = await getUsersData({uids: membersIDs});
                 setMembers(data);
+                setLoading(false);
             }
             catch(error){
                 console.error(error);
             }
         }
         getData();
-    }, [membersIDs])
+    }, [membersIDs, setLoading])
 
     return(
         <form onSubmit={createUpdateTask} noValidate>
@@ -119,16 +121,16 @@ const TaskEdit = ({performer, members: membersIDs, title, description, taskID, i
                     <img src={PersonIcon} alt='Person' />
                     <h2>SET TASK PERFORMER</h2>
                     <GridList>
-                        {members.map(({photoURL, displayName, uid}, index) => (
-                            <Member key={index}>
+                        {members.map(({photoURL, displayName, uid}) => (
+                            <MemberContainer key={uid}>
                                 <div>
-                                    <img src={photoURL} alt='Member' />
+                                    <img src={photoURL} alt={displayName} />
                                     <p>{displayName}</p>
                                 </div>
-                                <AssignButton onClick={e => handleSelectPerformer(e, {photoURL, displayName, uid})} type='button'>
+                                <MemberButton onClick={e => handleSelectPerformer(e, {photoURL, displayName, uid})} type='button'>
                                     <img src={PlusIcon} alt='Assign' />
-                                </AssignButton>
-                            </Member>
+                                </MemberButton>
+                            </MemberContainer>
                         ))}
                     </GridList>
                 </SelectMenu>

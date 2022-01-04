@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import './navbar.css';
-import ProjectsLogo from './projects.svg';
-import FriendsLogo from './friends.svg';
-import AccountLogo from './account.svg';
-import ArrowIcon from './arrow.svg';
+import ProjectsLogo from '../../images/navbar/projects.svg';
+import FriendsLogo from '../../images/navbar/friends.svg';
+import AccountLogo from '../../images/navbar/account.svg';
+import ArrowIcon from '../../images/navbar/arrow.svg';
 
 import { Header, Nav, CustomNavLink, Button, Heading } from './Navbar.styles';
 

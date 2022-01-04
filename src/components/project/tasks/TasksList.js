@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../../firebase';
-import AddIcon from './add.svg';
+import AddIcon from '../../../images/project/tasks/add.svg';
 
-import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "../MainContainer.styles";
+import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "../Main.styles";
 import Task from './Task';
 import TaskEdit from './TaskEdit';
+import Loader from '../../loading/Loader';
 
 const TasksList = ({isOwner, id, members}) => {
 
     const [isCreating, setIsCreating] = useState(false);
     const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const toggleCreating = e => {
         e.preventDefault();
@@ -31,6 +33,7 @@ const TasksList = ({isOwner, id, members}) => {
             {isOwner ? (
                 isCreating ? (
                     <TaskContainer>
+                        {loading && <Loader />}
                         <TaskEdit
                             creating={true}
                             members={members}
@@ -39,6 +42,7 @@ const TasksList = ({isOwner, id, members}) => {
                             isOwner={isOwner}
                             id={id}
                             setIsEditing={setIsCreating}
+                            setLoading={setLoading}
                         />
                     </TaskContainer>
                 ) : (
@@ -52,9 +56,9 @@ const TasksList = ({isOwner, id, members}) => {
             ) : (
                 null
             )}
-            {tasks.map(({status, title, description, performer, taskID}, index) => (
+            {tasks.map(({status, title, description, performer, taskID}) => (
                 <Task 
-                    key={index} 
+                    key={taskID} 
                     isOwner={isOwner}
                     status={status}
                     title={title}

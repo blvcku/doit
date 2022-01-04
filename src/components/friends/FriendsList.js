@@ -28,14 +28,16 @@ const FriendsList = ({searchTerm}) => {
     }
 
     useEffect(() => {
+        let isMounted = true;
         const getData = async () => {
-            setLoading(true);
+            if(isMounted) setLoading(true);
             const getFriendsData = functions.httpsCallable('getFriendsData');
             const { data } = await getFriendsData({friends: friends, invites: invites, requests: requests});
-            setFriendsData(data);
-            setLoading(false);
+            if(isMounted) setFriendsData(data);
+            if(isMounted) setLoading(false);
         }
-        getData();
+        if(isMounted) getData();
+        return () => { isMounted = false }
     }, [friends, invites, requests])
 
     useEffect(() => {
@@ -71,8 +73,8 @@ const FriendsList = ({searchTerm}) => {
                 <FlexContainer currentPage={currentPage}>
                     {pages.map((page, index) => (
                         <GridContainer key={index}>
-                            {page.map(({uid, displayName, photoURL, status}, index) => (
-                                <Person key={index} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
+                            {page.map(({uid, displayName, photoURL, status}) => (
+                                <Person key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
                             ))}
                         </GridContainer>
                     ))}

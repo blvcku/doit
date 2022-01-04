@@ -275,3 +275,59 @@ exports.acceptInvite = functions.https.onCall(async (data, context) => {
         throw error;
     }
 })
+
+exports.getProjectInvites = functions.https.onCall(async (data, context) => {
+    try{
+        if(!context.auth.uid){
+            return Promise.reject('unauthorized');
+        }
+        const projects = await projectsRef.where('invites', 'array-contains', context.auth.uid).get();
+        const projectInvites = [];
+        projects.forEach(project => {
+            const { title, photoURL = undefined } = project.data();
+            projectInvites.push({
+                title: title,
+                id: project.id,
+                photoURL: photoURL
+            })
+        })
+        return projectInvites;
+    }
+    catch(error){
+        throw error;
+    }
+});
+
+exports.acceptProjectInvitation = functions.https.onCall(async (data, context) => {
+    try{
+        if(!context.auth.uid){
+            return Promise.reject('unauthorized');
+        }
+        const project = await projectsRef.doc(data.projectID).get();
+        const { invites = [] } = project.data();
+        if(invites.includes(context.auth.uid)){
+            await projectsRef.doc(data.projectID).update({
+                invites: admin.firestore.FieldValue.arrayRemove(context.auth.uid),
+                members: admin.firestore.FieldValue.arrayUnion(context.auth.uid)
+            });
+        }
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+});
+
+exports.declineProjectInvitation = functions.https.onCall(async (data, context) => {
+    try{
+        if(!context.auth.uid){
+            return Promise.reject('unauthorized');
+        }
+        await projectsRef.doc(data.projectID).update({
+            invites: admin.firestore.FieldValue.arrayRemove(context.auth.uid)
+        });
+    }
+    catch(error){
+        throw error;
+    }
+})

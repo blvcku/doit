@@ -22,14 +22,16 @@ const SearchList = ({searchTerm}) => {
     const observer = useRef();
 
     const lastPerson = useCallback(personElement => {
+        let isMounted = true;
+        if(!isMounted) return;
         if(loading) return;
         if(invisibleLoading) return;
         if(observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
-            if(entries[0].isIntersecting && hasMore){
+            if(entries[0].isIntersecting && hasMore && isMounted){
                 const loadMoreData = async () => {
                     try{
-                        setInvisibleLoading(true);
+                        if(isMounted) setInvisibleLoading(true);
                         let users;
                         if(searchTerm){
                             users = await db.collection('users')
@@ -48,10 +50,12 @@ const SearchList = ({searchTerm}) => {
                                 .get();
                         }
                         if(users.empty){
-                            setHasMore(false);
-                            return setInvisibleLoading(false);
+                            if(isMounted){
+                                setHasMore(false);
+                                return setInvisibleLoading(false);
+                            }
                         }
-                        setLastVisible(users.docs[users.docs.length-1])
+                        if(isMounted) setLastVisible(users.docs[users.docs.length-1])
                         const usersArray = [];
                         users.forEach(user => {
                             const userData = user.data();
@@ -61,16 +65,17 @@ const SearchList = ({searchTerm}) => {
                                 uid: userData.uid
                             });
                         });
-                        setPersons(prev => [...prev, ...usersArray]);
+                        if(isMounted) setPersons(prev => [...prev, ...usersArray]);
                     }
                     catch(error){
                         console.error(error);
                     }
                 }
-                loadMoreData();
+                if(isMounted) loadMoreData();
             }
         });
-        if(personElement) observer.current.observe(personElement);
+        if(personElement && isMounted) observer.current.observe(personElement);
+        return () => { isMounted = false }
     }, [loading, hasMore, lastVisible, searchTerm, currentUser, invisibleLoading])
 
     const handleNextPage = e => {
@@ -84,21 +89,28 @@ const SearchList = ({searchTerm}) => {
     }
 
     useEffect(() => {
+        let isMounted = true;
         if(pages.length){
-            if(currentPage > (pages.length - 1)) setCurrentPage((pages.length - 1));
-            if(currentPage < 0) setCurrentPage(0);
-            if(currentPage === 0) setHidePrev(true);
-            else setHidePrev(false);
-            if(currentPage === (pages.length - 1)) setHideNext(true);
-            else setHideNext(false);
+            if(isMounted){
+                if(currentPage > (pages.length - 1)) setCurrentPage((pages.length - 1));
+                if(currentPage < 0) setCurrentPage(0);
+                if(currentPage === 0) setHidePrev(true);
+                else setHidePrev(false);
+                if(currentPage === (pages.length - 1)) setHideNext(true);
+                else setHideNext(false);
+            }
         }
+        return () => { isMounted = false }
     }, [currentPage, pages]);
 
-    useEffect(() => {   
+    useEffect(() => {
+        let isMounted = true;   
         const getData = async () => {
             try{
-                setInvisibleLoading(true);
-                setLoading(true);
+                if(isMounted){
+                    setInvisibleLoading(true);
+                    setLoading(true);
+                }
                 let users;
                 const usersArray = [];
                 if(searchTerm){
@@ -107,7 +119,7 @@ const SearchList = ({searchTerm}) => {
                 else{
                     users = await db.collection('users').where('uid', '!=', currentUser.uid).limit(8).get();
                 }
-                setLastVisible(users.docs[users.docs.length-1])
+                if(isMounted) setLastVisible(users.docs[users.docs.length-1])
                 users.forEach(user => {
                     const userData = user.data();
                     usersArray.push({
@@ -116,18 +128,22 @@ const SearchList = ({searchTerm}) => {
                         uid: userData.uid
                     })
                 })
-                setPersons(usersArray);
+                if(isMounted) setPersons(usersArray);
             }
             catch(error){
                 console.error(error);
             }
         }
-        getData();
-        setLoading(false);
-        setInvisibleLoading(false);
+        if(isMounted){
+            getData();
+            setLoading(false);
+            setInvisibleLoading(false);
+        }
+        return () => { isMounted = false }
     }, [searchTerm, currentUser]);
 
     useEffect(() => {
+        let isMounted = true;
         if(persons){
             const mappedPersons = persons.map(person => {
                 if(friends.includes(person.uid)) return {...person, status: 'friend'};
@@ -140,8 +156,9 @@ const SearchList = ({searchTerm}) => {
             for(let i = 0; i < mappedPersons.length; i += chunkSize){
                 result.push(mappedPersons.slice(i, i + chunkSize));
             }
-            setPages(result);
+            if(isMounted) setPages(result);
         }
+        return () => { isMounted = false }
     }, [friends, invites, requests, persons]);
 
     return(
@@ -154,9 +171,9 @@ const SearchList = ({searchTerm}) => {
                         <GridContainer key={pageIndex}>
                             {page.map(({uid, displayName, photoURL, status}, index) => {
                                 if(pages.length === pageIndex + 1 && pages[pageIndex].length === index + 1){
-                                    return <Person innerRef={lastPerson} key={index} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
+                                    return <Person innerRef={lastPerson} key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
                                 }
-                                return <Person key={index} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
+                                return <Person key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
                             })}
                         </GridContainer>
                     ))}

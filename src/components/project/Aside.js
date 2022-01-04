@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import CalendarIcon from './calendar.svg';
-import PersonIcon from './person.svg';
+import CalendarIcon from '../../images/project/calendar.svg';
+import PersonIcon from '../../images/project/person.svg';
 import { useHistory } from 'react-router-dom';
 
 import useConfirmBox from '../../hooks/useConfirmBox';

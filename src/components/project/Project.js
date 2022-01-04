@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import useError from '../../hooks/useError';
 
 import { NotFound, Form, Container, SubContainer } from './Project.styles';
-import { MainContainer } from './MainContainer.styles';
+import { MainContainer } from './Main.styles';
 import Banner from './Banner';
 import Aside from './Aside';
 import MembersList from './MembersList';
@@ -111,7 +111,7 @@ const Project = () => {
                             />
                             <MainContainer>
                                 <Switch>
-                                    <Route exact path={`${path}/members`} render={() => (<MembersList membersIDs={project.members}/>)} />
+                                    <Route exact path={`${path}/members`} render={() => (<MembersList authorID={project.authorID} isOwner={isOwner} membersIDs={project.members} invites={project.invites} projectID={id} />)} />
                                     <Route path={path} render={() => (<TasksList members={project.members} isOwner={isOwner} id={id} />)} />
                                 </Switch>
                             </MainContainer>
