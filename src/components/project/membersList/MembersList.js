@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { functions } from "../../firebase";
-import XIcon from '../../images/x.svg';
-import AssignedIcon from '../../images/project/peopleassigned.svg';
+import { functions } from "../../../firebase";
+import XIcon from '../../../images/x.svg';
+import AssignedIcon from '../../../images/project/peopleassigned.svg';
 import { useHistory } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
-import { MembersContainer, CloseMembers, MembersWrapper, MembersGroup, List, OverflowContainer } from "./Main.styles";
-import Loader from '../loading/Loader';
+import { MembersContainer, CloseButton, MembersWrapper, MembersGroup, List, OverflowContainer } from "./Members.styles";
+import Loader from '../../loading/Loader';
 import Member from './Member';
 
 const MembersList = ({membersIDs, isOwner, authorID, invites, projectID}) => {
@@ -60,9 +60,9 @@ const MembersList = ({membersIDs, isOwner, authorID, invites, projectID}) => {
     return(
         <MembersContainer>
             {(loadingMembers || loadingFriends) && <Loader />}
-            <CloseMembers onClick={handleClose} type='button'>
+            <CloseButton onClick={handleClose} type='button'>
                 <img src={XIcon} alt='Close' />
-            </CloseMembers>
+            </CloseButton>
             <img src={AssignedIcon} alt='People assigned' />
             <h1>People Assigned</h1>
             <MembersWrapper isOwner={isOwner}>

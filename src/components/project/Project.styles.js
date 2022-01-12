@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const NotFound = styled.h1`
-    position:absolute;
-    top:50vh;
-    left:50vw;
-    transform:translate(-50%,-50%);
-    width:100%;
-    text-align:center;
-`;
-
 export const Container = styled.div`
     margin: 20px 20px 20px 20px;
     @media(min-width:900px){
@@ -48,6 +39,13 @@ export const BannerContainer = styled.div`
     border-radius: 43px 43px 13px 13px;
     @media(min-width:700px){
         padding: 120px 0px 20px;
+    }
+`;
+
+export const MainContainer = styled.section`
+    grid-area: main;
+    @media(min-width:1375px){
+        margin-left:30px;
     }
 `;
 
@@ -149,7 +147,7 @@ export const AsideContainer = styled.aside`
     gap:20px;
     flex-direction:column;
     align-items:center;
-    max-height:527px;
+    height:max-content;
     @media(min-width:${({isOwner}) => isOwner ? '370px' : '300px'}){
         justify-content:center;
         flex-direction:row;
@@ -187,7 +185,7 @@ export const SecondContainer = styled.div`
     width:100%;
     text-align:center;
     @media(min-width:1300px){
-        margin-bottom:140px;
+        margin-bottom:160px;
         gap:35px;
     }
 `;
@@ -204,6 +202,11 @@ export const DeleteButton = styled.button`
     max-width:9rem;
     width:100%;
     cursor:pointer;
+    transition:transform .2s ease;
+    
+    &:active{
+        transform:scale(0.97);
+    }
 `;
 
 export const PeopleAssignedButton = styled(Link)`
@@ -234,7 +237,7 @@ export const PeopleAssignedButton = styled(Link)`
     }
 
     ${({isOwner}) => (
-        isOwner ? (
+        isOwner && (
             `@media(max-width:1300px){
                 text-transform:none;
                 padding: 8px 0;
@@ -248,6 +251,6 @@ export const PeopleAssignedButton = styled(Link)`
                     display:none;
                 }
             }`
-        ) : null       
+        )     
     )}
 `;

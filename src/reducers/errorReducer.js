@@ -35,7 +35,7 @@ const errorReducer = (state, action) => {
             return state = 'Unaccepted file type. JPEG or PNG only.';
         case 'update/change-image-failed':
             return state = 'Failed to change your profile picture. Try again later.';
-        case 'projects/failed':
+        case 'projects/create':
             return state = 'Failed to create project. Try again later.';
         case 'projects/edit':
             return state = 'Failed to edit your project. Try again later.';
@@ -67,6 +67,8 @@ const errorReducer = (state, action) => {
             return state = 'Failed to create task. Try again later.';
         case 'projects/task-status':
             return state = 'Failed to change task status. Try again later.';
+        case 'projects/task-file':
+            return state = 'Failed to upload file. Try again later';
         case 'projects/accept-invite':
             return state = 'Failed to accept project invitation. Try again later.';
         case 'projects/decline-invite':
@@ -77,6 +79,14 @@ const errorReducer = (state, action) => {
             return state = 'Failed to cancel project invitation. Try again later.';
         case 'projects/invite':
             return state = 'Failed to send project invitation. Try again later.';
+        case 'projects/max-steps':
+            return state = 'No more steps can be added.';
+        case 'projects/step-empty':
+            return state = 'Step cannot be empty.';
+        case 'projects/step-too-long':
+            return state = 'Step description too long. Maximum 60 characters';
+        case 'projects/step-failed':
+            return state = 'Failed to change step status. Try again later.';
         case 'friends/delete':
             return state = 'Failed to delete user from friend list. Try again later.';
         case 'friends/request':

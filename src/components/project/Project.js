@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useParams, Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import { db } from '../../firebase'; 
 
 import useAuth from '../../hooks/useAuth';
 import useError from '../../hooks/useError';
 
-import { NotFound, Form, Container, SubContainer } from './Project.styles';
-import { MainContainer } from './Main.styles';
+import { Form, Container, SubContainer, MainContainer } from './Project.styles';
 import Banner from './Banner';
 import Aside from './Aside';
-import MembersList from './MembersList';
+import MembersList from './membersList/MembersList';
 import TasksList from './tasks/TasksList';
 
 const Project = () => {
@@ -77,7 +76,6 @@ const Project = () => {
                 description: description.trim(),
                 date: date
             });
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/edit'});
@@ -118,7 +116,7 @@ const Project = () => {
                         </SubContainer>
                     </Container>
                 ) : (
-                    <NotFound>404: Not found</NotFound>
+                    <Redirect to='/dashboard/projects' />
                 )
             ) : (
                 null

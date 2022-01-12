@@ -53,11 +53,40 @@ exports.changeProjectPhoto = functions.https.onCall(async (data, context) => {
         const project = await projectsRef.doc(data.id).get();
         const { authorID } = project.data();
         if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
-        const base64EncodedImageString = data.file.replace(/^data:image\/\w+;base64,/, '');
+        const base64EncodedImageString = data.file.split(',')[1];
         const imageBuffer = new Buffer.from(base64EncodedImageString, 'base64');
-        const file = bucket.file(`projects/${data.id}/banner.jpg`);
+        const file = bucket.file(`projects/${data.id}/banner`);
         await file.save(imageBuffer, {
-            contentType: `${data.filetype}` 
+            contentType: `${data.filetype}`,
+            metadata: {
+                metadata: {
+                    owner: context.auth.uid  
+                }               
+            }
+        });
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+});
+
+exports.changeTaskFile = functions.https.onCall(async (data,context) => {
+    try{
+        if(!context.auth.uid) return Promise.reject('unauthorized');
+        const task = await tasksRef.doc(data.id).get();
+        const { authorID } = task.data();
+        if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
+        const base64EncodedString = data.file.split(',')[1];
+        const buffer = new Buffer.from(base64EncodedString, 'base64');
+        const file = bucket.file(`tasks/${data.id}/file`);
+        await file.save(buffer, {
+            contentType: `${data.filetype}`,
+            metadata: {
+                metadata: {
+                    owner: context.auth.uid
+                }
+            }
         });
         return;
     }
@@ -74,6 +103,23 @@ exports.setTaskStatus = functions.https.onCall(async (data, context) => {
         if(uid !== context.auth.uid) return Promise.reject('unauthorized');
         await tasksRef.doc(data.id).update({
             status: data.status
+        });
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+});
+
+exports.setStepStatus = functions.https.onCall(async (data, context) => {
+    try{
+        if(!context.auth.uid) return Promise.reject('unauthorized');
+        const task = await tasksRef.doc(data.id).get();
+        const { steps, performer: {uid} } = task.data();
+        if(uid !== context.auth.uid) return Promise.reject('unauthorized');
+        steps[data.index].checked = !steps[data.index].checked;
+        await tasksRef.doc(data.id).update({
+            steps: steps
         });
         return;
     }

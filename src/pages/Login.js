@@ -24,7 +24,6 @@ const Login = () => {
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
-            dispatchError({type: 'reset'});
             return history.push('/dashboard');
         }
         catch(error){

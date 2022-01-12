@@ -22,7 +22,6 @@ const ProjectInvite = ({title, id, index, photoURL, projectInvites, setProjectIn
         try{
             const acceptProjectInvitation = functions.httpsCallable('acceptProjectInvitation');
             await acceptProjectInvitation({projectID: id});
-            dispatchError({type: 'reset'});
             return history.push(`${path}/${id}`);
         }
         catch(error){
@@ -39,7 +38,6 @@ const ProjectInvite = ({title, id, index, photoURL, projectInvites, setProjectIn
         try{
             const declineProjectInvitation = functions.httpsCallable('declineProjectInvitation');
             await declineProjectInvitation({projectID: id});
-            dispatchError({type: 'reset'});
             const tempInvites = [...projectInvites];
             tempInvites.splice(index, 1);
             setProjectInvites(tempInvites);

@@ -25,7 +25,6 @@ const Profile = () => {
         try{
             setLogoutLoading(true);
             logout();
-            return dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'auth/failed-to-log-out'});
@@ -51,7 +50,6 @@ const Profile = () => {
             await db.collection('users').doc(currentUser.uid).update({
                 displayName: username.trim()
             });
-            dispatchError({type: 'reset'});
             setEmailMessage('Success! Your username and email have been changed!')
         }
         catch(error){
@@ -74,7 +72,6 @@ const Profile = () => {
             setPasswordLoading(true);
             await currentUser.updatePassword(password.trim());
             form.reset();
-            dispatchError({type: 'reset'});
             setPasswordMessage('Success! Your password has been changed!');
         }
         catch(error){
@@ -98,7 +95,6 @@ const Profile = () => {
             await db.collection('users').doc(currentUser.uid).update({
                 photoURL: url
             })
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'update/change-image-failed'});

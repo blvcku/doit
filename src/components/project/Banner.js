@@ -14,7 +14,6 @@ const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, i
     const handleChangeImage = e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
-        if(!isOwner) return;
         const file = e.target.files[0];
         if(!file) return;
         if(file.type !== 'image/png' && file.type !== 'image/jpeg'){
@@ -22,14 +21,13 @@ const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, i
         }
         const changeProjectPhoto = functions.httpsCallable('changeProjectPhoto');
         const reader = new FileReader();
-        reader.onload = async e => {
+        reader.onloadend = async e => {
             try{
                 await changeProjectPhoto({id: id, file: e.target.result, filetype: file.type});
-                const url = await storage.ref(`projects/${id}/banner.jpg`).getDownloadURL();
+                const url = await storage.ref(`projects/${id}/banner`).getDownloadURL();
                 await db.collection('projects').doc(id).update({
                     photoURL: url
                 });
-                dispatchError({type: 'reset'});
             }
             catch(error){
                 return dispatchError({type: 'projects/change-image-failed'});
@@ -60,7 +58,7 @@ const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, i
                             <Label aria-label='Change project banner' htmlFor='banner-background'>
                                 <img src={ChangePhotoIcon} alt='Change' />
                             </Label>
-                            <InputFile onChange={handleChangeImage} type='file' id='banner-background' />
+                            <InputFile onChange={handleChangeImage} type='file' accept='image/png, image/jpeg' id='banner-background' />
                         </>
                     ) : (
                         null

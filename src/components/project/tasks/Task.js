@@ -5,24 +5,20 @@ import CompletedIcon from '../../../images/project/tasks/completed.svg';
 import DeleteIcon from '../../../images/delete.svg';
 import EditIcon from '../../../images/project/tasks/editsmall.svg';
 import ArrowIcon from '../../../images/project/tasks/arrow.svg';
-import PendingColorIcon from '../../../images/project/tasks/pendingcolor.svg';
-import InProgressColorIcon from '../../../images/project/tasks/inprogresscolor.svg';
-import CompletedColorIcon from '../../../images/project/tasks/completedcolor.svg';
-import StatusIcon from '../../../images/project/tasks/status.svg';
-import CloseIcon from '../../../images/x.svg';
+import FileIcon from '../../../images/project/tasks/file.svg';
 import { db, functions } from '../../../firebase';
 
 import useError from '../../../hooks/useError';
 import useConfirmBox from '../../../hooks/useConfirmBox';
 import useAuth from '../../../hooks/useAuth';
 
-import { TaskContainer, FirstGroup, SecondGroup, ImageContainer, StatusButton, FlexContainer, SmallButton, Button, SelectMenu, CloseButton, GridContainer } from "../Main.styles";
+import { TaskContainer, TaskHead, TaskBody, ImageContainer, StatusButton, FlexContainer, SmallButton, Button, Step, DownloadFile } from "./Tasks.styles";
 import TaskEdit from './TaskEdit';
+import ChangeStatus from './changeStatus/ChangeStatus';
 import Loader from '../../loading/Loader';
 
-const Task = ({isOwner, status, title, description, members, taskID, performer, id}) => {
+const Task = ({isOwner, status, title, description, members, taskID, performer, id, file, steps }) => {
 
-    const [statusButton, setStatusButton] = useState();
     const [isEditing, setIsEditing] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [isChangingStatus, setIsChangingStatus] = useState(false);
@@ -32,38 +28,37 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
     const [isPerformer, setIsPerformer] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const changeStatus = async(e, status) => {
-        e.preventDefault();
+    const handleChangeStepStatus = async index => {
         dispatchError({type: 'reset'});
-        if(!isOwner && !isPerformer) return;
+        if(!isPerformer && !isOwner) return;
         try{
-            setIsChangingStatus(false);
             if(isOwner){
+                const tempSteps = steps;
+                tempSteps[index].checked = !tempSteps[index].checked;
                 await db.collection('tasks').doc(taskID).update({
-                    status: status
+                    steps: tempSteps
                 });
             }
             else{
-                const setTaskStatus = functions.httpsCallable('setTaskStatus');
-                await setTaskStatus({id: taskID, status: status});
+                const setStepStatus = functions.httpsCallable('setStepStatus');
+                await setStepStatus({id: taskID, index: index});
             }
-            dispatchError({type: 'reset'});
         }
         catch(error){
-            dispatchError({type: 'projects/task-status'});
+            dispatchError({type: 'projects/step-failed'});
         }
-    }
-
-    const handleCloseSelecting = e => {
-        e.preventDefault();
-        setIsChangingStatus(false);
     }
 
     const turnOnEditing = e => {
         e.preventDefault();
-        if(!isOwner) return;
         setExpanded(false);
         setIsEditing(true);
+    }
+
+    const turnOnChangingStatus = e => {
+        e.preventDefault();
+        if(!isOwner && !isPerformer) return;
+        setIsChangingStatus(true);
     }
 
     const toggleExpanded = e => {
@@ -73,7 +68,6 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
 
     const handleDeleteTask = e => {
         e.preventDefault();
-        if(!isOwner) return;
         setConfirmInfo({message: 'delete this task', action: deleteTask});
     }
 
@@ -81,7 +75,6 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
         try{
             dispatchError({type: 'reset'});
             await db.collection('tasks').doc(taskID).delete();
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/task-delete'});
@@ -97,44 +90,6 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
         }
     }, [currentUser, performer])
 
-    useEffect(() => {
-        const turnOnChangingStatus = e => {
-            e.preventDefault();
-            if(!isOwner && !isPerformer) return;
-            setIsChangingStatus(true);
-        }
-        switch(status){
-            case 'pending':
-                return setStatusButton(
-                    <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color='#db382c'>
-                        <img src={PendingIcon} alt='Pending' />
-                        PENDING
-                    </StatusButton>
-                );
-            case 'inprogress':
-                return setStatusButton(
-                    <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color='#db8a00'>
-                        <img src={InProgressIcon} alt='In progress' />
-                        IN PROGRESS
-                    </StatusButton>
-                );
-            case 'completed':
-                return setStatusButton(
-                    <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color='#018c5c'>
-                        <img src={CompletedIcon} alt='Completed' />
-                        COMPLETED
-                    </StatusButton>
-                );
-            default:
-                return setStatusButton(
-                    <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color='#db382c' >
-                        <img src={PendingIcon} alt='Pending' />
-                        PENDING
-                    </StatusButton>
-                )
-        }
-    }, [status, isOwner, isPerformer]);
-
     return(
         <TaskContainer>
             {loading && <Loader />}
@@ -145,38 +100,24 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                     title={title}
                     description={description}
                     taskID={taskID}
-                    isOwner={isOwner}
                     creating={false}
                     id={id}
                     setIsEditing={setIsEditing}
                     setLoading={setLoading}
+                    file={file}
+                    steps={steps}
                 />
             ) : (
                 isChangingStatus ? (
-                    <SelectMenu>
-                        <CloseButton onClick={handleCloseSelecting} type='button'>
-                            <img src={CloseIcon} alt='Close' />
-                        </CloseButton>
-                        <img src={StatusIcon} alt='Status' />
-                        <h2>CHANGE STATUS</h2>
-                        <GridContainer>
-                            <button onClick={e => changeStatus(e, 'pending')} type='button'>
-                                <img src={PendingColorIcon} alt='Pending' />
-                                PENDING
-                            </button>
-                            <button onClick={e => changeStatus(e, 'inprogress')} type='button'>
-                                <img src={InProgressColorIcon} alt='In progress' />
-                                IN PROGRESS
-                            </button>
-                            <button onClick={e => changeStatus(e, 'completed')} type='button'>
-                                <img src={CompletedColorIcon} alt='Completed' />
-                                COMPLETED
-                            </button>
-                        </GridContainer>
-                    </SelectMenu>
+                    <ChangeStatus 
+                        setIsChangingStatus={setIsChangingStatus}
+                        taskID={taskID}
+                        isOwner={isOwner}
+                        isPerformer={isPerformer}
+                    />
                 ) : ( 
                     <>
-                        <FirstGroup>
+                        <TaskHead>
                             <div>
                                 <ImageContainer>
                                     <img src={performer.photoURL} alt='Performer' />
@@ -186,7 +127,14 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                             </div>
                             <div>
                                 <FlexContainer>
-                                    {statusButton}
+                                <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color={{'pending': '#db382c', 'inprogress': '#db8a00', 'completed': '#018c5c'}[status]} >
+                                    <img src={{'pending': PendingIcon, 'inprogress': InProgressIcon, 'completed': CompletedIcon}[status]} alt='Pending' />
+                                    {
+                                        {
+                                            'inprogress': 'In progress'
+                                        }[status] || status
+                                    }
+                                </StatusButton>
                                     {isOwner ? (
                                         <SmallButton onClick={handleDeleteTask} color='#DB382C'>
                                             <img src={DeleteIcon} alt='Delete' />
@@ -204,13 +152,37 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                                     </Button>
                                 </FlexContainer>
                             </div>
-                        </FirstGroup>
+                        </TaskHead>
                         <hr />
                         {expanded ? (
-                            <SecondGroup>
-                                <h3>Description:</h3>
-                                <p>{description}</p>
-                            </SecondGroup>
+                            <TaskBody>
+                                <div>
+                                    <h3>Description:</h3>
+                                    <p>{description}</p>
+                                </div>
+                                {steps && 
+                                    <div>
+                                        <h4>Steps:</h4>
+                                        <ul>
+                                            {steps.map(({content, checked}, index) => (
+                                                <Step isOwner={isOwner} key={`${index}${checked}`}>
+                                                    <input onChange={() => handleChangeStepStatus(index)} defaultChecked={checked} disabled={!(isOwner || isPerformer)} type='checkbox' id={`step${index}`} />
+                                                    <label htmlFor={`step${index}`}>{content}</label>
+                                                </Step>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                }
+                                {file &&
+                                    <div>
+                                        <h5>Task Files:</h5>
+                                        <DownloadFile href={file.url} download>
+                                            <img src={FileIcon} alt='file' />
+                                            <p>{file.name}</p>
+                                        </DownloadFile>
+                                    </div>
+                                }
+                            </TaskBody>
                         ) : null}
                     </>
                 )

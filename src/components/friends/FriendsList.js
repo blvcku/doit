@@ -30,7 +30,6 @@ const FriendsList = ({searchTerm}) => {
     useEffect(() => {
         let isMounted = true;
         const getData = async () => {
-            if(isMounted) setLoading(true);
             const getFriendsData = functions.httpsCallable('getFriendsData');
             const { data } = await getFriendsData({friends: friends, invites: invites, requests: requests});
             if(isMounted) setFriendsData(data);

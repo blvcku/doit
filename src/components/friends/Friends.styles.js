@@ -45,15 +45,19 @@ export const Nav = styled.nav`
         justify-content:center;
         align-items:center;
         padding: 40px 20px;
-        gap:5px;
+        gap:10px;
         border-radius: 30px 30px 13px 13px;
         button{
-            padding:5px;
+            padding:6px 15px;
+            border-radius: 13px;
             background:none;
             border:none;
             cursor:pointer;
+            background: var(--colorWhite);
             img{
                 display:block;
+                width:.95rem;
+                height:.95rem;
             }
         }
         input{
@@ -68,6 +72,8 @@ export const Nav = styled.nav`
         }
         @media(min-width:310px){
             grid-column: span 2;
+        }
+        @media(min-width:350px){
             padding: 40px 50px;
         }
         @media(min-width:500px){
@@ -263,6 +269,9 @@ export const SmallButton = styled.button`
         width:17px;
         height:17px;
     }
+    &:disabled{
+        opacity:0.7;
+    }
 `;
 
 export const ApprovedButton = styled.button`
@@ -282,6 +291,9 @@ export const ApprovedButton = styled.button`
         width:14px;
         height:14px;
     }
+    &:disabled{
+        opacity:0.7;
+    }
 `;
 
 export const Button = styled(ApprovedButton)`
@@ -290,6 +302,9 @@ export const Button = styled(ApprovedButton)`
     color:var(--colorWhite);
     padding: 0px 20px;
     cursor:pointer;
+    &:disabled{
+        opacity:0.7;
+    }
 `;
 
 export const NextButton = styled.button`

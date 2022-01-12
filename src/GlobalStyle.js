@@ -21,22 +21,17 @@ const GlobalStyle = createGlobalStyle`
         margin:auto;
         inset:0;
         background-color: var(--colorDarkerWhite);
-        h1{
-            font-size: var(--fontSuperBig);
+        h1,h2{
             font-weight: 700;
-            margin:0;
-        }
-        h2{
-            font-size: var(--fontBig);
-            font-weight: 700;
-            margin: 0;
-        }
-        h3{
-            font-size: var(--fontMed);
-            margin:0;
         }
         b{
             font-weight:700;
+        }
+        img{
+            font-size:.7rem;
+        }
+        a{
+            text-decoration:none;
         }
     }
     html{

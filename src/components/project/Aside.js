@@ -30,7 +30,6 @@ const Aside = ({isEditing, isOwner, date, id}) => {
 
     const handleDeleteProject = e => {
         e.preventDefault();
-        if(!isOwner) return;
         setConfirmInfo({message: 'delete this project', action: deleteProject});
     }
 
@@ -39,7 +38,6 @@ const Aside = ({isEditing, isOwner, date, id}) => {
             dispatchError({type: 'reset'});
             history.push('/dashboard');
             await db.collection('projects').doc(id).delete();
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/delete'});

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { db, fb } from "../../firebase";
-import PlusIcon from '../../images/project/plus.svg';
-import MinusIcon from '../../images/project/minus.svg';
+import { db, fb } from "../../../firebase";
+import PlusIcon from '../../../images/project/plus.svg';
+import MinusIcon from '../../../images/project/minus.svg';
 
-import useError from "../../hooks/useError";
-import useConfirmBox from "../../hooks/useConfirmBox";
+import useError from "../../../hooks/useError";
+import useConfirmBox from "../../../hooks/useConfirmBox";
 
-import { MemberContainer, MemberButton } from "./Main.styles";
+import { MemberContainer, MemberButton } from "./Members.styles";
 
 const Member = ({status, uid, photoURL, displayName, isOwner, projectID}) => {
 
@@ -30,7 +30,6 @@ const Member = ({status, uid, photoURL, displayName, isOwner, projectID}) => {
             await db.collection('projects').doc(projectID).update({
                 members: fb.firestore.FieldValue.arrayRemove(uid)
             });
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/delete-member'});
@@ -48,7 +47,6 @@ const Member = ({status, uid, photoURL, displayName, isOwner, projectID}) => {
             await db.collection('projects').doc(projectID).update({
                 invites: fb.firestore.FieldValue.arrayUnion(uid)
             });
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/invite'});
@@ -66,7 +64,6 @@ const Member = ({status, uid, photoURL, displayName, isOwner, projectID}) => {
             await db.collection('projects').doc(projectID).update({
                 invites: fb.firestore.FieldValue.arrayRemove(uid)
             })
-            dispatchError({type: 'reset'});
         }
         catch(error){
             dispatchError({type: 'projects/delete-invite'});

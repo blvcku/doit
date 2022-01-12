@@ -24,7 +24,6 @@ const ResetPassword = (props) => {
             setMessage('');
             setLoading(true);
             await resetPassword(emailRef.current.value);
-            dispatchError({type: 'reset'});
             setMessage('Success! Check your inbox for further instructions.');
         }
         catch(error){

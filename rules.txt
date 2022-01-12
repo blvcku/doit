@@ -10,11 +10,15 @@ service firebase.storage {
     match /users/default/{profileImage}{
     	allow read;
     }
-    match /projects/{id}/{image}{
-      allow read: if true;
+    match /projects/{id}/banner{
+      allow read: if resource.metadata.owner == request.auth.uid;
+    }
+    match /tasks/{id}/file{
+    	allow read: if resource.metadata.owner == request.auth.uid;
     }
   }
 }
+
 
 
 

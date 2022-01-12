@@ -36,11 +36,10 @@ const ProjectsList = () => {
                 ],
                 invites: []
             });
-            dispatchError({type: 'reset'});
             return history.push(`/dashboard/projects/${id}`);
         }
         catch(error){
-            dispatchError({type: 'projects/failed'});
+            dispatchError({type: 'projects/create'});
         }
     }
 

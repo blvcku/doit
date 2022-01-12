@@ -31,7 +31,6 @@ const SignUp = (props) => {
         try{
             setLoading(true);
             await signUp(emailRef.current.value, passwordRef.current.value);
-            dispatchError({type: 'reset'});
             return history.push('/dashboard');
         }
         catch(error){

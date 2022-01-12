@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { db } from '../../../firebase';
 import AddIcon from '../../../images/project/tasks/add.svg';
 
-import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "../Main.styles";
+import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "./Tasks.styles";
 import Task from './Task';
 import TaskEdit from './TaskEdit';
 import Loader from '../../loading/Loader';
@@ -39,7 +39,6 @@ const TasksList = ({isOwner, id, members}) => {
                             members={members}
                             title={''}
                             description={''}
-                            isOwner={isOwner}
                             id={id}
                             setIsEditing={setIsCreating}
                             setLoading={setLoading}
@@ -56,7 +55,7 @@ const TasksList = ({isOwner, id, members}) => {
             ) : (
                 null
             )}
-            {tasks.map(({status, title, description, performer, taskID}) => (
+            {tasks.map(({status, title, description, performer, taskID, file, steps}) => (
                 <Task 
                     key={taskID} 
                     isOwner={isOwner}
@@ -67,6 +66,8 @@ const TasksList = ({isOwner, id, members}) => {
                     members={members}
                     taskID={taskID}
                     id={id}
+                    file={file}
+                    steps={steps}
                 />
             ))}
         </TasksListContainer>
