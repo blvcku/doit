@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { functions } from "../../firebase";
 
 import useAuth from "../../hooks/useAuth";
+import useCarousel from "../../hooks/useCarousel";
 
 import { GridContainer, FlexContainer, OverflowContainer, NextButton, PrevButton } from "./Friends.styles";
 import Person from "./Person";
@@ -9,23 +10,11 @@ import Loader from '../loading/Loader';
 
 const FriendsList = ({searchTerm}) => {
 
-    const [currentPage, setCurrentPage] = useState(0);
     const { currentUserData: {friends, invites, requests} } = useAuth();
-    const [hideNext, setHideNext] = useState(true);
-    const [hidePrev, setHidePrev] = useState(true);
     const [friendsData, setFriendsData] = useState([]);
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const handleNextPage = e => {
-        e.preventDefault();
-        setCurrentPage(prev => prev + 1);
-    }
-    
-    const handlePrevPage = e => {
-        e.preventDefault();
-        setCurrentPage(prev => prev - 1);
-    }
+    const { handleNextSlide, handlePrevSlide, setSlides, hidePrev, hideNext, currentSlide } = useCarousel();
 
     useEffect(() => {
         let isMounted = true;
@@ -51,25 +40,18 @@ const FriendsList = ({searchTerm}) => {
             result.push(filteredData.slice(i, i + chunkSize));
         }
         setPages(result);
-    }, [friendsData, searchTerm, setLoading])
+    }, [friendsData, searchTerm, setLoading]);
 
     useEffect(() => {
-        if(pages.length){
-            if(currentPage > (pages.length - 1)) setCurrentPage((pages.length - 1));
-            if(currentPage < 0) setCurrentPage(0);
-            if(currentPage === 0) setHidePrev(true);
-            else setHidePrev(false);
-            if(currentPage === (pages.length - 1)) setHideNext(true);
-            else setHideNext(false);
-        }
-    }, [currentPage, pages]);
+        setSlides(pages.length);
+    }, [pages, setSlides]);
 
     return(
         <>
             {loading && <Loader />}
             <h2>Friends List</h2>
             <OverflowContainer>
-                <FlexContainer currentPage={currentPage}>
+                <FlexContainer currentSlide={currentSlide}>
                     {pages.map((page, index) => (
                         <GridContainer key={index}>
                             {page.map(({uid, displayName, photoURL, status}) => (
@@ -79,13 +61,13 @@ const FriendsList = ({searchTerm}) => {
                     ))}
                 </FlexContainer>
             </OverflowContainer>
-            <PrevButton hide={hidePrev} onClick={handlePrevPage} type='button'>
+            <PrevButton hide={hidePrev} onClick={handlePrevSlide} type='button'>
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                     <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
                     <path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/>
                 </svg>
             </PrevButton>
-            <NextButton hide={hideNext} onClick={handleNextPage} type='button'>
+            <NextButton hide={hideNext} onClick={handleNextSlide} type='button'>
                 <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                     <g>
                         <path d="M0,0h24v24H0V0z" fill="none"/>

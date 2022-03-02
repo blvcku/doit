@@ -5,6 +5,8 @@ import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Form from './pages/Form';
+import FormSuccess from './components/forms/formSuccess/FormSuccess';
 
 import AuthProvider from './contexts/AuthContext';
 import ErrorProvider from './contexts/ErrorContext';
@@ -25,6 +27,8 @@ function App() {
                     <ConfirmBoxProvider>
                         <Switch>
                             <PrivateRoute path='/dashboard' component={Dashboard} />
+                            <Route exact path='/forms/success' component={FormSuccess} />
+                            <Route path='/forms/:id' component={Form} />
                             <Route path='/signup' component={SignUp} />
                             <Route path='/login' component={Login} />
                             <Route path='/resetpassword' component={ResetPassword} />

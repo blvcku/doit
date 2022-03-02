@@ -28,7 +28,7 @@ export const Header = styled.header`
         align-items:center;
         justify-content:center;
         @media(min-width:900px){
-            margin: 110px 0;
+            margin: 110px 0 90px;
         }
     }
 `;
@@ -69,7 +69,7 @@ export const CustomNavLink = styled(NavLink)`
     gap:13px;
     padding: 8px 45px;
     border-radius:15px;
-    margin: 8px 0;
+    margin: 5px 0;
 
     img{
         width:30px;
@@ -93,13 +93,16 @@ export const Button = styled.button`
     }
 `;
 
-export const Heading = styled.h2`
+export const Heading = styled.h1`
     a{
         color: var(--colorWhite);
         text-decoration:none;
         font-size: 60px;
         font-weight:700;
-        @media (min-width:900px){
+        img{
+            max-width:4rem;
+            width:100%;
+            height:auto;
             display:block;
         }
     }

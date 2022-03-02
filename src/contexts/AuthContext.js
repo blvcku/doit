@@ -35,7 +35,8 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
+            setCurrentUser(user);
+            setLoading(false);
         });
         return unsubscribe;
     }, []);
@@ -45,7 +46,6 @@ const AuthProvider = ({children}) => {
             const unsubscribe = db.collection('users').doc(currentUser.uid).onSnapshot(snapshot => {
                 const data = snapshot.data();
                 setCurrentUserData(data);
-                setLoading(false);
             })
             return unsubscribe;
         }

@@ -25,8 +25,6 @@ const errorReducer = (state, action) => {
             return state = 'Your password is too short. Minimum 6 characters.';
         case 'auth/username-too-short':
             return state = 'Your username is too short. Minimum 6 characters.';
-        case 'auth/username-too-long':
-            return state = 'Your username is too long. Maximum 20 characters';
         case 'auth/failed-to-log-out':
             return state = 'Failed to log out. Try again later.';
         case 'auth/requires-recent-login':
@@ -41,26 +39,18 @@ const errorReducer = (state, action) => {
             return state = 'Failed to edit your project. Try again later.';
         case 'projects/delete':
             return state = 'Failed to delete your project. Try again later.';
-        case 'projects/title-too-long':
-            return state = 'Title too long. Maximum 20 characters.';
         case 'projects/title-too-short':
-            return state = 'Title too short. Minimum 6 characters.';
-        case 'projects/description-too-long':
-            return state = 'Description too long. Maximum 80 characters.';
+            return state = 'Title cannot be empty.';
         case 'projects/description-too-short':
-            return state = 'Description too short. Minimum 6 characters.';
+            return state = 'Description cannot be empty.';
         case 'projects/change-image-failed':
             return state = 'Failed to change project image. Try again later.';
         case 'projects/task-delete':
             return state = 'Failed to delete task. Try again later.'
-        case 'projects/task-title-too-long':
-            return state = 'Title too long. Maximum 20 characters.';
         case 'projects/task-title-too-short':
-            return state = 'Title too short. Minimum 6 characters.';
-        case 'projects/task-description-too-long':
-            return state = 'Description too long. Maximum 300 characters.';
+            return state = 'Task title cannot be empty.';
         case 'projects/task-description-too-short':
-            return state = 'Description too short. Minimum 6 characters.';
+            return state = 'Task description cannot be empty.';
         case 'projects/task-update':
             return state = 'Failed to edit task. Try again later.';
         case 'projects/task-create':
@@ -83,8 +73,6 @@ const errorReducer = (state, action) => {
             return state = 'No more steps can be added.';
         case 'projects/step-empty':
             return state = 'Step cannot be empty.';
-        case 'projects/step-too-long':
-            return state = 'Step description too long. Maximum 60 characters';
         case 'projects/step-failed':
             return state = 'Failed to change step status. Try again later.';
         case 'friends/delete':
@@ -97,6 +85,46 @@ const errorReducer = (state, action) => {
             return state = 'Failed to decline friend request. Try again later';
         case 'friends/accept':
             return state = 'Failed to accept friend request. Try again later.';
+        case 'forms/title-empty':
+            return state = 'Form title cannot be empty.';
+        case 'forms/question-empty':
+            return state = 'Question cannot be empty.';
+        case 'forms/no-answers':
+            return state = 'Question has no answers. Add one to create form.';
+        case 'forms/max-questions':
+            return state = 'No more questions can be added.';
+        case 'forms/answer-empty':
+            return state = 'Answer cannot be empty.';
+        case 'forms/max-answers':
+            return state = 'No more answers can be added.';
+        case 'forms/wrong-file-type':
+            return state = 'Unaccepted file type.';
+        case 'forms/failed-to-create':
+            return state = 'Failed to create form. Try again later.';
+        case 'forms/answer-every-question':
+            return state = 'Answer every question to submit form.';
+        case 'forms/failed-to-submit':
+            return state = 'Failed to submit form. Try again later.';
+        case 'forms/failed-to-pause':
+            return state = 'Failed to pause/unpause form. Try again later.';
+        case 'posts/wrong-file-type':
+            return state = 'Unaccepted file type.';
+        case 'posts/failed-to-create':
+            return state = 'Failed to create post. Try again later.';
+        case 'posts/title-empty':
+            return state = 'Post title cannot be empty.';
+        case 'posts/description-empty':
+            return state = 'Post description cannot be empty.';
+        case 'posts/failed-to-delete':
+            return state = 'Failed to delete post. Try again later.';
+        case 'posts/failed-to-edit':
+            return state = 'Failed to edit post. Try again later.';
+        case 'posts/message-empty':
+            return state = 'Contact message cannot be empty.';
+        case 'posts/failed-to-send-message':
+            return state = 'Failed to send message. Try again later.';
+        case 'posts/already-sent-message':
+            return state = 'You have already sent a message to this person.';
         default:
             return state = 'Something went wrong. Try again later.';
     }

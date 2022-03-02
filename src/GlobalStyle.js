@@ -48,6 +48,24 @@ const GlobalStyle = createGlobalStyle`
         color:var(--colorWhite)!important;
         background: var(--colorSecondary)!important;
     }
+    .activeForm{
+        background: var(--darkerSecondary)!important;
+    }
+    .activeForm p{
+        color:var(--colorWhite)!important;
+    }
+    .activeForm svg{
+        fill:var(--colorWhite)!important;
+    }
+    .activePosts{
+        background:var(--colorSecondary)!important;
+    }
+    .activePosts svg{
+        fill:var(--colorWhite)!important;
+    }
+    .activePosts p{
+        color:var(--colorWhite)!important;
+    }
     
     @media (min-width: 600px){
         html{

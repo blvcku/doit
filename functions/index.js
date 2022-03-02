@@ -1,13 +1,63 @@
 const functions = require("firebase-functions");
 const admin = require('firebase-admin');
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = functions.config().sendgrid.key;
 admin.initializeApp({
     storageBucket: 'todoapp-5c047.appspot.com'
 });
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 const bucket = admin.storage().bucket();
 const projectsRef = admin.firestore().collection('projects');
 const tasksRef = admin.firestore().collection('tasks');
 const usersRef = admin.firestore().collection('users');
+const formsRef = admin.firestore().collection('forms');
+const postsRef = admin.firestore().collection('posts');
+
+exports.onAnswerCreate = functions.firestore.document('forms/{formID}/answers/{answerID}').onCreate(async (snap, context) => {
+    try{
+        const formID = context.params.formID;
+        console.log(formID);
+    }
+    catch(error){
+        throw error;
+    }
+})
+
+exports.onMessageCreate = functions.firestore.document('posts/{postID}/messages/{messageID}').onCreate(async (snap, context) => {
+    try{
+        
+    }
+    catch(error){
+        throw error;
+    }
+})
+
+exports.sendTaskMail = functions.firestore.document('tasks/{taskID}').onCreate(async (snap, context) => {
+    try{
+        const { performer: { uid:userID }, projectID } = snap.data();
+        const { email, displayName } = await admin.auth().getUser(userID);
+        const project = await projectsRef.doc(projectID).get();
+        const { title } = project.data();
+        const message = {
+            to: email,
+            from: 'p.orzechowski0405@gmail.com',
+            templateId: 'd-1a5c12ba62754dcfb9ebde198f3b2988',
+            dynamicTemplateData:{
+                subject: `New task in ${title}`,
+                project: title,
+                url: `http://localhost:3000/dashboard/projects/${projectID}`,
+                user: displayName
+            },
+        };
+
+        await sgMail.send(message);
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+}); 
 
 exports.getUserData = functions.https.onCall(async (data, context) => {
     try{
@@ -71,29 +121,50 @@ exports.changeProjectPhoto = functions.https.onCall(async (data, context) => {
     }
 });
 
-exports.changeTaskFile = functions.https.onCall(async (data,context) => {
+exports.moveTaskFile = functions.https.onCall(async (data,context) => {
     try{
         if(!context.auth.uid) return Promise.reject('unauthorized');
-        const task = await tasksRef.doc(data.id).get();
+        const task = await tasksRef.doc(data.taskID).get();
         const { authorID } = task.data();
         if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
-        const base64EncodedString = data.file.split(',')[1];
-        const buffer = new Buffer.from(base64EncodedString, 'base64');
-        const file = bucket.file(`tasks/${data.id}/file`);
-        await file.save(buffer, {
-            contentType: `${data.filetype}`,
-            metadata: {
-                metadata: {
-                    owner: context.auth.uid
-                }
-            }
-        });
+        const file = bucket.file(`temp/tasks/${data.taskID}/file`);
+        await file.move(`tasks/${data.taskID}/file`);
         return;
     }
     catch(error){
         throw error;
     }
 });
+
+exports.moveQuestionFile = functions.https.onCall(async (data,context) => {
+    try{
+        if(!context.auth.uid) return Promise.reject('unauthorized');
+        const form = await formsRef.doc(data.formID).get();
+        const { authorID } = form.data();
+        if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
+        const file = bucket.file(`temp/forms/${data.formID}/${data.questionID}/file`);
+        await file.move(`forms/${data.formID}/${data.questionID}/file`);
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+})
+
+exports.movePostFile = functions.https.onCall(async (data, context) => {
+    try{
+        if(!context.auth.uid) return Promise.reject('unauthorized');
+        const post = await postsRef.doc(data.postID).get();
+        const { authorID } = post.data();
+        if(authorID !== context.auth.uid) return Promise.reject('unauthorized');
+        const file = bucket.file(`temp/posts/${data.postID}/file`);
+        await file.move(`posts/${data.postID}/file`);
+        return;
+    }
+    catch(error){
+        throw error;
+    }
+})
 
 exports.setTaskStatus = functions.https.onCall(async (data, context) => {
     try{
@@ -152,6 +223,12 @@ exports.updateUser = functions.firestore.document('users/{userID}').onUpdate(asy
             tasks.forEach(task => tasksRef.doc(task.id).update({
                 'performer.displayName': after.displayName,
                 'performer.photoURL': after.photoURL
+            }))
+        });
+        await postsRef.where('authorID', '==', after.uid).get().then(posts => {
+            posts.forEach(post => postsRef.doc(post.id).update({
+                'author.displayName': after.displayName,
+                'author.photoURL': after.photoURL
             }))
         });
         return;
@@ -332,6 +409,7 @@ exports.getProjectInvites = functions.https.onCall(async (data, context) => {
         projects.forEach(project => {
             const { title, photoURL = undefined } = project.data();
             projectInvites.push({
+                invite: true,
                 title: title,
                 id: project.id,
                 photoURL: photoURL
@@ -377,3 +455,4 @@ exports.declineProjectInvitation = functions.https.onCall(async (data, context) 
         throw error;
     }
 })
+

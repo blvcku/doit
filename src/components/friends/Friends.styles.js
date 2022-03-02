@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.section`
     margin: 20px;
     @media(min-width:900px){
         margin: 80px 30px 20px 0;
@@ -132,7 +132,7 @@ export const FlexContainer = styled.div`
     flex-direction:column;
     gap:18px;
     @media(min-width:1500px){
-        transform: translateX(${({currentPage}) => `${currentPage * (-100)}%`});
+        transform: translateX(${({currentSlide}) => `${currentSlide * (-100)}%`});
         transition: transform .8s ease;
         flex-direction:row;
         gap:0px;
@@ -142,7 +142,7 @@ export const FlexContainer = styled.div`
         flex-direction:column;
         &::before{
             text-align:center;
-            content: 'Not found';
+            content: 'No friends';
             color:var(--colorSecondary);
             align-self:center;
             transform:translateY(110%);
@@ -331,4 +331,5 @@ export const NextButton = styled.button`
 
 export const PrevButton = styled(NextButton)`
     left:13px;
+    right:auto;
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PersonIcon from '../../images/profile/person.svg';
+import ProfileIcon from '../../images/account.svg';
 import { storage, db } from "../../firebase";
 
 import useAuth from "../../hooks/useAuth";
@@ -42,7 +42,6 @@ const Profile = () => {
         const { value: username } = form.elements['username'];
         if(!email.trim()) return dispatchError({type: 'auth/invalid-email'});
         if(username.trim().length < 6) return dispatchError({type: 'auth/username-too-short'});
-        if(username.trim().length > 20) return dispatchError({type: 'auth/username-too-long'});
         try{
             setEmailLoading(true);
             await currentUser.updateEmail(email.trim());
@@ -107,7 +106,7 @@ const Profile = () => {
             <GridContainer>
                 <Aside>
                     <div>
-                        <img src={PersonIcon} alt='Person' />
+                        <img src={ProfileIcon} alt='Profile' />
                         <h1>Account Settings</h1>
                     </div>
                 </Aside>
@@ -116,7 +115,7 @@ const Profile = () => {
                     <h3>Personal Information</h3>
                     <InputsWrapper>
                         <label htmlFor="username">Username</label>
-                        <input defaultValue={displayName} type='text' name='username' id='username' placeholder="Name"/>
+                        <input maxLength='20' defaultValue={displayName} type='text' name='username' id='username' placeholder="Name"/>
                         <label htmlFor='email'>E-mail</label>
                         <input defaultValue={email} type='email' name='email' id='email' placeholder="E-mail"/>
                         <SuccesMessage>{emailMessage}</SuccesMessage>

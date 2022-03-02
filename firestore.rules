@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  function getMembers(project){
+      	return get(/databases/$(database)/documents/projects/$(project)).data.members;
+      }
+  function getOwner(project){
+  	return get(/databases/$(database)/documents/projects/$(project)).data.authorID;
+  }
+    match /projects/{project} {
+      allow read: if request.auth.uid in resource.data.members;
+      allow update, delete: if request.auth.uid == resource.data.authorID;
+      allow create: if request.auth != null &&
+      	request.resource.data.createdAt == request.time &&
+      	request.auth.uid == request.resource.data.authorID;
+    }
+    match /tasks/{task}{
+    	allow read: if request.auth.uid in getMembers(resource.data.projectID);
+      allow update, delete: if request.auth.uid == getOwner(resource.data.projectID);
+      allow create: if request.auth.uid == getOwner(request.resource.data.projectID);
+    }
+    match /users/{user}{
+    	allow read;
+      allow create: if request.auth.uid != null && user == request.auth.uid;
+      allow update: if request.auth.uid == resource.data.uid;
+    }
+    match /forms/{form}{
+    	allow update, delete: if request.auth.uid == resource.data.authorID;
+      allow read: if (request.auth.uid == resource.data.authorID) ||
+      	(
+        	(resource.data.status == 'public' || request.auth.uid in resource.data.members) 
+          && 
+        	(!getUserAnswer(request.auth.uid) && !resource.data.paused)
+        );
+      allow create: if request.auth != null &&
+      	request.resource.data.createdAt == request.time &&
+      	request.auth.uid == request.resource.data.authorID;
+      function getFormOwner(){
+  			return get(/databases/$(database)/documents/forms/$(form)).data.authorID;
+      }
+      function getFormMembers(){
+        return get(/databases/$(database)/documents/forms/$(form)).data.members;
+      }
+      function getFormStatus(){
+        return get(/databases/$(database)/documents/forms/$(form)).data.status;
+      }
+      function getUserAnswer(userID){
+      	return exists(/databases/$(database)/documents/forms/$(form)/answers/$(userID));
+      }
+      function getFormPaused(){
+      	return get(/databases/$(database)/documents/forms/$(form)).data.paused;
+      }
+      match /answers/{answer}{
+      	allow create: if (getFormStatus() == 'public' ||
+        	(
+          	(
+            	request.auth.uid in getFormMembers()
+              ||
+              request.auth.uid == getFormOwner()
+            )
+            && 
+            	request.auth.uid == answer
+            &&
+            	!getUserAnswer(request.auth.uid)
+          )) && !getFormPaused();
+        allow read: if request.auth.uid == getFormOwner();
+      }
+      match /questions/{question} {
+      	allow create: if request.auth.uid == getFormOwner();
+        allow delete: if request.auth.uid == getFormOwner();
+        allow read: if (request.auth.uid == getFormOwner()) ||
+        	(
+          	(getFormStatus() == 'public' || request.auth.uid in getFormMembers()) 
+            &&
+          	(!getUserAnswer(request.auth.uid) && !getFormPaused())
+          );
+        match /answersSum/answersSum {
+        	allow create: if request.auth.uid == getFormOwner();
+          allow read: if request.auth.uid == getFormOwner();
+        }
+      }
+    }
+  }
+}

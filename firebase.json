@@ -1,4 +1,10 @@
 {
+  "storage": {
+    "rules": "./storage.rules"
+  },
+  "firestore": {
+    "rules": "./firestore.rules"
+  },
   "functions": {
     "source": "functions"
   },
@@ -8,7 +14,16 @@
     },
     "ui": {
       "enabled": true,
-      "port": 5000
+      "port": 4000
+    },
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "storage": {
+      "port": 9199
     }
   }
 }

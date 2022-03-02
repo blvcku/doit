@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { functions } from "../../firebase";
 import DefaultImage from '../../images/default.jpg';
-import AcceptIcon from '../../images/friends/accept.svg';
-import RequestIcon from '../../images/friends/request.svg';
-import ApprovedIcon from '../../images/friends/approved.svg';
+import AcceptIcon from '../../images/accept.svg';
+import RequestIcon from '../../images/request.svg';
+import ApprovedIcon from '../../images/approved.svg';
 import DeleteIcon from '../../images/delete.svg';
 
 import useConfirmBox from "../../hooks/useConfirmBox";

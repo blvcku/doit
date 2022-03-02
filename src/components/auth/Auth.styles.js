@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import backgroundImage from '../../images/auth/background.png';
+import backgroundImage from '../../images/background.png';
 
 export const Container = styled.main`
     width:100%;
@@ -9,7 +9,7 @@ export const Container = styled.main`
     align-items:center;
     background-image: url(${backgroundImage});
     background-size: cover;
-
+    padding:1rem;
 `;
 
 export const Wrapper = styled.div`

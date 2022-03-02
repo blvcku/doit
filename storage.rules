@@ -1,0 +1,27 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+		match /users/{uid}/{profileImage}{
+    	allow write: if request.auth.uid == uid && request.resource.contentType.matches('image/.*');
+      allow read: if true;
+    }
+    match /users/default/{profileImage}{
+    	allow read;
+    }
+    match /projects/{id}/banner{
+      allow read: if resource.metadata.owner == request.auth.uid;
+    }
+    match /tasks/{id}/file{
+    	allow read: if resource.metadata.owner == request.auth.uid;
+    }
+    match /forms/{form}/{question}/file{
+    	allow read: if resource.metadata.owner == request.auth.uid;
+    }
+    match /temp/forms/{form}/{question}/file{
+    	allow create: if request.auth != null;
+    }
+    match /temp/tasks/{task}/file{
+    	allow create: if request.auth != null;
+    }
+  }
+}
