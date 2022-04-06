@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
-import { db } from '../../../firebase';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { db, functions } from '../../../firebase';
 import PauseIcon from '../../../images/pause.svg';
 import UnpauseIcon from '../../../images/unpause.svg';
 import CopyIcon from '../../../images/copy.svg';
-
 import useAuth from '../../../hooks/useAuth';
 import useError from '../../../hooks/useError';
-
-import { Container, Wrapper, Header, PauseButton, FormInfoContainer, FormInfoWrapper, CopyButton, FormInfoFirst, FormInfoSecond, CopyContainer, QuestionsList } from './FormPanel.styles';
+import useConfirmBox from '../../../hooks/useConfirmBox';
+import useTitle from '../../../hooks/useTitle';
+import { Container, Wrapper, Header, PauseButton, FormInfoContainer, FormInfoWrapper, CopyButton, FormInfoFirst, FormInfoSecond, CopyContainer, QuestionsList, DeleteFormButton } from './FormPanel.styles';
 import FormScore from './FormScore';
 import Question from './Question';
 
@@ -20,6 +20,9 @@ const FormPanel = () => {
     const { currentUser: { uid } } = useAuth();
     const { dispatchError } = useError();
     const [questions, setQuestions] = useState([]);
+    const { setConfirmInfo } = useConfirmBox();
+    const { setTitle } = useTitle();
+    const history = useHistory();
 
     useEffect(() => {
         const unsubscribe = db.collection('forms').doc(id).onSnapshot(form => {
@@ -47,6 +50,10 @@ const FormPanel = () => {
         }
     }, [uid, form.authorID]);
 
+    useEffect(() => {
+        setTitle(form.title);
+    }, [setTitle, form.title]);
+
     const handleTogglePaused = async e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
@@ -68,6 +75,23 @@ const FormPanel = () => {
     const handleCopyQRCode = e => {
         e.preventDefault();
         navigator.clipboard.writeText(form.QRCode);
+    }
+
+    const handleDeleteForm = e => {
+        e.preventDefault();
+        setConfirmInfo({message: 'delete this form', action: deleteForm});
+    }
+
+    const deleteForm = async () => {
+        dispatchError({type: 'reset'});
+        try{
+            const deleteFormFunction = functions.httpsCallable('deleteForm');
+            history.push('/dashboard/forms');
+            await deleteFormFunction({formID: id});
+        }
+        catch(error){
+            dispatchError({type: 'forms/failed-to-delete'});
+        }
     }
 
     return(
@@ -113,7 +137,10 @@ const FormPanel = () => {
                                         <img src={form.QRCode} alt='QRCode' />
                                     </FormInfoSecond>
                                     <FormScore number={form.tookPart} text='Took part' />
-                                    <FormScore number={form.inProgress} text='In Progress' />
+                                    <FormScore number={form.inProgress >= 0 ? form.inProgress : 0} text='In Progress' />
+                                    <DeleteFormButton onClick={handleDeleteForm} type='button'>
+                                        Delete Form
+                                    </DeleteFormButton>
                                 </FormInfoWrapper>
                             </FormInfoContainer>
                             <QuestionsList>

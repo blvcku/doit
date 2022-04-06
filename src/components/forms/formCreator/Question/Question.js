@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
-import PlusIcon from '../../../../images/formCreator/addwhite.svg';
-import MinusIcon from '../../../../images/formCreator/minus.svg';
-
+import PlusIcon from '../../../../images/pluswhite.svg';
+import MinusIcon from '../../../../images/minus.svg';
 import useError from '../../../../hooks/useError';
 import useFileType from '../../../../hooks/useFileType';
-
 import { QuestionContainer, QuestionLabel, ButtonsContainer, FileContainer, AnswersContainer, Answer } from "./Question.styles";
 
-const Question = ({title, multipleAnswers, answers, file, index, inputField, error, setQuestions, questions}) => {
+const Question = ({title, multipleAnswers, answers, file, index, inputField, error, setQuestions, questions, preventDeleteLast}) => {
 
     const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const { dispatchError } = useError();
-    const { setFile, fileElement } = useFileType();
+    const { setFile, FileElement } = useFileType();
 
     const handleAction = (e, type, answerIndex) => {
         e.preventDefault();
         const tempQuestions = [...questions];
         switch(type){
+            case 'deleteQuestion':
+                tempQuestions.splice(index, 1);
+                break;
             case 'changeQuestionTitle':
                 tempQuestions[index].title = e.target.value;
                 break;
@@ -46,12 +47,13 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
         e.preventDefault();
         dispatchError({type: 'reset'});
         const file = e.target.files[0];
+        if(!file) return;
         if(!file.type.startsWith('audio') && !file.type.startsWith('video') && !file.type.startsWith('image')) return dispatchError({type: 'forms/wrong-file-type'});
         const reader = new FileReader();
         reader.onloadend = async e => {
             try{
                 const tempQuestions = [...questions];
-                tempQuestions[index].file = {file: e.target.result, name: file.name, type: file.type};
+                tempQuestions[index].file = {url: e.target.result, name: file.name, type: file.type};
                 setQuestions(tempQuestions);
             }
             catch(error){
@@ -69,7 +71,14 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
         <QuestionContainer error={error === index}>
             <QuestionLabel>
                 Form Question:
-                <input maxLength='200' value={title} onChange={e => handleAction(e, 'changeQuestionTitle')} type='text' name='question' placeholder="Question" />
+                <div>
+                    <input maxLength='200' value={title} onChange={e => handleAction(e, 'changeQuestionTitle')} type='text' name='question' placeholder="Question" />
+                    {!preventDeleteLast && (
+                        <button onClick={e => handleAction(e, 'deleteQuestion')} type='button'>
+                            <img src={MinusIcon} alt='delete' />
+                        </button>
+                    )}
+                </div>
             </QuestionLabel>
             <FileContainer type={file && file.type} >
                 <label>
@@ -77,9 +86,9 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
                     Add File
                     <input onChange={changeFile} type='file' name='file' />
                 </label>
-                {file && (
+                {file && file.url && (
                     <div>
-                        {fileElement}
+                        {FileElement}
                     </div>
                 )}
             </FileContainer>

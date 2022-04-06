@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { functions } from "../../firebase";
+import { deleteFriend, requestFriend, deleteRequest, declineInvite, acceptInvite } from "../../firebase";
 import DefaultImage from '../../images/default.jpg';
 import AcceptIcon from '../../images/accept.svg';
 import RequestIcon from '../../images/request.svg';
 import ApprovedIcon from '../../images/approved.svg';
 import DeleteIcon from '../../images/delete.svg';
-
 import useConfirmBox from "../../hooks/useConfirmBox";
 import useError from '../../hooks/useError';
-
 import { FriendContainer, SmallButton, ImageContainer, ApprovedButton, Button } from "./Friends.styles";
 
 const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) => {
@@ -18,33 +16,28 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
     const [loading, setLoading] = useState(false);
 
     const handleDeleteFriend = e => {
-        if(loading) return;
         e.preventDefault();
-        setConfirmInfo({message: `delete ${displayName} from your friend list`, action: deleteFriend});
-    }
-
-    const deleteFriend = async () => {
         if(loading) return;
-        try{
-            setLoading(true);
-            dispatchError({type: 'reset'});
-            const deleteFunction = functions.httpsCallable('deleteFriend');
-            await deleteFunction({friend: uid})
-        }
-        catch(error){
-            dispatchError({type: 'friends/delete'});
-        }
-        setLoading(false);
+        dispatchError({type: 'reset'});
+        setConfirmInfo({message: `delete ${displayName} from your friend list`, action: async () => {
+            try{
+                setLoading(true);
+                await deleteFriend(uid);
+            }
+            catch(error){
+                dispatchError({type: 'friends/delete'});
+            }
+            setLoading(false);
+        }});
     }
 
     const handleRequestFriend = async e => {
         e.preventDefault();
         if(loading) return;
+        dispatchError({type: 'reset'});
         try{
             setLoading(true);
-            dispatchError({type: 'reset'});
-            const requestFriend = functions.httpsCallable('requestFriend');
-            await requestFriend({requestedFriend: uid});
+            await requestFriend(uid);
         }
         catch(error){
             dispatchError({type: 'friends/request'});
@@ -55,11 +48,10 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
     const handleDeleteRequest = async e => {
         e.preventDefault();
         if(loading) return;
+        dispatchError({type: 'reset'});
         try{
             setLoading(true);
-            dispatchError({type: 'reset'});
-            const deleteRequest = functions.httpsCallable('deleteRequest');
-            await deleteRequest({requestedFriend: uid});
+            await deleteRequest(uid);
         }
         catch(error){
             dispatchError({type: 'friends/request-delete'});
@@ -70,11 +62,10 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
     const handleDeclineInvite = async e => {
         e.preventDefault();
         if(loading) return;
+        dispatchError({type: 'reset'});
         try{
             setLoading(true);
-            dispatchError({type: 'reset'});
-            const declineInvite = functions.httpsCallable('declineInvite');
-            await declineInvite({invite: uid});
+            await declineInvite(uid);
         }
         catch(error){
             dispatchError({type: 'friends/invite-decline'});
@@ -85,11 +76,10 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
     const handleAcceptInvite = async e => {
         e.preventDefault();
         if(loading) return;
+        dispatchError({type: 'reset'});
         try{
             setLoading(true);
-            dispatchError({type: 'reset'});
-            const acceptInvite = functions.httpsCallable('acceptInvite');
-            await acceptInvite({invite: uid});
+            await acceptInvite(uid);
         }
         catch(error){
             dispatchError({type: 'friends/accept'});

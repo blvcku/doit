@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { AnswerContainer, AnswerHead, AnswerScore } from "./FormPanel.styles";
 
 const Answer = ({answer, index, answersSum, answers = 0}) => {

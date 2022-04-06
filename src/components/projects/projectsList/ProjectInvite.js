@@ -2,9 +2,7 @@ import DefaultImage from '../../../images/defaultProject.jpg';
 import { functions } from '../../../firebase';
 import { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-
 import useError from '../../../hooks/useError';
-
 import { ProjectInviteContainer } from "./ProjectsList.styles";
 
 const ProjectInvite = ({title, id, index, photoURL, projectInvites, setProjectInvites}) => {

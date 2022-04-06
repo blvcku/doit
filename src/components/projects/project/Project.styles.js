@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const Container = styled.section`
     margin: 20px;
@@ -13,7 +12,8 @@ export const SubContainer = styled.div`
     width:100%;
     display:grid;
     grid-template-columns: 1fr;
-    gap:30px;
+    row-gap:1rem;
+    column-gap:2rem;
     grid-template-areas:
     'banner'
     'aside'
@@ -23,6 +23,8 @@ export const SubContainer = styled.div`
         grid-template-areas:
         'banner banner'
         'aside main';
+        row-gap:1.25rem;
+        column-gap:2.5rem;
     }
 `
 
@@ -34,27 +36,31 @@ export const BannerContainer = styled.header`
     background: ${({background}) => background ? `url(${background})` : 'var(--colorSecondary)'};
     background-size:cover;
     background-position: center center;
-    padding: 40px 0px 0px;
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 43px 43px 13px 13px;
-    @media(min-width:700px){
-        padding: 120px 0px 20px;
+    display:grid;
+    overflow:hidden;
+    &::before{
+        background:rgba(9, 114, 140, 0.8);
+        content:'';
+        display:block;
+        grid-area: 1 / 1 / 2 / 2;
+        justify-self:stretch;
     }
 `;
 
 export const MainContainer = styled.section`
     grid-area: main;
-    @media(min-width:1375px){
-        margin-left:30px;
-    }
 `;
 
 export const FlexContainer = styled.div`
+    grid-area: 1 / 1 / 2 / 2;
     display:flex;
     justify-content:space-between;
     flex-direction:column;
     align-items:end;
     gap:10px;
+    padding: 40px 0px 0px;
     div:nth-child(1){
         padding: 0px 25px 0px 25px;
         width:100%;
@@ -72,6 +78,7 @@ export const FlexContainer = styled.div`
     @media(min-width:700px){
         flex-direction:row;
         gap:40px;
+        padding: 120px 0px 20px;
     }
 
     @media(min-width:1300px){
@@ -93,12 +100,14 @@ export const Title = styled.input`
     color:var(--colorWhite);
     font-weight:700;
     font-size: clamp(1.8rem, 3vw, 2.6rem);
+    text-shadow: 0px 3px 6px #00000063;
     &:focus{
         outline:none;
     }
 `;
 
 export const Description = styled.textarea`
+    text-shadow: 0px 3px 6px #00000063;
     overflow-wrap:break-word;
     resize:none;
     height:max-content;
@@ -141,21 +150,21 @@ export const AsideContainer = styled.aside`
     grid-area: aside;
     background:var(--colorWhite);
     box-shadow: 0px 3px 6px #00000066;
-    padding: 30px 0;
+    padding: 1.9rem 1rem;
     border-radius:13px;
-    display:flex;
-    gap:20px;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1rem;
     align-items:center;
     height:max-content;
-    @media(min-width:${({isOwner}) => isOwner ? '370px' : '300px'}){
-        justify-content:center;
-        flex-direction:row;
+    @media(min-width:370px){
+        grid-template-columns:1fr 1fr;
     }
     @media(min-width:1300px){
-        flex-direction:column;
-        gap:${({isOwner}) => isOwner ? '50px' : '120px'};
-        padding:0 8px;
+        padding:0 .4rem;
+        grid-template-columns:1fr;
+        gap:4.3rem;
+        min-height:26.5rem;
     }
 `;
 
@@ -177,80 +186,42 @@ export const DateContainer = styled.div`
     }
 `;
 
-export const SecondContainer = styled.div`
-    display:flex;
-    flex-direction:column;
+export const ButtonsContainer = styled.div`
+    justify-self:center;
+    display:grid;
+    grid-template-columns:1fr;
     align-items:center;
-    gap:15px;
+    gap:1rem;
     width:100%;
+    max-width:9rem;
     text-align:center;
     @media(min-width:1300px){
         margin-bottom:160px;
-        gap:35px;
     }
-`;
-
-export const DeleteButton = styled.button`
-    box-shadow: 0px 3px 6px #00000029;
-    background: #DB382C;
-    border:none;
-    border-radius: 10px;
-    color:var(--colorWhite);
-    padding: 8px 0;
-    font-size:.8rem;
-    box-shadow: 0px 3px 6px #00000029;
-    max-width:9rem;
-    width:100%;
-    cursor:pointer;
-    transition:transform .2s ease;
-    
-    &:active{
-        transform:scale(0.97);
+    button, a{
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius:13px;
+        background:#0E8E8C;
+        border:none;
+        color:var(--colorWhite);
+        padding:.4rem 0;
+        font-size:.65rem;
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        transition:transform .2s ease;
+        cursor:pointer;
+        text-transform:uppercase;
+        font-weight:500;
+        gap:.3rem;
+        &:active{
+            transform:scale(0.97);
+        }
+        img{
+            width:.8rem;
+            height:.8rem;
+            display:block;
+        }
     }
-`;
-
-export const PeopleAssignedButton = styled(Link)`
-    text-decoration:none;
-    cursor:pointer;
-    background: var(--colorSecondary);
-    box-shadow: 0px 3px 6px #0000005E;
-    border:none;
-    border-radius:13px;
-    color:var(--colorWhite);
-    font-weight:500;
-    max-width:110px;
-    width:100%;
-    max-height:110px;
-    font-size:.6rem;
-    text-transform:uppercase;
-    padding:25px 25px;
-    transition:transform .2s ease;
-    
-    &:active{
-        transform:scale(0.97);
-    }
-    img{
-        display:inline
-    }
-    p{
-        margin-top:5px;
-    }
-
-    ${({isOwner}) => (
-        isOwner && (
-            `@media(max-width:1300px){
-                text-transform:none;
-                padding: 8px 0;
-                max-width:9rem;
-                font-size:.8rem;
-                border-radius:10px;
-                p{
-                    margin-top:0px;
-                }
-                img{
-                    display:none;
-                }
-            }`
-        )     
-    )}
 `;

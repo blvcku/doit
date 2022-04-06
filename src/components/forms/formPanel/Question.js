@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ArrowIcon from '../../../images/arrowwhite.svg';
 import { db } from '../../../firebase';
-
 import { QuestionContainer, QuestionWrapper, AnswersContainer, ExpandButton, OtherAnswersContainer } from "./FormPanel.styles";
 import Answer from "./Answer";
 

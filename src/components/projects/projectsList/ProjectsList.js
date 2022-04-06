@@ -4,11 +4,10 @@ import { db, fb, functions } from '../../../firebase';
 import SearchIcon from '../../../images/searchwhite.svg';
 import PlusIcon from '../../../images/pluswhite.svg';
 import DefaultImage from '../../../images/defaultProject.jpg';
-
 import useAuth from "../../../hooks/useAuth";
 import useError from '../../../hooks/useError';
 import useFilter from '../../../hooks/useFilter';
-
+import useTitle from '../../../hooks/useTitle';
 import { Container, SearchBar, ProjectsContainer, CreateProject, Project } from "./ProjectsList.styles";
 import ProjectInvite from "./ProjectInvite";
 
@@ -16,6 +15,7 @@ const ProjectsList = () => {
 
     const { currentUser: {uid} } = useAuth();
     const { dispatchError } = useError();
+    const { setTitle } = useTitle();
     const history = useHistory();
     const [projects, setProjects] = useState([]);
     const [projectInvites, setProjectInvites] = useState([]);
@@ -73,6 +73,10 @@ const ProjectsList = () => {
     useEffect(() => {
         setData([...projectInvites, ...projects]);
     }, [projects, projectInvites, setData]);
+
+    useEffect(() => {
+        setTitle('Projects');
+    }, [setTitle]);
 
     return(
         <Container>

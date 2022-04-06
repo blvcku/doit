@@ -16,16 +16,17 @@ export const CloseButton = styled.button`
     background:none;
     border:none;
     position:absolute;
-    left:-10px;
-    top:-20px;
+    left:-.5rem;
+    top:-1.5rem;
     cursor:pointer;
     padding:5px;
     img{
-        width:25px;
-        height:25px;
+        width:1.5rem;
+        height:1.5rem;
     }
-    @media(min-width:670px){
-        left:-20px;
+    @media(min-width:560px){
+        left:-1.3rem;
+        top:-1rem;
     }
 `;
 

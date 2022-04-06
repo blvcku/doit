@@ -6,22 +6,25 @@ export const TasksListContainer = styled.ul`
     min-height:200px;
     &:empty{
         font-size:1rem;
-        background: var(--colorWhite);
         border-radius:13px;
-        box-shadow: 0px 3px 6px #00000066;
         &::before{
-            content: 'No tasks';
+            content: 'There are no tasks in this project yet';
             position:absolute;
             left:50%;
             top:50%;
             transform:translate(-50%,-50%);
+            width:100%;
+            text-align:center;
         }
-        color:var(--colorSecondary);
+        color:#676767;
+        @media(min-width:1300px){
+            height:500px;
+        }
     }
 `;
 
 export const CreateTask = styled.li`
-    margin-bottom:30px;
+    margin-bottom:1rem;
 `;
 
 export const CreateTaskButton = styled.button`
@@ -53,7 +56,7 @@ export const TaskContainer = styled.li`
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
     background:var(--colorWhite);
-    margin-bottom:30px;
+    margin-bottom:1rem;
     position:relative;
     hr{
         opacity:0;
@@ -64,54 +67,49 @@ export const TaskContainer = styled.li`
 `;
 
 export const TaskHead = styled.div`
-    display:flex;
+    display:grid;
+    grid-template-columns:1fr;
     border-bottom: 1px solid #707070;
     margin-bottom:33px;
-    flex-direction:column;
-    div{
-        display:flex;
-        align-items:center;
-        margin-bottom:20px;
-        justify-content:space-between;
-        width:max-content;
-    }
-    div:nth-child(1){
-        gap:15px;
-        @media(max-width:500px){
-            justify-content:start;
-        }
-    }
-    div:nth-child(2){
-        flex:1;
-        gap:30px;
-        @media(max-width:500px){
-            width:100%;
-            gap:0px;
-        }
-    }
-    h2{
+    gap:10px;
+    align-items:center;
+    h3{
         color: #676767;
-        font-size:.7rem;
+        font-size:.9rem;
         font-weight:400;
-        overflow-wrap:break-word;
-        overflow:hidden;
-        @media(min-width:290px){
-            font-size:.8rem;
-        }
-        @media(min-width:330px){
-            font-size:1rem;
-        }
+        word-break:break-word;
+        max-width:max-content;
     }
     @media(min-width:500px){
-        flex-direction:row;
-        gap:15px;
+        grid-template-columns:minmax(min-content, auto) 1fr;
+    }
+`;
+
+export const TaskHeadFirst = styled.div`
+    gap:15px;
+    justify-content:start;
+    display:flex;
+    align-items:center;
+    @media(min-width:500px){
+        justify-content:auto;
+        margin-bottom:20px;
+    }
+`;
+
+export const TaskHeadSecond = styled.div`
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    justify-content:space-between;
+    div{
+        display:flex;
+        gap:10px;
     }
 `;
 
 export const TaskEditHead = styled(TaskHead)`
-    flex-direction:column;
-    gap:10px;
-    h2{
+    h3{
         overflow:visible;
         position:relative;
         &::before{
@@ -124,34 +122,15 @@ export const TaskEditHead = styled(TaskHead)`
             left:0;
         }
     }
-    @media(min-width:450px){
-        flex-direction:row;
-        gap:13px;
-    }
-    div:nth-child(1){
-        @media(max-width:450px){
-            margin-bottom:0px;
-        }
-    }
-    div:nth-child(2){
-        width:100%;
-        height:max-content;
-        align-self:center;
-        align-items:stretch;
-        @media(max-width:450px){
-            justify-content:start;
-            gap:15px;
-        }
-    }
-`
+`;
 
 export const ImageContainer = styled.figure`
-    width:2.5rem;
+    min-width:2.5rem;
     height:2.5rem;
     position:relative;
     img{
-        max-width:100%;
-        min-height:100%;
+        width:100%;
+        height:100%;
         aspect-ratio: 1/1;
         object-fit:cover;
         border-radius:50%;
@@ -204,7 +183,7 @@ export const StatusButton = styled.button`
 `;
 
 export const SaveButton = styled.button`
-    padding:6px 17px;
+    padding:7px 17px;
     border-radius:13px;
     box-shadow: 0px 3px 6px #00000029;
     background: var(--darkerSecondary);
@@ -219,14 +198,6 @@ export const SaveButton = styled.button`
         width:14px;
         height:14px;
     }
-`;
-
-export const FlexContainer = styled.div`
-    margin-bottom:0!important;
-    gap:8px!important;
-    flex: 0 1 auto!important;
-    justify-content:end!important;
-    width:max-content!important;
 `;
 
 export const SmallButton = styled.button`
@@ -295,11 +266,7 @@ export const Step = styled.li`
             transition:transform .2s ease;
         }
         &:checked::after{
-            ${({isOwner}) => isOwner ? `
-                animation:checkedAnimation .2s ease forwards;
-            ` : `
-                transform:translateX(100%);
-            `}
+            transform:translateX(100%);
         }
         &:disabled{
             opacity:.7;
@@ -321,7 +288,7 @@ export const TaskBody = styled.div`
     display:grid;
     column-gap:10px;
     grid-template-columns:1fr;
-    h3, h4, h5{
+    h4, h5, h6{
         color: #676767;
         font-weight:700;
         margin-bottom:15px;
@@ -566,6 +533,8 @@ export const StepEdit = styled.li`
         cursor:pointer;
         img{
             display:block;
+            width:1rem;
+            height:1rem;
         }
     }
     div{

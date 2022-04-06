@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { functions } from "../../../../firebase";
-import XIcon from '../../../../images/x.svg';
+import CloseIcon from '../../../../images/close.svg';
 import PeopleAssignedIcon from '../../../../images/peopleassigned.svg';
 import { useHistory } from "react-router-dom";
-
 import useAuth from "../../../../hooks/useAuth";
-
 import { MembersContainer, CloseButton, MembersWrapper, MembersGroup, List, OverflowContainer } from "./Members.styles";
 import Loader from '../../../loading/Loader';
 import Member from './Member';
@@ -17,7 +15,7 @@ const MembersList = ({membersIDs, isOwner, authorID, invites, projectID}) => {
     const [loadingMembers, setLoadingMembers] = useState(true);
     const [loadingFriends, setLoadingFriends] = useState(true);
     const history = useHistory();
-    const { currentUserData: {friends} } = useAuth();
+    const { currentUserData: { friends = [] } = {} } = useAuth();
 
     useEffect(() => {
         const getUsersData = functions.httpsCallable('getUsersData');
@@ -54,29 +52,29 @@ const MembersList = ({membersIDs, isOwner, authorID, invites, projectID}) => {
 
     const handleClose = e => {
         e.preventDefault();
-        history.goBack();
+        history.push(`/dashboard/projects/${projectID}`);
     }
 
     return(
         <MembersContainer>
             {(loadingMembers || loadingFriends) && <Loader />}
             <CloseButton onClick={handleClose} type='button'>
-                <img src={XIcon} alt='Close' />
+                <img src={CloseIcon} alt='Close' />
             </CloseButton>
             <img src={PeopleAssignedIcon} alt='People assigned' />
-            <h1>People Assigned</h1>
+            <h2>People Assigned</h2>
             <MembersWrapper isOwner={isOwner}>
                 <MembersGroup>
-                    <h2>Participants</h2>
+                    <h3>Participants</h3>
                     <OverflowContainer isOwner={isOwner}>
-                        <h3>Owner</h3>
+                        <h4>Owner</h4>
                         <List>
                             {members.map(({photoURL, displayName, uid}) => {
                                 if(uid !== authorID) return null;
                                 return <Member projectID={projectID} isOwner={isOwner} key={uid} photoURL={photoURL} displayName={displayName} uid={uid} status='owner' />
                             })}
                         </List>
-                        <h4>Members</h4>
+                        <h5>Members</h5>
                         <List emptyInformation='No members' >
                             {members.map(({photoURL, displayName, uid}) => {
                                 if(uid === authorID) return null;
@@ -87,9 +85,9 @@ const MembersList = ({membersIDs, isOwner, authorID, invites, projectID}) => {
                 </MembersGroup>
                 {isOwner ? (
                     <MembersGroup>
-                        <h2>Add to project</h2>
+                        <h3>Add to project</h3>
                         <OverflowContainer isOwner={isOwner}>
-                            <h3>Friends</h3>
+                            <h4>Friends</h4>
                             <List emptyInformation='No friends'>
                                 {friendsData.map(({photoURL, displayName, uid}) => {
                                     if(membersIDs.includes(uid)) return null;

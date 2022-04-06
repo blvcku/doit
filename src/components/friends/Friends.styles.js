@@ -121,7 +121,7 @@ export const Section = styled.section`
 export const OverflowContainer = styled.div`
     overflow:hidden;
     margin-top:25px;
-    min-height:110px;
+    min-height:200px;
     @media(min-width:900px){
         min-height:300px;
     }
@@ -133,7 +133,6 @@ export const FlexContainer = styled.div`
     gap:18px;
     @media(min-width:1500px){
         transform: translateX(${({currentSlide}) => `${currentSlide * (-100)}%`});
-        transition: transform .8s ease;
         flex-direction:row;
         gap:0px;
     }

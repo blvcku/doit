@@ -1,12 +1,10 @@
 import { db, functions } from "../../../../../firebase";
-import PendingColorIcon from '../../../../../images/project/tasks/pendingcolor.svg';
-import InProgressColorIcon from '../../../../../images/project/tasks/inprogresscolor.svg';
-import CompletedColorIcon from '../../../../../images/project/tasks/completedcolor.svg';
-import StatusIcon from '../../../../../images/project/tasks/status.svg';
-import CloseIcon from '../../../../../images/x.svg';
-
+import PendingColorIcon from '../../../../../images/pendingcolor.svg';
+import InProgressColorIcon from '../../../../../images/inprogresscolor.svg';
+import CompletedColorIcon from '../../../../../images/completedcolor.svg';
+import StatusIcon from '../../../../../images/status.svg';
+import CloseIcon from '../../../../../images/close.svg';
 import useError from "../../../../../hooks/useError";
-
 import { Container, CloseButton, Wrapper } from "./ChangeStatus.styles";
 
 const ChangeStatus = ({setIsChangingStatus, taskID, isOwner, isPerformer}) => {

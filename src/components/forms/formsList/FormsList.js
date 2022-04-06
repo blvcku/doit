@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { db } from '../../../firebase';
-import PlusIcon from '../../../images/formsList/plus.svg';
-import SearchIcon from '../../../images/formsList/search.svg';
-import FormIcon from '../../../images/formsList/form.svg';
-
+import PlusIcon from '../../../images/pluswhite.svg';
+import SearchIcon from '../../../images/searchwhite.svg';
+import FormIcon from '../../../images/form.svg';
 import useAuth from '../../../hooks/useAuth';
 import useFilter from '../../../hooks/useFilter';
-
+import useTitle from '../../../hooks/useTitle';
 import { Link } from 'react-router-dom';
 import { Container, Form, CreateForm, FormsContainer, SearchBar } from "./FormsList.styles";
 
@@ -14,6 +13,7 @@ const FormsList = () => {
 
     const { currentUser: {uid} } = useAuth();
     const { setData, filter, setFilter, filteredData } = useFilter();
+    const { setTitle } = useTitle();
 
     const handleFilterChange = e => {
         e.preventDefault();
@@ -28,6 +28,10 @@ const FormsList = () => {
         })
         return unsubscribe;
     }, [uid, setData]);
+
+    useEffect(() => {
+        setTitle('Forms');
+    }, [setTitle]);
 
     return(
         <Container>

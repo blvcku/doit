@@ -125,6 +125,7 @@ export const FileContainer = styled.div`
         height:auto;
         object-fit:contain;
         object-position:center center;
+        cursor:pointer;
     }
     video{
         display:block;

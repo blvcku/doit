@@ -1,10 +1,8 @@
-import AddFileIcon from '../../../../images/project/tasks/addfile.svg';
-import FileIcon from '../../../../images/project/tasks/file.svg';
-import PlusIcon from '../../../../images/project/tasks/plus.svg';
+import AddFileIcon from '../../../../images/addfile.svg';
+import FileIcon from '../../../../images/file.svg';
+import PlusIcon from '../../../../images/pluswhite.svg';
 import MinusIcon from '../../../../images/minus.svg';
-
 import useError from "../../../../hooks/useError";
-
 import { TaskEditBodyContainer, Label, AddStepButton, AddFileLabel, StepsContainer, StepEdit } from "./Tasks.styles";
 
 const TaskEditBody = ({steps, setSteps, setTitle, setDescription, setSelectedFile, title, description, selectedFile}) => {
@@ -44,19 +42,19 @@ const TaskEditBody = ({steps, setSteps, setTitle, setDescription, setSelectedFil
 
     const handleChangeFile = e => {
         e.preventDefault();
-        const givenFile = e.target.files[0];
-        setSelectedFile(givenFile);
+        const file = e.target.files[0];
+        setSelectedFile(file);
     }
 
     return(
         <TaskEditBodyContainer>
             <Label>
                 Task Title: 
-                <input maxLength='20' onChange={handleTitleChange} value={title} type='text' name='title'/>
+                <input maxLength='50' onChange={handleTitleChange} value={title} type='text' name='title'/>
             </Label>
             <Label>
                 Description:
-                <textarea maxLength='300' onChange={handleDescriptionChange} defaultValue={description} name='description' /> 
+                <textarea spellCheck='false' maxLength='300' onChange={handleDescriptionChange} defaultValue={description} name='description' /> 
             </Label>
             <AddStepButton onClick={handleAddStep} type='button'>
                 <img src={PlusIcon} alt='Add' />

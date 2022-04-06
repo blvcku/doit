@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import { db } from '../../../firebase'; 
-
 import useAuth from '../../../hooks/useAuth';
 import useError from '../../../hooks/useError';
-
+import useTitle from '../../../hooks/useTitle';
 import { Form, Container, SubContainer, MainContainer } from './Project.styles';
 import Banner from './Banner';
 import Aside from './Aside';
 import MembersList from './membersList/MembersList';
 import TasksList from './tasks/TasksList';
+import Chat from './chat/Chat';
 
 const Project = () => {
 
@@ -17,6 +17,7 @@ const Project = () => {
     const { path } = useRouteMatch();
     const { currentUser } = useAuth();
     const { dispatchError } = useError();
+    const { setTitle } = useTitle();
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
     const [isOwner, setIsOwner] = useState(false);
@@ -46,6 +47,10 @@ const Project = () => {
             titleRef.current.focus();
         }
     }, [isEditing])
+
+    useEffect(() => {
+        setTitle(project.title);
+    }, [project.title, setTitle])
 
     const turnOnEdit = e => {
         e.preventDefault();
@@ -108,6 +113,7 @@ const Project = () => {
                             <MainContainer>
                                 <Switch>
                                     <Route exact path={`${path}/members`} render={() => (<MembersList authorID={project.authorID} isOwner={isOwner} membersIDs={project.members} invites={project.invites} projectID={id} />)} />
+                                    <Route exact path={`${path}/chat`} render={() => <Chat title={project.title} id={id} />} />
                                     <Route path={path} render={() => (<TasksList members={project.members} isOwner={isOwner} id={id} />)} />
                                 </Switch>
                             </MainContainer>

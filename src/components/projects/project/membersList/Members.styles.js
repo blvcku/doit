@@ -20,7 +20,7 @@ export const MembersContainer = styled.div`
         height:550px;
         padding: 35px 75px 40px;
     }
-    h1{
+    h2{
         font-weight:800;
         font-size:1.15rem;
         text-transform: uppercase;
@@ -92,8 +92,9 @@ export const CloseButton = styled.button`
     cursor:pointer;
     padding:5px;
     img{
-        width:25px;
-        height:25px;
+        width:1.5rem;
+        height:1.5rem;
+        display:block;
     }
 `;
 
@@ -110,7 +111,7 @@ export const MembersWrapper = styled.div`
         list-style:none;
     }
 
-    h2{
+    h3{
         font-weight:800;
         color: var(--colorSecondary);
         text-transform: uppercase;
@@ -181,7 +182,7 @@ export const OverflowContainer = styled.div`
     margin-top:18px;
     max-width:400px;
 
-    h3, h4{
+    h4, h5{
         font-weight:500;
         color: var(--colorSecondary);
         text-transform: uppercase;

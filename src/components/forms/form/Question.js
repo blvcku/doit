@@ -1,24 +1,22 @@
 import { useEffect } from 'react';
-
 import useFileType from '../../../hooks/useFileType';
-
 import { QuestionContainer, QuestionWrapper, FileContainer, AnswerContainer, InputFieldLabel } from "./Form.styles";
 
-const Question = ({title, fileURL, answers, fileType, multipleAnswers, index, inputField, error}) => {
+const Question = ({title, file, answers, multipleAnswers, index, inputField, error}) => {
 
-    const { setFile, fileElement } = useFileType();   
+    const { setFile, FileElement } = useFileType();   
 
     useEffect(() => {
-        setFile({type: fileType, file: fileURL, name: 'file'})
-    }, [fileType, fileURL, setFile]);
+        setFile(file)
+    }, [file, setFile]);
 
     return(
         <QuestionContainer error={error === index} >
             <QuestionWrapper>
                 <h2>{title}</h2>
-                {fileURL && (
-                    <FileContainer type={fileType}>
-                        {fileElement}
+                {file && file.url && (
+                    <FileContainer type={file && file.type}>
+                        {FileElement}
                     </FileContainer>
                 )}
                 <ul>

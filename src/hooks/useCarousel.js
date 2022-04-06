@@ -21,10 +21,13 @@ const useCarousel = () => {
         if(slides){
             if(currentSlide > (slides - 1)) setCurrentSlide((slides - 1));
             if(currentSlide < 0) setCurrentSlide(0);
-            if(currentSlide === 0) setHidePrev(true);
-            else setHidePrev(false);
-            if(currentSlide === (slides - 1)) setHideNext(true);
-            else setHideNext(false);
+            setHidePrev(currentSlide === 0);
+            setHideNext(currentSlide === (slides - 1));
+        }
+        else{
+            setHidePrev(true);
+            setHideNext(true);
+            setCurrentSlide(0);
         }
     }, [currentSlide, slides]);
 

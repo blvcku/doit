@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../../../firebase';
-import AddIcon from '../../../../images/project/tasks/add.svg';
-
+import AddIcon from '../../../../images/plusblue.svg';
 import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "./Tasks.styles";
 import Task from './Task';
 import TaskEdit from './TaskEdit';

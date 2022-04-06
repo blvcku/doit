@@ -9,30 +9,47 @@ service cloud.firestore {
   }
     match /projects/{project} {
       allow read: if request.auth.uid in resource.data.members;
-      allow update, delete: if request.auth.uid == resource.data.authorID;
-      allow create: if request.auth != null &&
+      allow update, delete: if request.auth.token.email_verified && request.auth.uid == resource.data.authorID;
+      allow create: if request.auth.token.email_verified && request.auth != null &&
       	request.resource.data.createdAt == request.time &&
       	request.auth.uid == request.resource.data.authorID;
+      match /messages/{message}{
+      	allow read: if request.auth.uid in getMembers(project);
+        allow create: if request.auth.token.email_verified && request.auth.uid == request.resource.data.author.uid
+         && request.auth.uid in getMembers(project)
+         && request.resource.data.createdAt == request.time;
+      }
     }
     match /tasks/{task}{
     	allow read: if request.auth.uid in getMembers(resource.data.projectID);
-      allow update, delete: if request.auth.uid == getOwner(resource.data.projectID);
-      allow create: if request.auth.uid == getOwner(request.resource.data.projectID);
+      allow update, delete: if request.auth.token.email_verified && request.auth.uid == getOwner(resource.data.projectID);
+      allow create: if request.auth.token.email_verified && request.auth.uid == getOwner(request.resource.data.projectID);
     }
     match /users/{user}{
     	allow read;
       allow create: if request.auth.uid != null && user == request.auth.uid;
-      allow update: if request.auth.uid == resource.data.uid;
+      allow update: if request.auth.uid == resource.data.uid && request.auth.uid == user;
+      allow delete: if request.auth.uid == resource.data.uid && request.auth.uid == user;
+    }
+    match /posts/{post}{
+    	allow create: if request.auth.token.email_verified && request.auth.uid != null
+      	&& request.auth.uid == request.resource.data.authorID
+        && request.resource.data.createdAt == request.time;
+      allow read: if request.auth.uid != null;
+      allow update, delete: if request.auth.token.email_verified && request.auth.uid == resource.data.authorID;
+      match /messages/{message}{
+      	allow create: if request.auth.token.email_verified && request.auth.uid == message;
+      }
     }
     match /forms/{form}{
-    	allow update, delete: if request.auth.uid == resource.data.authorID;
+    	allow update, delete: if request.auth.token.email_verified && request.auth.uid == resource.data.authorID;
       allow read: if (request.auth.uid == resource.data.authorID) ||
       	(
         	(resource.data.status == 'public' || request.auth.uid in resource.data.members) 
           && 
         	(!getUserAnswer(request.auth.uid) && !resource.data.paused)
         );
-      allow create: if request.auth != null &&
+      allow create: if request.auth.token.email_verified && request.auth != null &&
       	request.resource.data.createdAt == request.time &&
       	request.auth.uid == request.resource.data.authorID;
       function getFormOwner(){
@@ -64,10 +81,11 @@ service cloud.firestore {
             	!getUserAnswer(request.auth.uid)
           )) && !getFormPaused();
         allow read: if request.auth.uid == getFormOwner();
+        allow delete: if request.auth.token.email_verified && request.auth.uid == getFormOwner();
       }
       match /questions/{question} {
-      	allow create: if request.auth.uid == getFormOwner();
-        allow delete: if request.auth.uid == getFormOwner();
+      	allow create: if request.auth.token.email_verified && request.auth.uid == getFormOwner();
+        allow delete: if request.auth.token.email_verified && request.auth.uid == getFormOwner();
         allow read: if (request.auth.uid == getFormOwner()) ||
         	(
           	(getFormStatus() == 'public' || request.auth.uid in getFormMembers()) 
@@ -75,7 +93,8 @@ service cloud.firestore {
           	(!getUserAnswer(request.auth.uid) && !getFormPaused())
           );
         match /answersSum/answersSum {
-        	allow create: if request.auth.uid == getFormOwner();
+        	allow delete: if request.auth.token.email_verified && request.auth.uid == getFormOwner();
+        	allow create: if request.auth.token.email_verified && request.auth.uid == getFormOwner();
           allow read: if request.auth.uid == getFormOwner();
         }
       }

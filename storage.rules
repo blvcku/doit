@@ -9,19 +9,31 @@ service firebase.storage {
     	allow read;
     }
     match /projects/{id}/banner{
-      allow read: if resource.metadata.owner == request.auth.uid;
+      allow read: if resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
+    }
+    match /projects/{project}/messages/{message}{
+    	allow read: if resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
     }
     match /tasks/{id}/file{
-    	allow read: if resource.metadata.owner == request.auth.uid;
+    	allow read: if resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
     }
     match /forms/{form}/{question}/file{
-    	allow read: if resource.metadata.owner == request.auth.uid;
+    	allow read: if resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
     }
     match /temp/forms/{form}/{question}/file{
-    	allow create: if request.auth != null;
+    	allow create: if request.resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
     }
     match /temp/tasks/{task}/file{
-    	allow create: if request.auth != null;
+    	allow create: if request.resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
+    }
+    match /temp/posts/{post}/file{
+    	allow create: if request.resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
+    }
+    match /temp/projects/{project}/messages/{message}{
+    	allow create: if request.resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
+    }
+    match /posts/{post}/file{
+    	allow read: if resource.metadata.owner == request.auth.uid && request.auth.token.email_verified;
     }
   }
 }

@@ -1,5 +1,4 @@
 import useConfirmBox from '../../hooks/useConfirmBox';
-
 import { Container } from './ConfirmBox.styles';
 import { Box } from './ConfirmBox.styles';
 

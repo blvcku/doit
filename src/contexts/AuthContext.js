@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, storage, db } from '../firebase';
+import { auth, storage, db, functions } from '../firebase';
 
 export const AuthContext = React.createContext();
 
@@ -29,8 +29,70 @@ const AuthProvider = ({children}) => {
         return auth.signOut();
     }
 
-    const resetPassword = (email) => {
-        return auth.sendPasswordResetEmail(email);
+    const resetPassword = async (email) => {
+        try{
+            const sendPasswordResetMail = functions.httpsCallable('sendPasswordResetMail');
+            await sendPasswordResetMail({email: email});
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
+    }
+
+    const deleteAccount = async () => {
+        try{
+            const deleteUserAccount = functions.httpsCallable('deleteUserAccount');
+            return await deleteUserAccount();
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
+    }
+
+    const updateUsername = async (username) => {
+        try{
+            await currentUser.updateProfile({displayName: username.trim()});
+            await db.collection('users').doc(currentUser.uid).update({
+                displayName: username.trim()
+            });
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
+    }
+
+    const updateEmail = async (email) => {
+        try{
+            await currentUser.updateEmail(email);
+            const sendVerifyEmail = functions.httpsCallable('sendVerifyEmail');
+            await sendVerifyEmail();
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
+    }
+
+    const updatePassword = async (password) => {
+        try{
+            await currentUser.updatePassword(password.trim());
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
+    }
+
+    const updateProfileImage = async (file) => {
+        try{
+            await storage.ref(`users/${currentUser.uid}/profile.jpg`).put(file);
+            const url = await storage.ref(`users/${currentUser.uid}/profile.jpg`).getDownloadURL();
+            await currentUser.updateProfile({photoURL: url});
+            await db.collection('users').doc(currentUser.uid).update({
+                photoURL: url
+            })
+        }
+        catch(error){
+            return Promise.reject(error);
+        }
     }
 
     useEffect(() => {
@@ -49,7 +111,7 @@ const AuthProvider = ({children}) => {
             })
             return unsubscribe;
         }
-    }, [currentUser])
+    }, [currentUser]);
 
     const value = {
         currentUserData,
@@ -57,7 +119,12 @@ const AuthProvider = ({children}) => {
         signUp,
         login,
         logout,
-        resetPassword
+        resetPassword,
+        deleteAccount,
+        updateUsername,
+        updateEmail,
+        updatePassword,
+        updateProfileImage
     }
 
     return(

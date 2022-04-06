@@ -1,5 +1,4 @@
 import { useContext } from "react";
-
 import { ConfirmBoxContext } from "../contexts/ConfirmBoxContext";
 
 const useConfirmBox = () => (

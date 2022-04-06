@@ -1,7 +1,5 @@
-import AddIcon from '../../../images/formCreator/add.svg';
-
+import AddIcon from '../../../images/plusdarkblue.svg';
 import useError from '../../../hooks/useError';
-
 import { QuestionsListContainer, CreateButton, AddQuestionButton, ButtonsContainer } from "./FormCreator.styles";
 import Question from './Question/Question';
 
@@ -31,6 +29,7 @@ const QuestionsList = ({questions, setQuestions, isCreating, error}) => {
                         error={error}
                         setQuestions={setQuestions}
                         questions={questions}
+                        preventDeleteLast={questions.length === 1}
                     />
                 ))}
             </QuestionsListContainer>

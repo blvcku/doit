@@ -2,9 +2,7 @@ import EditIcon from '../../../images/editwhite.svg';
 import ChangePhotoIcon from '../../../images/changephoto.svg';
 import SubmitIcon from '../../../images/submit.svg';
 import { storage, db, functions } from '../../../firebase';
-
 import useError from '../../../hooks/useError';
-
 import { BannerContainer, Title, Description, Button, Label, InputFile, FlexContainer } from './Project.styles';
 
 const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, id, background}) => {

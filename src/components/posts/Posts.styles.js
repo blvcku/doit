@@ -158,6 +158,7 @@ export const FileContainer = styled.div`
             height:auto;
             object-fit:contain;
             object-position:center center;
+            cursor:pointer;
         }
         video{
             display:block;
@@ -179,7 +180,7 @@ export const SubmitButton = styled.button`
     border:none;
     padding:.7rem 3.5rem;
     cursor:pointer;
-    margin-top:4rem;
+    margin-top:2rem;
     position:relative;
     p{
         font-size:1rem;

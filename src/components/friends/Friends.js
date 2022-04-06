@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NavLink, useRouteMatch, Switch, Route, Redirect } from "react-router-dom";
 import SearchIcon from '../../images/search.svg';
-
+import useTitle from '../../hooks/useTitle';
 import { Container, Wrapper, Nav, Section } from "./Friends.styles";
 import FriendsList from './FriendsList';
 import SearchFriends from './SearchFriends';
@@ -9,18 +9,23 @@ import SearchFriends from './SearchFriends';
 const Friends = () => {
 
     const { path } = useRouteMatch();
-    const [searchTerm, setSearchTerm] = useState(null);
+    const { setTitle } = useTitle();
+    const [searchTerm, setSearchTerm] = useState('');
+    const searchRef = useRef();
 
     const handleChangeSearch = e => {
         e.preventDefault();
-        const form = e.target;
-        const { value } = form.elements['search'];
-        setSearchTerm(value);
+        setSearchTerm(searchRef.current.value);
     }
 
     const clearSearchTerm = e => {
-        setSearchTerm(null);
+        searchRef.current.value = '';
+        setSearchTerm('');
     }
+
+    useEffect(() => {
+        setTitle('Friends');
+    }, [setTitle]);
 
     return(
         <Container>
@@ -28,7 +33,7 @@ const Friends = () => {
                 <header>
                     <Nav>
                         <form onSubmit={handleChangeSearch} noValidate>
-                            <input type='text' name='search' placeholder="Search"/>
+                            <input ref={searchRef} type='text' name='search' placeholder="Search"/>
                             <button type='submit'>
                                 <img src={SearchIcon} alt='Search' />
                             </button>

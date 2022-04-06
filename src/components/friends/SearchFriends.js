@@ -1,88 +1,52 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../firebase';
-
+import { usersIndex } from '../../algolia';
 import useAuth from '../../hooks/useAuth';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import useCarousel from '../../hooks/useCarousel';
-
 import { GridContainer, FlexContainer, OverflowContainer, PrevButton, NextButton } from "./Friends.styles";
 import Person from "./Person";
 import Loader from '../loading/Loader';
 
-const SearchList = ({searchTerm}) => {
+const SearchFriends = ({searchTerm}) => {
 
     const [pages, setPages] = useState([]);
-    const { currentUser, currentUserData: {friends, invites, requests} } = useAuth();
-    const [loading, setLoading] = useState(true);
+    const [persons, setPersons] = useState([]);
+    const [loaderVisible, setLoaderVisible] = useState(true);
+    const { currentUser, currentUserData: { friends = [], invites = [], requests = [] } = {} } = useAuth();
     const { handleNextSlide, handlePrevSlide, setSlides, hidePrev, hideNext, currentSlide } = useCarousel();
+    const { last, setHasMore, currentPage, setCurrentPage, setLoading } = useInfiniteScroll();
     const chunkSize = 8;
 
-    const loadMoreData = async () => {
-        if(loading) return;
-        try{
-            let usersRef = db.collection('users').where('uid', '!=', currentUser.uid).startAfter(lastVisible).limit(chunkSize);
-            if(searchTerm){
-                usersRef = db.collection('users')
-                    .where('displayName', '!=', currentUser.displayName)
-                    .where("displayName", ">=", searchTerm)
-                    .where("displayName", "<=", searchTerm + "\uf8ff")
-                    .startAfter(lastVisible)
-                    .limit(chunkSize)
-            }
-            const users = await usersRef.get();
-            if(users.empty) return setHasMore(false);
-            setLastVisible(users.docs[users.docs.length-1]);
-            const personsList = [];
-            users.forEach(user => {
-                const userData = user.data();
-                personsList.push({
-                    displayName: userData.displayName,
-                    photoURL: userData.photoURL,
-                    uid: userData.uid
-                });
-            });
-            setPersons(prev => [...prev, ...personsList]);          
-        }
-        catch(error){
-            console.error(error);
-            setHasMore(false);
-        }
-    }
-
-    const { last: lastPerson, data: persons, setData: setPersons, setHasMore, lastVisible, setLastVisible } = useInfiniteScroll(loadMoreData);
-
     useEffect(() => {
-        let isMounted = true;   
         const getData = async () => {
             try{
                 setLoading(true);
-                let usersRef = db.collection('users').where('uid', '!=', currentUser.uid).limit(chunkSize);
-                if(searchTerm){
-                    usersRef = db.collection('users').where('displayName', '!=', currentUser.displayName).where("displayName", ">=", searchTerm).where("displayName", "<=", searchTerm + "\uf8ff").limit(chunkSize);
-                }
-                const users = await usersRef.get();
-                setLastVisible(users.docs[users.docs.length-1]);
+                const result = await usersIndex.search(searchTerm ? searchTerm : '', {
+                    hitsPerPage: chunkSize,
+                    filters: `NOT uid:${currentUser.uid}`,
+                    page: currentPage
+                });
+                const users = result.hits;
+                setHasMore(users.length > 0);
                 const usersArray = [];
-                users.forEach(user => {
-                    const userData = user.data();
+                users.forEach(({displayName, photoURL, uid}) => {
                     usersArray.push({
-                        displayName: userData.displayName,
-                        photoURL: userData.photoURL,
-                        uid: userData.uid
+                        displayName: displayName,
+                        photoURL: photoURL,
+                        uid: uid
                     })
                 })
-                setPersons(usersArray);
+                setPersons(prev => [...prev, ...usersArray]);
             }
             catch(error){
                 console.error(error);
+                setHasMore(false);
             }
             setLoading(false);
+            setLoaderVisible(false);
         }
-        if(isMounted){
-            getData();
-        }
-        return () => { isMounted = false }
-    }, [searchTerm, currentUser, setPersons, setLastVisible]);
+        getData();
+    }, [searchTerm, currentPage, currentUser, setHasMore, setLoading]);
 
     useEffect(() => {
         if(persons){
@@ -101,8 +65,10 @@ const SearchList = ({searchTerm}) => {
     }, [friends, invites, requests, persons]);
 
     useEffect(() => {
-        setHasMore(true);
-    }, [searchTerm, setHasMore]);
+        setLoaderVisible(true);
+        setPersons([]);
+        setCurrentPage(0);
+    }, [searchTerm, setCurrentPage]);
 
     useEffect(() => {
         setSlides(pages.length);
@@ -110,7 +76,7 @@ const SearchList = ({searchTerm}) => {
     
     return(
         <>
-            {loading && <Loader />}
+            {loaderVisible && <Loader />}
             <h2>Friends By Search</h2>
             <OverflowContainer>
                 <FlexContainer currentSlide={currentSlide}>
@@ -118,7 +84,7 @@ const SearchList = ({searchTerm}) => {
                         <GridContainer key={pageIndex}>
                             {page.map(({uid, displayName, photoURL, status}, index) => {
                                 if(pages.length === pageIndex + 1 && pages[pageIndex].length === index + 1){
-                                    return <Person innerRef={lastPerson} key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
+                                    return <Person innerRef={last} key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
                                 }
                                 return <Person key={uid} status={status} uid={uid} displayName={displayName} photoURL={photoURL}/>
                             })}
@@ -142,4 +108,4 @@ const SearchList = ({searchTerm}) => {
     )
 }
 
-export default SearchList;
+export default SearchFriends;

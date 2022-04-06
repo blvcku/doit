@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileIcon from '../../images/account.svg';
-import { storage, db } from "../../firebase";
-
+import { useHistory } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useError from "../../hooks/useError";
-
-import { Container, GridContainer, Aside, Form, InputsWrapper, Button, SuccesMessage, Figure, Label } from './Profile.styles';
+import useConfirmBox from '../../hooks/useConfirmBox';
+import useTitle from '../../hooks/useTitle';
+import { Container, GridContainer, Aside, Form, InputsWrapper, Button, SuccesMessage, Figure, Label, ButtonsContainer } from './Profile.styles';
 import Loader from '../loading/Loader';
 
 const Profile = () => {
 
-    const { logout, currentUser: {photoURL, displayName, email, uid}, currentUser } = useAuth();
+    const { updateProfileImage, updatePassword, updateEmail, updateUsername, deleteAccount, logout, currentUser: { photoURL, displayName, email } } = useAuth();
     const { dispatchError } = useError();
+    const { setConfirmInfo } = useConfirmBox();
+    const { setTitle } = useTitle();
+    const history = useHistory();
     const [passwordLoading, setPasswordLoading] = useState(false);
     const [emailLoading, setEmailLoading] = useState(false);
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState('');
     const [emailMessage, setEmailMessage] = useState('');
+
+    useEffect(() => {
+        setTitle('Account');
+    }, [setTitle]);
 
     const handleLogout = async e => {
         e.preventDefault();
@@ -24,7 +31,7 @@ const Profile = () => {
         dispatchError({type: 'reset'});
         try{
             setLogoutLoading(true);
-            logout();
+            await logout();
         }
         catch(error){
             dispatchError({type: 'auth/failed-to-log-out'});
@@ -38,18 +45,18 @@ const Profile = () => {
         dispatchError({type: 'reset'});
         setEmailMessage('');
         const form = e.target;
-        const { value: email } = form.elements['email'];
+        const { value: newEmail } = form.elements['email'];
         const { value: username } = form.elements['username'];
-        if(!email.trim()) return dispatchError({type: 'auth/invalid-email'});
+        if(!newEmail.trim()) return dispatchError({type: 'auth/invalid-email'});
         if(username.trim().length < 6) return dispatchError({type: 'auth/username-too-short'});
         try{
             setEmailLoading(true);
-            await currentUser.updateEmail(email.trim());
-            await currentUser.updateProfile({displayName: username.trim()});
-            await db.collection('users').doc(currentUser.uid).update({
-                displayName: username.trim()
-            });
-            setEmailMessage('Success! Your username and email have been changed!')
+            await updateUsername(username);
+            setEmailMessage('Success! Your username has been changed!')
+            if(newEmail.trim() !== email){
+                await updateEmail(newEmail);
+                setEmailMessage('Success! Check your inbox to verify email address.');
+            }
         }
         catch(error){
             dispatchError({type: error.code});
@@ -69,7 +76,7 @@ const Profile = () => {
         if(password.trim() !== confirm.trim()) return dispatchError({type: 'auth/passwords-not-match'});
         try{
             setPasswordLoading(true);
-            await currentUser.updatePassword(password.trim());
+            await updatePassword(password);
             form.reset();
             setPasswordMessage('Success! Your password has been changed!');
         }
@@ -88,15 +95,29 @@ const Profile = () => {
         if(file.type !== 'image/png' && file.type !== 'image/jpeg') return dispatchError({type: 'update/wrong-image-type'});
         try{
             setLogoutLoading(true);
-            await storage.ref(`users/${uid}/profile.jpg`).put(file);
-            const url = await storage.ref(`users/${uid}/profile.jpg`).getDownloadURL();
-            await currentUser.updateProfile({photoURL: url});
-            await db.collection('users').doc(currentUser.uid).update({
-                photoURL: url
-            })
+            await updateProfileImage(file);
         }
         catch(error){
             dispatchError({type: 'update/change-image-failed'});
+        }
+        setLogoutLoading(false);
+    }
+
+    const handleDeleteAccount = e => {
+        e.preventDefault();
+        setConfirmInfo({message: 'delete your account', action: delAccount});
+    }
+
+    const delAccount = async () => {
+        dispatchError({type: 'reset'});
+        if(logoutLoading) return;
+        try{
+            setLogoutLoading(true);
+            await deleteAccount();
+            return history.push('/login');
+        }
+        catch(error){
+            dispatchError({type: error.code});
         }
         setLogoutLoading(false);
     }
@@ -130,7 +151,10 @@ const Profile = () => {
                     </Figure>
                     <Label htmlFor='profilePicture'>Change profile picture</Label>
                     <input onChange={handleChangeImage} style={{display: 'none'}} type='file' id='profilePicture' name='profilePicture' />
-                    <Button style={{background: '#DB382C'}} type='button' onClick={handleLogout}>Log out</Button>
+                    <ButtonsContainer>
+                        <Button type='button' onClick={handleLogout}>Log out</Button>
+                        <Button style={{background: '#DB382C'}} type='button' onClick={handleDeleteAccount} >Delete Account</Button>
+                    </ButtonsContainer>
                 </Form>
                 <Form onSubmit={handleSubmitPassword} noValidate>
                     {passwordLoading && <Loader />}

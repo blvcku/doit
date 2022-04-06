@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Triangle from '../../images/triangle.svg';
-import XIcon from '../../images/x.svg';
-
+import CloseIcon from '../../images/close.svg';
 import useError from '../../hooks/useError';
-
 import { Wrapper, Card } from './Error.styles';
 
-const Error = (props) => {
+const Error = () => {
 
     const { error, dispatchError } = useError();
     const [resetAnimation, setResetAnimation] = useState(false);
@@ -17,7 +15,7 @@ const Error = (props) => {
     }
 
     useEffect(() => {
-        if(error){
+        if(error.error){
             setResetAnimation(true);
             const timer = setTimeout(() => {
                 dispatchError({type: 'reset'});
@@ -36,14 +34,14 @@ const Error = (props) => {
 
     return(
         <>
-            {error ? (!resetAnimation &&
+            {error && error.error ? (!resetAnimation &&
                 <Wrapper>
                     <Card>
                         <button onClick={handleCloseError} type='button'>
-                            <img src={XIcon} alt='Close' />
+                            <img src={CloseIcon} alt='Close' />
                         </button>
                         <img src={Triangle} alt='Error triangle' />
-                        <p role='alert'>{error}</p>
+                        <p role='alert'>{error.error}</p>
                         <div className='error-bar'></div>
                     </Card>
                 </Wrapper>

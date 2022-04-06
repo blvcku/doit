@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { db } from '../../firebase';
 import SearchIcon from '../../images/search.svg';
-
 import useAuth from '../../hooks/useAuth';
 import useFilter from '../../hooks/useFilter';
-
 import { SearchBar, PostsContainer } from './Posts.styles';
 import Post from './Post';
 
@@ -42,8 +40,8 @@ const MyPosts = () => {
                 </SearchBar>
             </nav>
             <PostsContainer>
-                {filteredData.map(({title, id, authorID, author, createdAt, description, fileURL, fileType}) => (
-                    <Post key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} fileURL={fileURL} fileType={fileType} />
+                {filteredData.map(({title, id, authorID, author, createdAt, description, file}) => (
+                    <Post key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} file={file} />
                 ))}
             </PostsContainer>
         </>

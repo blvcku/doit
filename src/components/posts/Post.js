@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
-import EditIcon from '../../images/project/tasks/editsmall.svg';
-import ArrowIcon from '../../images/project/tasks/arrow.svg';
+import EditIcon from '../../images/editblue.svg';
+import ArrowIcon from '../../images/arrowblue.svg';
 import DeleteIcon from '../../images/delete.svg';
-import { db } from '../../firebase';
-
+import { functions } from '../../firebase';
 import useAuth from "../../hooks/useAuth";
 import useTimeSince from '../../hooks/useTimeSince';
 import useConfirmBox from '../../hooks/useConfirmBox';
 import useError from '../../hooks/useError';
 import useFileType from '../../hooks/useFileType';
-
+import useUserProfile from '../../hooks/useUserProfile';
 import { PostContainer, FlexContainer, AuthorInformations, ButtonsContainer, DeleteButton, ExpandButton, Description, FileContainer, ContactButton } from "./Posts.styles";
 import PostCreator from './PostCreator';
 import ContactForm from './ContactForm';
 
-const Post = ({innerRef, title, authorID, author, createdAt, id, description, fileURL, fileType}) => {
+const Post = ({innerRef, title, authorID, author, createdAt, id, description, file}) => {
 
     const { currentUser: {uid} } = useAuth();
     const [isOwner, setIsOwner] = useState(false);
@@ -22,8 +21,9 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
     const { setSeconds, timeSince } = useTimeSince();
     const { setConfirmInfo } = useConfirmBox();
     const { dispatchError } = useError();
+    const { setUserID } = useUserProfile();
     const [isEditing, setIsEditing] = useState(false);
-    const { setFile, fileElement } = useFileType();
+    const { setFile, FileElement } = useFileType();
     const [contactForm, setContactForm] = useState(false);
 
     useEffect(() => {
@@ -36,10 +36,13 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
     }, [createdAt.seconds, setSeconds]);
 
     useEffect(() => {
-        if(fileURL && fileType){
-            setFile({file: fileURL, type: fileType, name: 'file'});
-        }
-    }, [fileURL, fileType, setFile]);
+        setFile(file);
+    }, [file, setFile]);
+
+    const openUserProfile = e => {
+        e.preventDefault();
+        setUserID(authorID);
+    }
 
     const handleToggleExpanded = e => {
         e.preventDefault();
@@ -54,7 +57,8 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
     const deletePost = async () => {
         dispatchError({type: 'reset'});
         try{
-            await db.collection('posts').doc(id).delete();
+            const deletePost = functions.httpsCallable('deletePost');
+            await deletePost({id: id});
         }
         catch(error){
             dispatchError({type: 'posts/failed-to-delete'});
@@ -77,13 +81,13 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
                 <ContactForm id={id} setContactForm={setContactForm} />
             ) : (
                 isEditing ? (
-                    <PostCreator setIsEditing={setIsEditing} isCreating={false} initialTitle={title} initialDescription={description} initialFileURL={fileURL} initialFileType={fileType} postID={id} />
+                    <PostCreator setIsEditing={setIsEditing} isCreating={false} initialTitle={title} initialDescription={description} initialFile={file} postID={id} />
                 ) : (
                     <PostContainer>
                         <h3>{title}</h3>
                         <FlexContainer>
                             <AuthorInformations>
-                                <img src={author.photoURL} alt={author.displayName} />
+                                <img style={{cursor: 'pointer'}} onClick={openUserProfile} src={author.photoURL} alt={author.displayName} />
                                 <h4>{author.displayName}</h4>
                                 <p>{timeSince}</p>
                             </AuthorInformations>
@@ -106,10 +110,10 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
                         {expanded && (
                             <>
                                 <Description>{description}</Description>
-                                {fileURL && fileType && (
+                                {file && file.url && (
                                     <FileContainer>
                                         <div style={{marginTop: '1rem'}}>
-                                            {fileElement}
+                                            {FileElement}
                                         </div>
                                     </FileContainer>
                                 )}

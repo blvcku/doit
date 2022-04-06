@@ -1,25 +1,31 @@
 import { useState, useEffect } from 'react';
+import useImage from './useImage';
 
-const useFileType = () => {
+const useFileType = (callback) => {
 
     const [file, setFile] = useState(null);
-    const [fileElement, setFileElement] = useState(null);
+    const [FileElement, setFileElement] = useState(null);
+    const { setImage } = useImage();
 
     useEffect(() => {
-        if(file && file.type && file.name && file.file){
+        const handleClickImage = e => {
+            e.preventDefault();
+            setImage(file);
+        }
+        if(file && file.type && file.name && file.url){
             if(file.type.startsWith('video')){
-                setFileElement(<video src={file.file} controls={true} />)
+                setFileElement(<video src={file.url} onLoadedData={callback} controls={true} />)
             }
             else if(file.type.startsWith('audio')){
-                setFileElement(<audio src={file.file} controls={true} />)
+                setFileElement(<audio src={file.url} onLoadedData={callback} controls={true} />)
             }
             else{
-                setFileElement(<img src={file.file} alt={file.name} />)
+                setFileElement(<img onClick={handleClickImage} src={file.url} alt={file.name} onLoad={callback} />)
             }
         }
-    }, [file]);
+    }, [file, callback, setImage]);
 
-    return { setFile, fileElement, file };
+    return { setFile, FileElement, file };
 }
 
 export default useFileType;

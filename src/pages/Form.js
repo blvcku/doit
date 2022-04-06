@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Redirect, useHistory } from "react-router-dom";
 import { db } from '../firebase';
-
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
-
+import useTitle from '../hooks/useTitle';
 import { FormBanner, FormContainer, FormMain, FormSubmit, QuestionsList } from '../components/forms/form/Form.styles';
 import Question from '../components/forms/form/Question';
 
@@ -13,6 +12,7 @@ const Form = () => {
     const history = useHistory();
     const { dispatchError } = useError();
     const { currentUser = null } = useAuth();
+    const { setTitle } = useTitle();
     const { id } = useParams();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -42,58 +42,60 @@ const Form = () => {
         return unsubscribe;
     }, [id]);
 
+    useEffect(() => {
+        setTitle(form.title);
+    }, [setTitle, form.title]);
+
     const handleSubmitForm = async e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
         setError(null);
         setIsSubmitting(true);
         const form = e.target;
-        let answers = {};
-        for(const [questionIndex, {multipleAnswers, inputField, id}] of questions.entries()){
-            let answer = {input: null, answers: []};
-            if(multipleAnswers){
-                const checkboxAnswers = form.elements[`answer${questionIndex}`];
-                let isAnyChecked = false;
-                checkboxAnswers.forEach(({checked, value}) => {
-                    if(checked){
-                        isAnyChecked = true;
-                        answer.answers.push(value);
-                    }
-                })
-                if(!isAnyChecked){
-                    setError(questionIndex);
-                    setIsSubmitting(false);
-                    return dispatchError({type: 'forms/answer-every-question'});
-                }
-            }
-            else{
-                const { value } = form.elements[`answer${questionIndex}`];
-                if(!value){
-                    setError(questionIndex);
-                    setIsSubmitting(false);
-                    return dispatchError({type: 'forms/answer-every-question'});
-                }
-                answer.answers.push(value);
-            }
+        let userAnswers = {};
+        for(const [questionIndex, {multipleAnswers, inputField, id, answers}] of questions.entries()){
+            const answer = {input: null, answers: []};
             if(inputField){
                 const { value } = form.elements[`answer${questionIndex}input`];
                 if(value.trim()){
-                    answer = {...answer, input: value.trim()};
+                    answer.input = value.trim();
+                }
+                answer.input = value.trim();
+            }
+            if(answers.length > 0){
+                if(multipleAnswers){
+                    const checkboxAnswers = form.elements[`answer${questionIndex}`];
+                    checkboxAnswers.forEach(({checked, value}) => {
+                        if(checked){
+                            answer.answers.push(value);
+                        }
+                    })
+                }
+                else{
+                    const { value } = form.elements[`answer${questionIndex}`];
+                    if(value){
+                        answer.answers.push(value);
+                    }
                 }
             }
-            answers = {...answers, [id]: answer};
+            if(!answer.input && !answer.answers.length){
+                setError(questionIndex);
+                setIsSubmitting(false);
+                return dispatchError({type: 'forms/answer-every-question'});
+            }
+            userAnswers = {...userAnswers, [id]: answer};
         }
         try{
             if(currentUser){
                 await db.collection('forms').doc(id).collection('answers').doc(currentUser.uid).set({
                     authorID: currentUser.uid,
-                    answers: answers
+                    answers: userAnswers
                 });
             }
             else{
                 await db.collection('forms').doc(id).collection('answers').add({
                     authorID: null,
-                    answers: answers
+                    answers: userAnswers
                 });
             }
             return history.push('/forms/success');
@@ -115,8 +117,8 @@ const Form = () => {
                         <FormMain>
                             <form noValidate onSubmit={handleSubmitForm}>
                                 <QuestionsList>
-                                    {questions.map(({title, answers, fileURL, fileType, id, multipleAnswers, inputField}, index) => (
-                                        <Question inputField={inputField} index={index} key={id} multipleAnswers={multipleAnswers} title={title} answers={answers} fileURL={fileURL} fileType={fileType} error={error} />
+                                    {questions.map(({title, answers, file, id, multipleAnswers, inputField}, index) => (
+                                        <Question inputField={inputField} index={index} key={id} multipleAnswers={multipleAnswers} title={title} answers={answers} file={file} error={error} />
                                     ))}
                                 </QuestionsList>
                                 <FormSubmit disabled={isSubmitting} isSubmitting={isSubmitting} type='submit'>

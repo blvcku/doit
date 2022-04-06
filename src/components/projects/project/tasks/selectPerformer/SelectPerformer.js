@@ -1,6 +1,6 @@
-import PersonIcon from '../../../../../images/project/tasks/person.svg';
+import PerformerIcon from '../../../../../images/performer.svg';
 import PlusIcon from '../../../../../images/plus.svg';
-import CloseIcon from '../../../../../images/x.svg';
+import CloseIcon from '../../../../../images/close.svg';
 
 import { Container, CloseButton, Wrapper } from "./SelectPerformer.styles";
 import { MemberContainer, MemberButton } from "../../membersList/Members.styles";
@@ -23,7 +23,7 @@ const SelectPerformer = ({members, setSelectedPerformer, setIsSelectingPerformer
             <CloseButton onClick={handleCloseSelecting} type='button'>
                 <img src={CloseIcon} alt='Close' />
             </CloseButton>
-            <img src={PersonIcon} alt='Person' />
+            <img src={PerformerIcon} alt='Performer' />
             <h2>SET TASK PERFORMER</h2>
                 <Wrapper>
                     {members.map(({photoURL, displayName, uid}) => (

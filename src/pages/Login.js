@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
-
+import useTitle from '../hooks/useTitle';
 import { Container, Form, Wrapper, Paragraph, SubmitButton } from '../components/auth/Auth.styles';
 
 const Login = () => {
@@ -13,14 +12,17 @@ const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const { dispatchError } = useError();
+    const { setTitle } = useTitle();
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setTitle('Log In');
+    }, [setTitle]);
 
     const handleSubmit = async e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
-        if(passwordRef.current.value.length === 0){
-            return dispatchError({type: 'auth/invalid-password'});
-        }
+        if(!passwordRef.current.value) return dispatchError({type: 'auth/invalid-password'});
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);

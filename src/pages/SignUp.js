@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-
 import useAuth from '../hooks/useAuth';
 import useError from '../hooks/useError';
-
+import useTitle from '../hooks/useTitle';
 import { Container, SignUpForm, Wrapper, Paragraph, SubmitButton } from '../components/auth/Auth.styles';
 
 const SignUp = (props) => {
@@ -14,20 +13,19 @@ const SignUp = (props) => {
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
     const { dispatchError } = useError();
+    const { setTitle } = useTitle();
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setTitle('Sign Up');
+    }, [setTitle]);
 
     const handleSubmit = async e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
-        if(!emailRef.current.value.trim()){
-            return dispatchError({type: 'auth/invalid-email'});
-        }
-        if(passwordRef.current.value.length < 6){
-            return dispatchError({type: 'auth/password-too-short'});
-        }
-        if(passwordRef.current.value !== confirmPasswordRef.current.value){
-            return dispatchError({type: 'auth/passwords-not-match'});
-        }
+        if(!emailRef.current.value.trim()) return dispatchError({type: 'auth/invalid-email'});
+        if(passwordRef.current.value.length < 6) return dispatchError({type: 'auth/password-too-short'});
+        if(passwordRef.current.value !== confirmPasswordRef.current.value) return dispatchError({type: 'auth/passwords-not-match'});
         try{
             setLoading(true);
             await signUp(emailRef.current.value, passwordRef.current.value);

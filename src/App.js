@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-
 import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Form from './pages/Form';
 import FormSuccess from './components/forms/formSuccess/FormSuccess';
-
 import AuthProvider from './contexts/AuthContext';
 import ErrorProvider from './contexts/ErrorContext';
 import ConfirmBoxProvider from './contexts/ConfirmBoxContext';
@@ -16,8 +14,10 @@ import Error from './components/error/Error';
 import ErrorPortal from './portals/ErrorPortal';
 import ConfirmBoxPortal from './portals/ConfirmBoxPortal';
 import ConfirmBox from './components/confirmBox/ConfirmBox';
-
 import GlobalStyle from './GlobalStyle';
+import ImagePortal from './portals/ImagePortal';
+import ImageProvider from './contexts/ImageContext';
+import Image from './components/image/Image';
 
 function App() {
     return (
@@ -25,22 +25,27 @@ function App() {
             <AuthProvider>
                 <ErrorProvider>
                     <ConfirmBoxProvider>
-                        <Switch>
-                            <PrivateRoute path='/dashboard' component={Dashboard} />
-                            <Route exact path='/forms/success' component={FormSuccess} />
-                            <Route path='/forms/:id' component={Form} />
-                            <Route path='/signup' component={SignUp} />
-                            <Route path='/login' component={Login} />
-                            <Route path='/resetpassword' component={ResetPassword} />
-                            <Route path='*' render={() => <Redirect to='/dashboard/projects' />} />
-                        </Switch>
-                        <ErrorPortal>
-                            <Error />
-                        </ErrorPortal>
-                        <ConfirmBoxPortal>
-                            <ConfirmBox />
-                        </ConfirmBoxPortal>
-                        <GlobalStyle />
+                        <ImageProvider>
+                            <Switch>
+                                <PrivateRoute path='/dashboard' component={Dashboard} />
+                                <Route exact path='/forms/success' component={FormSuccess} />
+                                <Route path='/forms/:id' component={Form} />
+                                <Route path='/signup' component={SignUp} />
+                                <Route path='/login' component={Login} />
+                                <Route path='/resetpassword' component={ResetPassword} />
+                                <Route path='*' render={() => <Redirect to='/dashboard/projects' />} />
+                            </Switch>
+                            <ErrorPortal>
+                                <Error />
+                            </ErrorPortal>
+                            <ConfirmBoxPortal>
+                                <ConfirmBox />
+                            </ConfirmBoxPortal>
+                            <ImagePortal>
+                                <Image />
+                            </ImagePortal>
+                            <GlobalStyle />
+                        </ImageProvider>
                     </ConfirmBoxProvider>
                 </ErrorProvider>
             </AuthProvider>

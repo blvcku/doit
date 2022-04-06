@@ -7,7 +7,6 @@ import ArrowIcon from '../../images/navarrow.svg';
 import FormsLogo from '../../images/forms.svg';
 import PostsLogo from '../../images/posts.svg';
 import Logo from '../../images/logo.svg';
-
 import { Header, Nav, CustomNavLink, Button, Heading } from './Navbar.styles';
 
 const Navbar = () => {

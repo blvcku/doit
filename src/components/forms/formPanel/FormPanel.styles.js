@@ -47,6 +47,27 @@ export const Header = styled.header`
     }
 `;
 
+export const DeleteFormButton = styled.button`
+    order:3;
+    grid-column: span 2;
+    background: #DB382C;
+    box-shadow: 0px 3px 6px #00000029;
+    font-size:.8rem;
+    border:none;
+    border-radius:13px;
+    color:var(--colorWhite);
+    cursor:pointer;
+    width:fit-content;
+    height:fit-content;
+    padding: .4rem 2rem;
+    margin:auto;
+    @media(min-width:520px){
+        grid-column: 4;
+        margin:0;
+        transform:translateY(-20%);
+    }
+`;
+
 export const PauseButton = styled.button`
     text-align:center;
     border:2px solid var(--darkerSecondary);
@@ -155,6 +176,7 @@ export const FormScoreContainer = styled.div`
     width:100%;
     text-align:center;
     padding: 1.35rem 0 1.5rem;
+    order:4;
     div{
         background:var(--darkerSecondary);
         width:55%;
@@ -181,6 +203,7 @@ export const FormScoreContainer = styled.div`
     @media(min-width:520px){
         grid-row: 2/4;
         justify-self:start;
+        order:0;
     }
     @media(min-width:950px){
         div{
@@ -267,6 +290,10 @@ export const AnswersContainer = styled.ul`
     }
     @media(min-width:1100px){
         grid-template-columns:repeat(4, 1fr);
+    }
+    &:empty{
+        margin-top:1rem;
+        margin-bottom:0;
     }
 `;
 

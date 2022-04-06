@@ -121,6 +121,22 @@ export const InputsWrapper = styled.div`
     }
 `;
 
+export const ButtonsContainer = styled.div`
+    max-width:220px;
+    margin:auto;
+    margin-top:25px;
+    padding:0 1rem;
+    button:nth-child(2){
+        margin-top:15px;
+    }
+    button{
+        display:block;
+        width:100%;
+        margin-top:0px;
+        padding: 9px 0px;
+    }
+`;
+
 export const Button = styled.button`
     background: #0E8E8C;
     box-shadow: 0px 3px 6px #00000029;
@@ -132,10 +148,10 @@ export const Button = styled.button`
     margin-top:35px;
     cursor:pointer;
     font-weight:400;
-    transition: transform .3s ease;
     @media(min-width:400px){
         margin-top:50px;
     }
+    transition: transform .3s ease;
     &:active{
         transform:scale(0.95);
     }
@@ -171,12 +187,18 @@ export const Figure = styled.figure`
         }
     }
     figcaption{
-        font-size:1.5rem;
+        font-size:1.1rem;
         font-weight:700;
         color: var(--colorSecondary);
         margin-top:6px;
         word-break:break-word;
+        @media(min-width:310px){
+            font-size:1.35rem;
+        }
         @media(min-width:400px){
+            font-size:1.9rem;
+        }
+        @media(min-width:1500px){
             font-size:2.1rem;
         }
         padding: 0px 10px;

@@ -1,31 +1,27 @@
 import { useState, useEffect } from "react";
 import { functions } from "../../firebase";
-
 import useAuth from "../../hooks/useAuth";
 import useCarousel from "../../hooks/useCarousel";
-
 import { GridContainer, FlexContainer, OverflowContainer, NextButton, PrevButton } from "./Friends.styles";
 import Person from "./Person";
 import Loader from '../loading/Loader';
 
 const FriendsList = ({searchTerm}) => {
 
-    const { currentUserData: {friends, invites, requests} } = useAuth();
+    const { currentUserData: { friends = [], invites = [], requests = [] } = {} } = useAuth();
     const [friendsData, setFriendsData] = useState([]);
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
     const { handleNextSlide, handlePrevSlide, setSlides, hidePrev, hideNext, currentSlide } = useCarousel();
 
     useEffect(() => {
-        let isMounted = true;
         const getData = async () => {
             const getFriendsData = functions.httpsCallable('getFriendsData');
             const { data } = await getFriendsData({friends: friends, invites: invites, requests: requests});
-            if(isMounted) setFriendsData(data);
-            if(isMounted) setLoading(false);
+            setFriendsData(data);
+            setLoading(false);
         }
-        if(isMounted) getData();
-        return () => { isMounted = false }
+        getData();
     }, [friends, invites, requests])
 
     useEffect(() => {

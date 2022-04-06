@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react';
-import SaveIcon from '../../../../images/project/tasks/save.svg';
-import AssingIcon from '../../../../images/project/tasks/ppladd.svg';
+import SaveIcon from '../../../../images/save.svg';
+import AssingIcon from '../../../../images/assign.svg';
 import { db, fb, functions, storage } from '../../../../firebase';
-
 import useAuth from '../../../../hooks/useAuth';
 import useError from '../../../../hooks/useError';
-
-import { TaskEditHead, ImageContainer, SmallButton, SaveButton } from "./Tasks.styles";
+import { TaskEditHead, ImageContainer, SmallButton, SaveButton, TaskHeadFirst, TaskHeadSecond } from "./Tasks.styles";
 import SelectPerformer from './selectPerformer/SelectPerformer';
 import TaskEditBody from './TaskEditBody';
 
-const TaskEdit = ({setLoading, performer, members: membersIDs, title: initialTitle, description: initialDescription, taskID, creating, id, setIsEditing, file, steps: initialSteps}) => {
+const TaskEdit = ({setLoading, performer = {}, members: membersIDs, title: initialTitle = '', description: initialDescription = '', taskID, creating, id, setIsEditing, file, steps: initialSteps = []}) => {
 
-    const [selectedPerformer, setSelectedPerformer] = useState();
+    const [selectedPerformer, setSelectedPerformer] = useState(performer);
     const [isSelectingPerformer, setIsSelectingPerformer] = useState(false);
     const [members, setMembers] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [steps, setSteps] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(file);
+    const [title, setTitle] = useState(initialTitle);
+    const [description, setDescription] = useState(initialDescription);
+    const [steps, setSteps] = useState(initialSteps);
     const { currentUser } = useAuth();
     const { dispatchError } = useError();
 
@@ -30,8 +28,8 @@ const TaskEdit = ({setLoading, performer, members: membersIDs, title: initialTit
     const createUpdateTask = async e => {
         e.preventDefault();
         dispatchError({type: 'reset'});
-        if(title.trim().length === 0) return dispatchError({type: 'projects/task-title-too-short'});
-        if(description.trim().length === 0) return dispatchError({type: 'projects/task-description-too-short'});
+        if(!title.trim()) return dispatchError({type: 'projects/task-title-too-short'});
+        if(!description.trim()) return dispatchError({type: 'projects/task-description-too-short'});
         for(const step of steps){
             if(!step.content.trim()) return dispatchError({type: 'projects/step-empty'});
         }
@@ -99,14 +97,7 @@ const TaskEdit = ({setLoading, performer, members: membersIDs, title: initialTit
                 photoURL: currentUser.photoURL
             });
         }
-        else{
-            setSelectedPerformer(performer);
-            setSelectedFile(file);
-            setTitle(initialTitle);
-            setDescription(initialDescription)
-            setSteps(initialSteps);
-        }
-    }, [creating, performer, currentUser, file, initialTitle, initialDescription, initialSteps]);
+    }, [creating, currentUser]);
 
     useEffect(() => {
         const getUsersData = functions.httpsCallable('getUsersData');
@@ -138,13 +129,13 @@ const TaskEdit = ({setLoading, performer, members: membersIDs, title: initialTit
             ) : (
                 <>
                     <TaskEditHead>
-                        <div>
+                        <TaskHeadFirst>
                             <ImageContainer>
                                 <img src={selectedPerformer && selectedPerformer.photoURL} alt='Performer' />
                             </ImageContainer>
-                            <h2>{selectedPerformer && selectedPerformer.displayName}</h2>
-                        </div>
-                        <div>
+                            <h3>{selectedPerformer && selectedPerformer.displayName}</h3>
+                        </TaskHeadFirst>
+                        <TaskHeadSecond>
                             <SmallButton onClick={toggleOnSelectingPerformer} type='button'>
                                 <img src={AssingIcon} alt='Assing' />
                             </SmallButton>
@@ -152,9 +143,8 @@ const TaskEdit = ({setLoading, performer, members: membersIDs, title: initialTit
                                 <img src={SaveIcon} alt='Submit' />
                                 Save
                             </SaveButton>
-                        </div>
+                        </TaskHeadSecond>
                     </TaskEditHead>
-                    <hr />
                     <TaskEditBody 
                         steps={steps}
                         setSteps={setSteps}

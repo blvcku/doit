@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'; 
 import SearchIcon from '../../images/search.svg';
-import { db } from '../../firebase';
-
+import { postsIndex } from '../../algolia';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-
 import { SearchBar, PostsContainer } from './Posts.styles';
 import Post from './Post';
 
 const GlobalPosts = () => {
 
-    const [searchTerm, setSearchTerm] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [posts, setPosts] = useState([]);
+    const { last, setHasMore, currentPage, setCurrentPage, setLoading } = useInfiniteScroll();
     const chunkSize = 5;
 
     const handleChangeSearchTerm = e => {
@@ -19,54 +19,35 @@ const GlobalPosts = () => {
         setSearchTerm(value);
     }
 
-    const loadMoreData = async () => {
-        try{
-            let postsRef = db.collection('posts').orderBy('createdAt').startAfter(lastVisible).limit(chunkSize);
-            if(searchTerm){
-                postsRef = db.collection('posts').where("title", ">=", searchTerm).where("title", "<=", searchTerm + "\uf8ff").orderBy('title').orderBy('createdAt').startAfter(lastVisible).limit(chunkSize);
-            }
-            const posts = await postsRef.get();
-            if(posts.empty) return setHasMore(false);
-            setLastVisible(posts.docs[posts.docs.length-1]);
-            const postsArray = [];
-            posts.forEach(post => (
-                postsArray.unshift({...post.data(), id: post.id})
-            ));
-            setData(prev => [...prev, ...postsArray]);
-        }
-        catch(error){
-            console.error(error);
-            setHasMore(false);
-        }
-    }
-
-    const { last, data, setData, setHasMore, lastVisible, setLastVisible } = useInfiniteScroll(loadMoreData);
-
     useEffect(() => {
-        setHasMore(true);
-    }, [searchTerm, setHasMore]);
+        setPosts([]);
+        setCurrentPage(0);
+    }, [searchTerm, setCurrentPage]);
 
     useEffect(() => {
         const getData = async () => {
             try{
-                let postsRef = db.collection('posts').limit(chunkSize).orderBy('createdAt');
-                if(searchTerm){
-                    postsRef = db.collection('posts').where("title", ">=", searchTerm).where("title", "<=", searchTerm + "\uf8ff").orderBy('title').orderBy('createdAt').limit(chunkSize);
-                }
-                const posts = await postsRef.get();
-                setLastVisible(posts.docs[posts.docs.length-1]);
+                setLoading(true);
+                const result = await postsIndex.search(searchTerm ? searchTerm : '', {
+                    hitsPerPage: chunkSize,
+                    page: currentPage
+                });
+                const posts = result.hits;
+                setHasMore(posts.length > 0);
                 const postsArray = [];
                 posts.forEach(post => (
-                    postsArray.unshift({...post.data(), id: post.id})
+                    postsArray.push({...post, id: post.objectID, createdAt: { seconds: post.createdAt._seconds }})
                 ));
-                setData(postsArray); 
+                setPosts(prev => [...prev, ...postsArray]); 
             }
             catch(error){
                 console.error(error);
+                setHasMore(false);
             }
+            setLoading(false);
         }
         getData();
-    }, [searchTerm, setData, setLastVisible])
+    }, [searchTerm, setHasMore, currentPage, setLoading])
 
     return(
         <>
@@ -79,9 +60,9 @@ const GlobalPosts = () => {
                 </SearchBar>
             </nav>
             <PostsContainer>
-                {data.map(({title, id, authorID, author, createdAt, description, fileURL, fileType}, index) => {
-                    if(data.length === index + 1) return <Post innerRef={last} key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} fileURL={fileURL} fileType={fileType} />
-                    return <Post key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} fileURL={fileURL} fileType={fileType} />
+                {posts.map(({title, id, authorID, author, createdAt, description, file}, index) => {
+                    if(posts.length === index + 1) return <Post innerRef={last} key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} file={file} />
+                    return <Post key={id} title={title} authorID={authorID} author={author} createdAt={createdAt} id={id} description={description} file={file} />
                 })}
             </PostsContainer>
         </>

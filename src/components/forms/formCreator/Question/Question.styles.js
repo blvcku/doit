@@ -49,6 +49,10 @@ export const ButtonsContainer = styled.div`
             width:.9rem;
             height:.9rem;
         }
+        transition: transform .3s ease;
+        &:active{
+            transform:scale(0.95);
+        }
     }
     label{
         font-weight:500;
@@ -102,6 +106,9 @@ export const ButtonsContainer = styled.div`
 export const QuestionLabel = styled.label`
     color:var(--darkerSecondary);
     font-weight:800;
+    div{
+        position:relative;
+    }
     input{
         display:block;
         box-shadow: 0px 3px 6px #00000029;
@@ -110,10 +117,24 @@ export const QuestionLabel = styled.label`
         width:100%;
         font-size: .8rem;
         font-weight:500;
-        padding: .5rem 1.4rem;
+        padding: .5rem 2.4rem .5rem 1rem;
         margin-top:.3rem;
         outline:none;
         color:#676767;
+    }
+    button{
+        position:absolute;
+        right:.7rem;
+        top:50%;
+        transform:translateY(-50%);
+        background:none;
+        border:none;
+        cursor:pointer;
+        img{
+            display:block;
+            width:1.2rem;
+            height:1.2rem;
+        }
     }
 `;
 
@@ -140,6 +161,10 @@ export const FileContainer = styled.div`
             width:1.3rem;
             height:1.3rem;
         }
+        transition: transform .3s ease;
+        &:active{
+            transform:scale(0.95);
+        }
     }
     div{
         max-width:250px;
@@ -163,6 +188,7 @@ export const FileContainer = styled.div`
             height:auto;
             object-fit:contain;
             object-position:center center;
+            cursor:pointer;
         }
         video{
             display:block;
@@ -213,7 +239,7 @@ export const Answer = styled.li`
         border-radius:10px;
         border: 1px solid #707070;
         font-size:.9rem;
-        padding: .3rem 2.5rem .3rem .7rem;
+        padding: .3rem 2rem .3rem .7rem;
         outline:none;
         color:#676767;
         width:100%;
@@ -229,6 +255,8 @@ export const Answer = styled.li`
         cursor:pointer;
         img{
             display:block;
+            width:1rem;
+            height:1rem;
         }
     }
     div{

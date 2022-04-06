@@ -1,5 +1,4 @@
 import { useState, useLayoutEffect } from 'react';
-
 import { FormScoreContainer } from './FormPanel.styles';
 
 const FormScore = ({number = 0, text = ''}) => {

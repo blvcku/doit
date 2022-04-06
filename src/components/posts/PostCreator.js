@@ -1,20 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PlusIcon from '../../images/formCreator/addwhite.svg';
+import PlusIcon from '../../images/pluswhite.svg';
 import { db, fb, storage, functions } from '../../firebase';
-
 import useFileType from '../../hooks/useFileType';
 import useError from '../../hooks/useError';
 import useAuth from '../../hooks/useAuth';
-
 import { Form, Label, TitleInput, FileContainer, SubmitButton } from "./Posts.styles";
 
-const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITLE', initialDescription = '', initialFileURL, initialFileType, postID}) => {
+const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITLE', initialDescription = '', initialFile = {url: null, type: null, name: null}, postID}) => {
 
     const [title, setTitle] = useState(initialTitle);
     const titleRef = useRef();
     const [description, setDescription] = useState(initialDescription);
-    const { setFile, file, fileElement } = useFileType();
+    const { setFile, file, FileElement } = useFileType();
     const { dispatchError } = useError();
     const [loading, setLoading] = useState(false);
     const { currentUser: {uid, photoURL, displayName} } = useAuth();
@@ -33,11 +31,12 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
     const handleChangeFile = e => {
         e.preventDefault();
         const file = e.target.files[0];
+        if(!file) return;
         if(!file.type.startsWith('audio') && !file.type.startsWith('video') && !file.type.startsWith('image')) return dispatchError({type: 'posts/wrong-file-type'});
         const reader = new FileReader();
         reader.onloadend = async e => {
             try{
-                setFile({file: e.target.result, name: file.name, type: file.type});
+                setFile({url: e.target.result, name: file.name, type: file.type});
             }
             catch(error){
                 console.error(error);
@@ -52,10 +51,8 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
 
     useEffect(() => {
         if(isCreating) return;
-        if(!initialFileURL) return;
-        if(!initialFileType) return;
-        setFile({file: initialFileURL, name: 'file', type: initialFileType});
-    }, [initialFileType, initialFileURL, isCreating, setFile]);
+        setFile(initialFile);
+    }, [initialFile, isCreating, setFile]);
 
     const handleCreatePost = async e => {
         e.preventDefault();
@@ -71,19 +68,25 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
                     photoURL: photoURL
                 },
                 authorID: uid,
-                fileURL: null,
-                fileType: null,
+                file: {
+                    url: null,
+                    type: null,
+                    name: null
+                },
                 title: title.trim(),
                 description: description.trim() 
             });
-            if(file && file.file && file.type){
+            if(file && file.url && file.type){
                 const movePostFile = functions.httpsCallable('movePostFile');
-                await storage.ref(`temp/posts/${id}/file`).putString(file.file, 'data_url', {customMetadata: {'owner': uid} });
+                await storage.ref(`temp/posts/${id}/file`).putString(file.url, 'data_url', {customMetadata: {'owner': uid} });
                 await movePostFile({postID: id});
                 const url = await storage.ref(`posts/${id}/file`).getDownloadURL();
                 await db.collection('posts').doc(id).update({
-                    fileURL: url,
-                    fileType: file.type
+                    file:{
+                        url: url,
+                        type: file.type,
+                        name: file.name
+                    }
                 });
             }
         }  
@@ -105,14 +108,17 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
                 title: title.trim(),
                 description: description.trim()
             });
-            if(file && file.file && file.type && file.file !== initialFileURL){
+            if(file && file.url && file.url !== initialFile.url){
                 const movePostFile = functions.httpsCallable('movePostFile');
-                await storage.ref(`temp/posts/${postID}/file`).putString(file.file, 'data_url', {customMetadata: {'owner': uid} });
+                await storage.ref(`temp/posts/${postID}/file`).putString(file.url, 'data_url', {customMetadata: {'owner': uid} });
                 await movePostFile({postID: postID});
                 const url = await storage.ref(`posts/${postID}/file`).getDownloadURL();
                 await db.collection('posts').doc(postID).update({
-                    fileURL: url,
-                    fileType: file.type
+                    file:{
+                        url: url,
+                        type: file.type,
+                        name: file.name
+                    }
                 });
             }
         }
@@ -125,10 +131,10 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
 
     return(
         <Form onSubmit={isCreating ? handleCreatePost : handleUpdatePost}>
-            <TitleInput maxLength='50' ref={titleRef} type='text' name='title' value={title} onChange={handleChangeTitle} />
+            <TitleInput spellCheck='false' maxLength='50' ref={titleRef} type='text' name='title' value={title} onChange={handleChangeTitle} />
             <Label>
                 <p>Content:</p>
-                <textarea onChange={handleChangeDescription} value={description} maxLength='600' />
+                <textarea spellCheck='false' onChange={handleChangeDescription} value={description} maxLength='600' />
             </Label>
             <FileContainer type={file && file.type} >
                 <label>
@@ -138,7 +144,7 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
                 </label>
                 {file && (
                     <div>
-                        {fileElement}
+                        {FileElement}
                     </div>
                 )}
             </FileContainer>
