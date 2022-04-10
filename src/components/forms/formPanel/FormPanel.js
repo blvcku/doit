@@ -23,6 +23,7 @@ const FormPanel = () => {
     const { setConfirmInfo } = useConfirmBox();
     const { setTitle } = useTitle();
     const history = useHistory();
+    const [deletingForm, setDeletingForm] = useState(false);
 
     useEffect(() => {
         const unsubscribe = db.collection('forms').doc(id).onSnapshot(form => {
@@ -51,7 +52,7 @@ const FormPanel = () => {
     }, [uid, form.authorID]);
 
     useEffect(() => {
-        setTitle(form.title);
+        setTitle(form.title || 'DOIT');
     }, [setTitle, form.title]);
 
     const handleTogglePaused = async e => {
@@ -85,13 +86,15 @@ const FormPanel = () => {
     const deleteForm = async () => {
         dispatchError({type: 'reset'});
         try{
+            setDeletingForm(true);
             const deleteFormFunction = functions.httpsCallable('deleteForm');
-            history.push('/dashboard/forms');
             await deleteFormFunction({formID: id});
+            return history.push('/dashboard/forms');
         }
         catch(error){
             dispatchError({type: 'forms/failed-to-delete'});
         }
+        setDeletingForm(false);
     }
 
     return(
@@ -138,7 +141,7 @@ const FormPanel = () => {
                                     </FormInfoSecond>
                                     <FormScore number={form.tookPart} text='Took part' />
                                     <FormScore number={form.inProgress >= 0 ? form.inProgress : 0} text='In Progress' />
-                                    <DeleteFormButton onClick={handleDeleteForm} type='button'>
+                                    <DeleteFormButton disabled={deletingForm} onClick={handleDeleteForm} type='button'>
                                         Delete Form
                                     </DeleteFormButton>
                                 </FormInfoWrapper>

@@ -49,7 +49,7 @@ const Project = () => {
     }, [isEditing])
 
     useEffect(() => {
-        setTitle(project.title);
+        setTitle(project.title || 'DOIT');
     }, [project.title, setTitle])
 
     const turnOnEdit = e => {

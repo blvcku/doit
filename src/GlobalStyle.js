@@ -17,9 +17,6 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
     body{
-        max-width:1920px;
-        margin:auto;
-        inset:0;
         background-color: var(--colorDarkerWhite);
         h1,h2{
             font-weight: 700;
@@ -28,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
             font-weight:700;
         }
         img{
-            font-size:.7rem;
+            font-size:0;
         }
         a{
             text-decoration:none;

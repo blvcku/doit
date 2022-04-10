@@ -77,6 +77,7 @@ export const MessagesContainer = styled.ul`
         margin-top:0;
         padding-bottom:0!important;
         &::before{
+            text-align:center;
             content:'Your messages will appear here..';
             color:#676767;
             position:absolute;

@@ -33,7 +33,7 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
     }
 });
 
-exports.onPostDelete = functions.firestore.document('posts/${postID}').onDelete(async (snap, context) => {
+exports.onPostDelete = functions.firestore.document('posts/{postID}').onDelete(async (snap, context) => {
     try{
         await bucket.deleteFiles({ prefix: `forms/${snap.id}` });
         return;

@@ -108,7 +108,7 @@ export const Section = styled.section`
         padding: 40px 85px;
     }
     @media(min-width:1300px){
-        min-height:681px;
+        min-height:685px;
     }
 
     h2{
@@ -144,9 +144,9 @@ export const FlexContainer = styled.div`
             content: 'No friends';
             color:var(--colorSecondary);
             align-self:center;
-            transform:translateY(110%);
+            transform:translateY(300%);
             @media(min-width:900px){
-                transform:translateY(400%);
+                transform:translateY(500%);
             }
             @media(min-width:1300px){
                 transform:translateY(850%);
@@ -239,6 +239,7 @@ export const ImageContainer = styled.div`
         border-radius:50%;
         grid-area: 1 / 1 / 2 / 2;
         display:block;
+        aspect-ratio:1/1;
     }
     &::before{
         padding-bottom:100%;

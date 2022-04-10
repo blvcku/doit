@@ -42,9 +42,7 @@ const ResetPassword = (props) => {
                     <label htmlFor='email'>E-mail</label>
                     <input placeholder='example@mail.com' type='email' name='email' id='email' ref={emailRef}/>
                     <Paragraph>
-                        <b>
-                            <Link to='/login'>Back to Log In</Link>
-                        </b>
+                        <Link to='/login'>Back to Log In</Link>
                     </Paragraph>
                     <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                     <SuccessMessage>

@@ -16,6 +16,7 @@ const Aside = ({isEditing, isOwner, date, id}) => {
     const [minDate, setMinDate] = useState('');
     const [formatedDate, setFormatedDate] = useState();
     const { setConfirmInfo } = useConfirmBox();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const today = new Date();
@@ -35,14 +36,16 @@ const Aside = ({isEditing, isOwner, date, id}) => {
 
     const deleteProject = async () => {
         try{
+            setLoading(true);
             const deleteProjectFunction = functions.httpsCallable('deleteProject');
             dispatchError({type: 'reset'});
-            history.push('/dashboard');
             await deleteProjectFunction({id: id});
+            return history.push('/dashboard');
         }
         catch(error){
             dispatchError({type: 'projects/delete'});
         }
+        setLoading(false);
     }
 
     const handleLeaveProject = e => {
@@ -52,14 +55,16 @@ const Aside = ({isEditing, isOwner, date, id}) => {
 
     const leaveProject = async () => {
         try{
+            setLoading(true);
             const leaveProjectFunction = functions.httpsCallable('leaveProject');
             dispatchError({type: 'reset'});
-            history.push('/dashboard');
             await leaveProjectFunction({projectID: id});
+            return history.push('/dashboard');
         }
         catch(error){
             dispatchError({type: 'projects/leave'});
         }
+        setLoading(false);
     }
 
     return(
@@ -75,12 +80,12 @@ const Aside = ({isEditing, isOwner, date, id}) => {
             </DateContainer>
             <ButtonsContainer>
                 {isOwner ? (
-                        <button style={{background: '#DB382C'}} onClick={handleDeleteProject} type='button' aria-label='Delete project'>
+                        <button disabled={loading} style={{background: '#DB382C'}} onClick={handleDeleteProject} type='button' aria-label='Delete project'>
                             <img src={DeleteIcon} alt='delete' />
                             Delete Project
                         </button>
                     ) : (
-                        <button style={{background: '#DB382C'}} onClick={handleLeaveProject} type='button' aria-label='Delete project'>
+                        <button disabled={loading} style={{background: '#DB382C'}} onClick={handleLeaveProject} type='button' aria-label='Delete project'>
                             Leave Project
                         </button>
                 )}

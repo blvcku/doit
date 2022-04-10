@@ -58,18 +58,32 @@ exports.deleteUserAccount = functions.https.onCall(async (data, context) => {
 exports.updateUser = functions.firestore.document('users/{userID}').onUpdate(async (change, context) => {
     try{
         const after = change.after.data();
-        await tasksRef.where('performer.uid', '==', after.uid).get().then(tasks => {
-            tasks.forEach(task => tasksRef.doc(task.id).update({
-                'performer.displayName': after.displayName,
-                'performer.photoURL': after.photoURL
-            }))
-        });
-        await postsRef.where('authorID', '==', after.uid).get().then(posts => {
-            posts.forEach(post => postsRef.doc(post.id).update({
-                'author.displayName': after.displayName,
-                'author.photoURL': after.photoURL
-            }))
-        });
+        if(after.photoURL){
+            await tasksRef.where('performer.uid', '==', after.uid).get().then(tasks => {
+                tasks.forEach(task => tasksRef.doc(task.id).update({
+                    'performer.displayName': after.displayName,
+                    'performer.photoURL': after.photoURL
+                }))
+            });
+            await postsRef.where('authorID', '==', after.uid).get().then(posts => {
+                posts.forEach(post => postsRef.doc(post.id).update({
+                    'author.displayName': after.displayName,
+                    'author.photoURL': after.photoURL
+                }))
+            });
+        }
+        else{
+            await tasksRef.where('performer.uid', '==', after.uid).get().then(tasks => {
+                tasks.forEach(task => tasksRef.doc(task.id).update({
+                    'performer.displayName': after.displayName
+                }))
+            });
+            await postsRef.where('authorID', '==', after.uid).get().then(posts => {
+                posts.forEach(post => postsRef.doc(post.id).update({
+                    'author.displayName': after.displayName
+                }))
+            });
+        }
         return;
     }
     catch(error){
@@ -80,9 +94,10 @@ exports.updateUser = functions.firestore.document('users/{userID}').onUpdate(asy
 exports.newUserSignUp = functions.auth.user().onCreate(async user => {
     try{
         const [username] = user.email.split('@');
+        const updatedUsername = username.slice(0, 20);
         await usersRef.doc(user.uid).set({
             uid: user.uid,
-            displayName: username,
+            displayName: updatedUsername,
             friends: [],
             requests: [],
             invites: [] 

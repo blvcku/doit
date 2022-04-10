@@ -67,10 +67,10 @@ export const Paragraph = styled.p`
     font-size:.8rem;
     margin-top:30px;
     color: var(--colorSecondary);
+    font-weight:700;
     a{
         color: var(--colorSecondary);
-        font-weight:700;
-        text-decoration:none;
+        text-decoration:underline;
     }
 `;
 

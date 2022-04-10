@@ -12,6 +12,7 @@ import useUserProfile from '../../hooks/useUserProfile';
 import { PostContainer, FlexContainer, AuthorInformations, ButtonsContainer, DeleteButton, ExpandButton, Description, FileContainer, ContactButton } from "./Posts.styles";
 import PostCreator from './PostCreator';
 import ContactForm from './ContactForm';
+import Loader from '../loading/Loader';
 
 const Post = ({innerRef, title, authorID, author, createdAt, id, description, file}) => {
 
@@ -25,6 +26,7 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
     const [isEditing, setIsEditing] = useState(false);
     const { setFile, FileElement } = useFileType();
     const [contactForm, setContactForm] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if(authorID === uid) setIsOwner(true);
@@ -57,12 +59,14 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
     const deletePost = async () => {
         dispatchError({type: 'reset'});
         try{
+            setLoading(true);
             const deletePost = functions.httpsCallable('deletePost');
             await deletePost({id: id});
         }
         catch(error){
             dispatchError({type: 'posts/failed-to-delete'});
         }
+        setLoading(false);
     }
 
     const handleTurnOnEditing = e => {
@@ -84,6 +88,7 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
                     <PostCreator setIsEditing={setIsEditing} isCreating={false} initialTitle={title} initialDescription={description} initialFile={file} postID={id} />
                 ) : (
                     <PostContainer>
+                        {loading && <Loader />}
                         <h3>{title}</h3>
                         <FlexContainer>
                             <AuthorInformations>

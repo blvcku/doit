@@ -120,18 +120,18 @@ export const FileContainer = styled.div`
     `}
     img{
         display:block;
-        width:max-content;
         max-width:100%;
         height:auto;
         object-fit:contain;
         object-position:center center;
         cursor:pointer;
+        max-height:600px;
     }
     video{
         display:block;
         width:100%;
         height:auto;
-        aspect-ratio:16/9;
+        max-height:600px;
     }
     audio{
         width:100%;

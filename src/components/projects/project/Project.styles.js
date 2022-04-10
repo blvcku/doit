@@ -223,5 +223,8 @@ export const ButtonsContainer = styled.div`
             height:.8rem;
             display:block;
         }
+        &:disabled{
+            opacity:0.7;
+        }
     }
 `;

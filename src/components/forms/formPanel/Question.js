@@ -25,6 +25,7 @@ const Question = ({title, formID, id, answers, inputField}) => {
             .doc('answersSum')
             .onSnapshot(answersSum => {
                 const data = answersSum.data();
+                if(!data) return;
                 setInputAnswers(data.inputs);
                 setUsersAnswers(data.answersSum);
             })

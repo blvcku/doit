@@ -142,7 +142,7 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
                     Add File
                     <input type='file' name='file' onChange={handleChangeFile} />
                 </label>
-                {file && (
+                {file && file.url && (
                     <div>
                         {FileElement}
                     </div>

@@ -153,18 +153,18 @@ export const FileContainer = styled.div`
         `}
         img{
             display:block;
-            width:max-content;
             max-width:100%;
             height:auto;
             object-fit:contain;
             object-position:center center;
             cursor:pointer;
+            max-height:600px;
         }
         video{
             display:block;
             width:100%;
             height:auto;
-            aspect-ratio:16/9;
+            max-height:600px;
         }
         audio{
             width:100%;
@@ -266,6 +266,8 @@ export const PostContainer = styled.div`
     border-radius:13px;
     text-align:center;
     padding:1rem 1rem 2rem;
+    position:relative;
+    overflow:hidden;
     h3{
         font-weight:500;
         font-size:1.3rem;

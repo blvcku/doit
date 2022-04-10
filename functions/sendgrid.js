@@ -6,11 +6,11 @@ const host = functions.config().app.host;
 const postsRef = admin.firestore().collection('posts');
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
 sgMail.setApiKey(SENDGRID_API_KEY);
-const taskTemplate = functions.config().sendgrid.taskTemplate;
-const postMessageTemplate = functions.config().sendgrid.postMessageTemplate;
-const verifyEmailTemplate = functions.config().sendgrid.verifyEmailTemplate;
-const resetPasswordTemplate = functions.config().sendgrid.resetPasswordTemplate;
-const fromEmail = functions.config().sendgrid.fromEmail;
+const taskTemplate = functions.config().sendgrid.tasktemplate;
+const postMessageTemplate = functions.config().sendgrid.postmessagetemplate;
+const verifyEmailTemplate = functions.config().sendgrid.verifyemailtemplate;
+const resetPasswordTemplate = functions.config().sendgrid.resetpasswordtemplate;
+const fromEmail = functions.config().sendgrid.fromemail;
 
 const projectsRef = admin.firestore().collection('projects');
 

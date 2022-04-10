@@ -34,7 +34,7 @@ const FormCreator = () => {
     }, [])
 
     useEffect(() => {
-        setTitle(form.title);
+        setTitle(form.title || 'DOIT');
     }, [setTitle, form.title]);
 
     const validateData = () => {

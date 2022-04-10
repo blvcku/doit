@@ -23,7 +23,7 @@ const SearchFriends = ({searchTerm}) => {
                 setLoading(true);
                 const result = await usersIndex.search(searchTerm ? searchTerm : '', {
                     hitsPerPage: chunkSize,
-                    filters: `NOT uid:${currentUser.uid}`,
+                    filters: `NOT objectID:${currentUser.uid}`,
                     page: currentPage
                 });
                 const users = result.hits;

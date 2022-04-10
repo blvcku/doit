@@ -43,7 +43,7 @@ const Form = () => {
     }, [id]);
 
     useEffect(() => {
-        setTitle(form.title);
+        setTitle(form.title || 'DOIT');
     }, [setTitle, form.title]);
 
     const handleSubmitForm = async e => {

@@ -47,7 +47,7 @@ service cloud.firestore {
       	(
         	(resource.data.status == 'public' || request.auth.uid in resource.data.members) 
           && 
-        	(!getUserAnswer(request.auth.uid) && !resource.data.paused)
+        	!resource.data.paused
         );
       allow create: if request.auth.token.email_verified && request.auth != null &&
       	request.resource.data.createdAt == request.time &&
@@ -90,7 +90,7 @@ service cloud.firestore {
         	(
           	(getFormStatus() == 'public' || request.auth.uid in getFormMembers()) 
             &&
-          	(!getUserAnswer(request.auth.uid) && !getFormPaused())
+          	!getFormPaused()
           );
         match /answersSum/answersSum {
         	allow delete: if request.auth.token.email_verified && request.auth.uid == getFormOwner();

@@ -141,18 +141,13 @@ export const ImageContainer = styled.figure`
         position:absolute;
         bottom:-1.6rem;
         border-radius:8px;
-        left:50%;
-        transform:translateX(-50%);
+        left:0;
         z-index:50;
         background: #333331;
         opacity: .8;
         font-size:.7rem;
         color:var(--colorWhite);
         padding: 5px 10px;
-        @media(min-width:560px){
-            left:0;
-            transform:none;
-        }
         white-space:nowrap;
     }
 

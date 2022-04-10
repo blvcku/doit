@@ -66,6 +66,9 @@ export const DeleteFormButton = styled.button`
         margin:0;
         transform:translateY(-20%);
     }
+    &:disabled{
+        opacity:0.7;
+    }
 `;
 
 export const PauseButton = styled.button`

@@ -13,8 +13,9 @@ const AuthProvider = ({children}) => {
         try{
             const { user } = await auth.createUserWithEmailAndPassword(email, password);
             const [username] = email.split('@');
+            const updatedUsername = username.slice(0, 20);
             const photoURL = await storage.ref('users/default/default.jpg').getDownloadURL();
-            return await user.updateProfile({displayName: username, photoURL: photoURL});
+            return await user.updateProfile({displayName: updatedUsername, photoURL: photoURL});
         }
         catch(error){
             return Promise.reject(error);

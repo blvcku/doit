@@ -49,10 +49,8 @@ const SignUp = (props) => {
                     <label htmlFor='confirmPassword'>Confirm Password</label>
                     <input placeholder='Confirm Password' type='password' autoComplete='off' name='ConfirmPassword' id='ConfirmPassword' ref={confirmPasswordRef} />
                     <Paragraph>
-                        <u>Already have an account?</u>
-                        <b>
-                            <Link to='/login'> Log In</Link>
-                        </b>
+                        Already have an account?&nbsp;
+                        <Link to='/login'>Log In</Link>
                     </Paragraph>
                     <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                 </SignUpForm>

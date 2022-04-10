@@ -44,12 +44,10 @@ const Login = () => {
                     <label htmlFor='password'>Password</label>
                     <input placeholder='Password' type='password' autoComplete='on' name='password' id='password' ref={passwordRef} />
                     <Paragraph>
-                        <u>Don't have an account?</u>
-                        <b>
-                            <Link to='/signup'> Sign Up</Link>
-                            <br/>
-                            <Link to='/resetpassword'>I forgot my password</Link>
-                        </b>
+                        Don't have an account?&nbsp;
+                        <Link to='/signup'>Sign Up</Link>
+                        <br/>
+                        <Link to='/resetpassword'>I forgot my password</Link>
                     </Paragraph>
                     <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                 </Form>

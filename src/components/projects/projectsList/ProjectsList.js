@@ -81,7 +81,7 @@ const ProjectsList = () => {
     return(
         <Container>
             <nav>
-                <SearchBar noValidate>
+                <SearchBar onSubmit={e => e.preventDefault()} noValidate>
                     <input placeholder='Search' type='text' name='search' id='search' value={filter} onChange={handleFilterChange} />
                     <img src={SearchIcon} alt='Search' />
                 </SearchBar>
