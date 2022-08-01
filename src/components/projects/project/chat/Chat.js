@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { db, fb } from '../../../../firebase';
-import CloseIcon from '../../../../images/closewhite.svg';
+import CloseIcon from '../../../../images/close-white.svg';
 import useInfiniteScrollFirestore from '../../../../hooks/useInfiniteScrollFirestore';
 import { Container, Banner, ChatContainer, MessagesContainer } from "./Chat.styles";
 import Message from './Message';
@@ -97,7 +97,7 @@ const Chat = ({title, id}) => {
             {loading && <Loader />}
             <Banner>
                 <button onClick={handleCloseChat} type='button'>
-                    <img src={CloseIcon} alt='Close' />
+                    <img src={CloseIcon} alt='Close chat window' />
                 </button>
                 <h2>Chatting with {title}</h2>
             </Banner>

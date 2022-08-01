@@ -14,7 +14,7 @@ export const Container = styled.main`
 
 export const Wrapper = styled.div`
     box-shadow: 0px 3px 6px #00000040;
-    background:var(--colorWhite);
+    background:var(--color-white);
     opacity:0.9;
     padding:110px 30px 60px;
     max-width:600px;
@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
 
     h1{
         font-weight:500;
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-size:2rem;
         text-align:center;
     }
@@ -40,21 +40,21 @@ export const Form = styled.form`
     position:relative;
     label{
         margin-top:70px;
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-weight:700;
         font-size:1rem;
     }
     input{
         width:100%;
-        color: var(--colorSecondary);
-        border:2px solid var(--colorSecondary);
+        color: var(--color-primary);
+        border:2px solid var(--color-primary);
         border-radius:10px;
         padding: 16px 22px;
         font-size:1rem;
         margin-top:10px;
 
         &::placeholder{
-            color: var(--colorSecondary);
+            color: var(--color-primary);
         }
 
         &:focus{
@@ -66,10 +66,10 @@ export const Form = styled.form`
 export const Paragraph = styled.p`
     font-size:.8rem;
     margin-top:30px;
-    color: var(--colorSecondary);
+    color: var(--color-primary);
     font-weight:700;
     a{
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         text-decoration:underline;
     }
 `;
@@ -81,9 +81,9 @@ export const SubmitButton = styled.button`
     font-size:1rem;
     padding: 10px 35px;
     font-weight:700;
-    background:${({loading}) => loading ? 'var(--colorMain)' : 'var(--colorSecondary)'};
+    background:${({loading}) => loading ? 'var(--color-accent)' : 'var(--color-primary)'};
     border:none;
-    color:var(--colorWhite);
+    color:var(--color-white);
     border-radius:10px;
     transition: transform .3s ease;
     cursor:pointer;
@@ -97,7 +97,7 @@ export const SubmitButton = styled.button`
 export const SignUpForm = styled(Form)`
     label{
         margin-top:30px;
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-weight:700;
         font-size:1rem;
     }

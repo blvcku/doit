@@ -34,7 +34,7 @@ export const GridContainer = styled.div`
 `;
 
 export const Aside = styled.aside`
-    background: var(--colorSecondary);
+    background: var(--color-primary);
     border-radius: 43px 43px 13px 13px;
     box-shadow: 0px 3px 6px #00000066;
     display:grid;
@@ -49,7 +49,7 @@ export const Aside = styled.aside`
         }
     }
     h1{
-        color: var(--colorWhite);
+        color: var(--color-white);
         font-size:1.6rem;
         @media(min-width:360px){
             font-size:2rem;
@@ -61,7 +61,7 @@ export const Aside = styled.aside`
 `;
 
 export const Form = styled.form`
-    background: var(--colorWhite);
+    background: var(--color-white);
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 13px;
     text-align:center;
@@ -69,7 +69,7 @@ export const Form = styled.form`
     position:relative;
     overflow:hidden;
     h3{
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-size:1.2rem;
         font-weight:700;
         padding: 0px 15px;
@@ -94,7 +94,7 @@ export const InputsWrapper = styled.div`
     align-items:center;
     label{
         font-weight:500;
-        color:var(--colorSecondary);
+        color:var(--color-primary);
         font-size:1.1rem;
         margin-top:10px;
         @media(min-width:400px){
@@ -142,7 +142,7 @@ export const Button = styled.button`
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 12px;
     font-size:.7rem;
-    color: var(--colorWhite);
+    color: var(--color-white);
     border:none;
     padding: 9px 50px;
     margin-top:35px;
@@ -179,7 +179,7 @@ export const Figure = styled.figure`
         width:150px;
         height:150px;
         aspect-ratio: 1/1;
-        outline: 2px solid var(--colorSecondary);
+        outline: 2px solid var(--color-primary);
         border-radius:50%;
         @media(min-width:400px){
             width:200px;
@@ -189,7 +189,7 @@ export const Figure = styled.figure`
     figcaption{
         font-size:1.1rem;
         font-weight:700;
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         margin-top:6px;
         word-break:break-word;
         @media(min-width:310px){
@@ -209,7 +209,7 @@ export const Label = styled.label`
     font-size: .9rem;
     font-weight:500;
     text-decoration: underline;
-    color: var(--colorSecondary);
+    color: var(--color-primary);
     cursor:pointer;
     display:block;
     margin-top:3px;

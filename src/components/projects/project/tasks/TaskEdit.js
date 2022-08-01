@@ -5,7 +5,7 @@ import { db, fb, functions, storage } from '../../../../firebase';
 import useAuth from '../../../../hooks/useAuth';
 import useError from '../../../../hooks/useError';
 import { TaskEditHead, ImageContainer, SmallButton, SaveButton, TaskHeadFirst, TaskHeadSecond } from "./Tasks.styles";
-import SelectPerformer from './selectPerformer/SelectPerformer';
+import SelectPerformer from './select-performer/SelectPerformer';
 import TaskEditBody from './TaskEditBody';
 
 const TaskEdit = ({setLoading, performer = {}, members: membersIDs, title: initialTitle = '', description: initialDescription = '', taskID, creating, id, setIsEditing, file, steps: initialSteps = []}) => {
@@ -137,10 +137,10 @@ const TaskEdit = ({setLoading, performer = {}, members: membersIDs, title: initi
                         </TaskHeadFirst>
                         <TaskHeadSecond>
                             <SmallButton onClick={toggleOnSelectingPerformer} type='button'>
-                                <img src={AssingIcon} alt='Assing' />
+                                <img src={AssingIcon} alt='open the menu with option of choosing the performer of the task' />
                             </SmallButton>
                             <SaveButton type='submit'>
-                                <img src={SaveIcon} alt='Submit' />
+                                <img src={SaveIcon} alt='' />
                                 Save
                             </SaveButton>
                         </TaskHeadSecond>

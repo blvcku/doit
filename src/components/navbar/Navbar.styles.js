@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 export const Header = styled.header`
     width:100%;
     height:max-content;
-    background-color: var(--colorMain);
-    color: var(--colorWhite);
+    background-color: var(--color-accent);
+    color: var(--color-white);
     position:sticky;
     top:0;
     z-index:100;
@@ -62,7 +62,7 @@ export const Nav = styled.nav`
 
 export const CustomNavLink = styled(NavLink)`
     text-decoration:none;
-    color: var(--colorWhite);
+    color: var(--color-white);
     font-size:1.1rem;
     display:flex;
     align-items:center;
@@ -70,6 +70,10 @@ export const CustomNavLink = styled(NavLink)`
     padding: 8px 45px;
     border-radius:15px;
     margin: 5px 0;
+
+    &.active{
+        background: #70cfca;
+    }
 
     img{
         width:30px;
@@ -95,7 +99,7 @@ export const Button = styled.button`
 
 export const Heading = styled.h1`
     a{
-        color: var(--colorWhite);
+        color: var(--color-white);
         text-decoration:none;
         font-size: 60px;
         font-weight:700;

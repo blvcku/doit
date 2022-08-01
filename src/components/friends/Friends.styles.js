@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Container = styled.section`
     margin: 20px;
@@ -23,24 +24,9 @@ export const Nav = styled.nav`
     @media(min-width:1300px){
         grid-template-columns: 2fr 1fr 1fr;
     }
-    a{
-        padding:25px 0 18px;
-        box-shadow: 0px 3px 6px #00000029;
-        text-align:center;
-        border-radius:13px;
-        border:2px solid var(--colorSecondary);
-        text-decoration:none;
-        color: var(--colorSecondary);
-        font-weight:500;
-        svg{
-            width:30px;
-            height:30px;
-            fill: var(--colorSecondary);
-        }
-    }
     form{
         box-shadow: 0px 3px 6px #00000066;
-        background:var(--colorSecondary);
+        background:var(--color-primary);
         display:flex;
         justify-content:center;
         align-items:center;
@@ -53,7 +39,7 @@ export const Nav = styled.nav`
             background:none;
             border:none;
             cursor:pointer;
-            background: var(--colorWhite);
+            background: var(--color-white);
             img{
                 display:block;
                 width:.95rem;
@@ -65,7 +51,7 @@ export const Nav = styled.nav`
             font-size:.7rem;
             border-radius:20px;
             border:none;
-            background:var(--colorDarkerWhite);
+            background:var(--color-white-dark);
             padding: 7px 0px 7px 20px;
             outline:none;
             color: #676767;
@@ -86,10 +72,38 @@ export const Nav = styled.nav`
     }
 `;
 
+export const CustomNavLink = styled(NavLink)`
+    padding:25px 0 18px;
+    box-shadow: 0px 3px 6px #00000029;
+    text-align:center;
+    border-radius:13px;
+    border:2px solid var(--color-primary);
+    text-decoration:none;
+    color: var(--color-primary);
+    font-weight:500;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    gap:5px;
+    svg{
+        width:30px;
+        height:30px;
+        fill: var(--color-primary);
+    }
+    &.active{
+        color:var(--color-white)!important;
+        background: var(--color-primary)!important;
+        svg{
+            fill:var(--color-white)!important;
+        }
+    }
+`;
+
 export const Section = styled.section`
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 13px;
-    background:var(--colorWhite);
+    background:var(--color-white);
     margin-top:15px;
     padding:15px 5px;
     position:relative;
@@ -112,7 +126,7 @@ export const Section = styled.section`
     }
 
     h2{
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-size:1.1rem;
         margin-left:20px;
     }
@@ -142,7 +156,7 @@ export const FlexContainer = styled.div`
         &::before{
             text-align:center;
             content: 'No friends';
-            color:var(--colorSecondary);
+            color:var(--color-primary);
             align-self:center;
             transform:translateY(300%);
             @media(min-width:900px){
@@ -181,10 +195,10 @@ export const GridContainer = styled.ul`
 export const FriendContainer = styled.li`
     position:relative;
     overflow:hidden;
-    border: 2px solid var(--colorThird);
+    border: 2px solid var(--color-accent-dark);
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
-    background:var(--colorWhite);
+    background:var(--color-white);
     padding: 15px 10px 2px;
     figcaption{
         font-size:.9rem;
@@ -231,7 +245,7 @@ export const ImageContainer = styled.div`
     position:relative;
     margin:auto;
     img{
-        outline: 1px solid var(--colorSecondary);
+        outline: 1px solid var(--color-primary);
         object-fit:cover;
         height:100%;
         max-width:100%;
@@ -276,10 +290,10 @@ export const SmallButton = styled.button`
 
 export const ApprovedButton = styled.button`
     box-shadow: 0px 3px 6px #00000029;
-    border:1px solid var(--colorThird);
+    border:1px solid var(--color-accent-dark);
     background:none;
     border-radius:13px;
-    color: var(--colorThird);
+    color: var(--color-accent-dark);
     display:flex;
     gap:3px;
     align-items:center;
@@ -298,8 +312,8 @@ export const ApprovedButton = styled.button`
 
 export const Button = styled(ApprovedButton)`
     border:none;
-    background: var(--colorThird);
-    color:var(--colorWhite);
+    background: var(--color-accent-dark);
+    color:var(--color-white);
     padding: 0px 20px;
     cursor:pointer;
     &:disabled{

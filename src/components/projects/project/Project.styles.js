@@ -33,7 +33,7 @@ export const Form = styled.form`
 `;
 
 export const BannerContainer = styled.header`
-    background: ${({background}) => background ? `url(${background})` : 'var(--colorSecondary)'};
+    background: ${({background}) => background ? `url(${background})` : 'var(--color-primary)'};
     background-size:cover;
     background-position: center center;
     box-shadow: 0px 3px 6px #00000066;
@@ -97,7 +97,7 @@ export const Title = styled.input`
     display:block;
     background:none;
     border:none;
-    color:var(--colorWhite);
+    color:var(--color-white);
     font-weight:700;
     font-size: clamp(1.8rem, 3vw, 2.6rem);
     text-shadow: 0px 3px 6px #00000063;
@@ -117,7 +117,7 @@ export const Description = styled.textarea`
     display:block;
     background:none;
     border:none;
-    color:var(--colorWhite);
+    color:var(--color-white);
     font-weight:700;
     &:focus{
         outline:none;
@@ -148,7 +148,7 @@ export const Label = styled.label`
 
 export const AsideContainer = styled.aside`
     grid-area: aside;
-    background:var(--colorWhite);
+    background:var(--color-white);
     box-shadow: 0px 3px 6px #00000066;
     padding: 1.9rem 1rem;
     border-radius:13px;
@@ -170,7 +170,7 @@ export const AsideContainer = styled.aside`
 
 export const DateContainer = styled.div`
     text-align:center;
-    color:var(--darkerSecondary);
+    color:var(--color-primary-dark);
     width:100%;
     h2{
         margin-top:2px;
@@ -203,7 +203,7 @@ export const ButtonsContainer = styled.div`
         border-radius:13px;
         background:#0E8E8C;
         border:none;
-        color:var(--colorWhite);
+        color:var(--color-white);
         padding:.4rem 0;
         font-size:.65rem;
         width:100%;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { functions } from '../../../firebase';
 import CalendarIcon from '../../../images/calendar.svg';
-import PeopleAssignedIcon from '../../../images/peopleassignedwhite.svg';
+import PeopleAssignedIcon from '../../../images/people-assigned-white.svg';
 import DeleteIcon from '../../../images/delete.svg';
 import ChatIcon from '../../../images/chat.svg';
 import { useHistory, Link } from 'react-router-dom';
@@ -70,7 +70,7 @@ const Aside = ({isEditing, isOwner, date, id}) => {
     return(
         <AsideContainer>
             <DateContainer>
-                <img src={CalendarIcon} alt='Calendar'/>
+                <img src={CalendarIcon} alt=''/>
                 <h2>Due:</h2>
                 {isEditing ? (
                     <input form='main-form' defaultValue={date} name='date' min={minDate} aria-label='Due date' type='date' />
@@ -81,7 +81,7 @@ const Aside = ({isEditing, isOwner, date, id}) => {
             <ButtonsContainer>
                 {isOwner ? (
                         <button disabled={loading} style={{background: '#DB382C'}} onClick={handleDeleteProject} type='button' aria-label='Delete project'>
-                            <img src={DeleteIcon} alt='delete' />
+                            <img src={DeleteIcon} alt='' />
                             Delete Project
                         </button>
                     ) : (
@@ -90,11 +90,11 @@ const Aside = ({isEditing, isOwner, date, id}) => {
                         </button>
                 )}
                 <Link to={`/dashboard/projects/${id}/members`}>
-                    <img src={PeopleAssignedIcon} alt='People Assigned' />
+                    <img src={PeopleAssignedIcon} alt='' />
                     People Assigned
                 </Link>
                 <Link to={`/dashboard/projects/${id}/chat`}>
-                    <img src={ChatIcon} alt='chat' />
+                    <img src={ChatIcon} alt='' />
                     Chat
                 </Link>
             </ButtonsContainer>

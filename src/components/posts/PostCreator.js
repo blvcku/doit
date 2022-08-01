@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PlusIcon from '../../images/pluswhite.svg';
+import PlusIcon from '../../images/plus-white.svg';
 import { db, fb, storage, functions } from '../../firebase';
 import useFileType from '../../hooks/useFileType';
 import useError from '../../hooks/useError';
@@ -138,7 +138,7 @@ const PostCreator = ({setIsEditing, isCreating = true, initialTitle = 'POST TITL
             </Label>
             <FileContainer type={file && file.type} >
                 <label>
-                    <img src={PlusIcon} alt='Add' />
+                    <img src={PlusIcon} alt='' />
                     Add File
                     <input type='file' name='file' onChange={handleChangeFile} />
                 </label>

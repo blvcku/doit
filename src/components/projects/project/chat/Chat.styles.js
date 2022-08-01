@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Banner = styled.div`
-    background:var(--darkerSecondary);
+    background:var(--color-primary-dark);
     box-shadow: 0px 3px 6px #0000003B;
     border-radius: 13px;
     position:relative;
@@ -23,7 +23,7 @@ export const Banner = styled.div`
     }
     text-align:center;
     h2{
-        color:var(--colorWhite);
+        color:var(--color-white);
         font-size:1.25rem;
         font-weight:500;
         word-break:break-word;
@@ -110,7 +110,7 @@ export const Form = styled.form`
         width:100%;
         input{
             border-radius:22px;
-            background:var(--colorWhite);
+            background:var(--color-white);
             color:#8C8C8C;
             border:none;
             width:100%;
@@ -137,7 +137,7 @@ export const Form = styled.form`
         }
     }
     button{
-        background:var(--darkerSecondary);
+        background:var(--color-primary-dark);
         border:none;
         padding: 0 .8rem;
         box-shadow:${({scrolledToBottom}) => scrolledToBottom ? '0px 3px 6px #0000001F' : '0px 3px 6px #00000066'};

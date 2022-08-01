@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     z-index:30;
     width:100%;
     height:100%;
-    background: var(--colorWhite);
+    background: var(--color-white);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
         width:55px;
         height:55px;
         path{
-            fill: var(--colorSecondary);
+            fill: var(--color-primary);
         }
     }
 `;

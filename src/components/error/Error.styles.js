@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     max-height:170px;
     height:100%;
     font-size:var(--fontSmall);
-    color: var(--colorWhite);
+    color: var(--color-white);
     z-index:500;
 
     @media (min-width: 768px){
@@ -26,7 +26,7 @@ export const Card = styled.div`
     align-items:center;
     text-align:center;
     padding:15px 14px;
-    background-color:var(--colorWhite);
+    background-color:var(--color-white);
     opacity:0.9;
     border-radius:13px;
     width:100%;
@@ -47,7 +47,7 @@ export const Card = styled.div`
     }
 
     p{
-        color: var(--colorSecondary);
+        color: var(--color-primary);
         font-weight:700;
         margin:9px 0px;
         max-height:50px;
@@ -57,13 +57,13 @@ export const Card = styled.div`
     }
 
     div{
-        background-color: var(--colorSecondary);
+        background-color: var(--color-primary);
         position: relative;
         width:90%;
         height: 7px;
         border-radius:10px;
         overflow:hidden;
-        border:2px solid var(--colorSecondary);
+        border:2px solid var(--color-primary);
     }
 
     div:before{
@@ -74,7 +74,7 @@ export const Card = styled.div`
         left:0;
         width:100%;
         height:100%;
-        background-color: var(--colorWhite);
+        background-color: var(--color-white);
         animation: error-bar-animation 10s linear;
     }
 

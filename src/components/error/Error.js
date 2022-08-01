@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Triangle from '../../images/triangle.svg';
-import CloseIcon from '../../images/close.svg';
+import CloseIcon from '../../images/close-grey.svg';
 import useError from '../../hooks/useError';
 import { Wrapper, Card } from './Error.styles';
 
@@ -38,9 +38,9 @@ const Error = () => {
                 <Wrapper>
                     <Card>
                         <button onClick={handleCloseError} type='button'>
-                            <img src={CloseIcon} alt='Close' />
+                            <img src={CloseIcon} alt='Close error box' />
                         </button>
-                        <img src={Triangle} alt='Error triangle' />
+                        <img src={Triangle} alt='Error' />
                         <p role='alert'>{error.error}</p>
                         <div className='error-bar'></div>
                     </Card>

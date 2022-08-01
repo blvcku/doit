@@ -1,5 +1,5 @@
-import EditIcon from '../../../images/editwhite.svg';
-import ChangePhotoIcon from '../../../images/changephoto.svg';
+import EditIcon from '../../../images/edit-white.svg';
+import ChangePhotoIcon from '../../../images/change-photo.svg';
 import SubmitIcon from '../../../images/submit.svg';
 import { storage, db, functions } from '../../../firebase';
 import useError from '../../../hooks/useError';
@@ -46,15 +46,16 @@ const Banner = ({title, description, isOwner, isEditing, turnOnEdit, titleRef, i
                         <>
                             {isEditing ? (
                                 <Button type='submit'>
-                                    <img src={SubmitIcon} alt='Submit'/>
+                                    <img src={SubmitIcon} alt='Submit project details'/>
                                 </Button>
                             ) : (
                                 <Button type='button' onClick={turnOnEdit} aria-label='Edit project' >
-                                    <img src={EditIcon} alt='Edit'/>
+                                    <img src={EditIcon} alt='Edit project details'/>
                                 </Button>
                             )}
                             <Label htmlFor='banner-background'>
-                                <img src={ChangePhotoIcon} alt='Change project banner' />
+                                {/* eslint-disable-next-line */}
+                                <img src={ChangePhotoIcon} alt='Change project banner image' />
                             </Label>
                             <InputFile onChange={handleChangeImage} type='file' accept='image/png, image/jpeg' id='banner-background' />
                         </>

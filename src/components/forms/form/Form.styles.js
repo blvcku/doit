@@ -8,7 +8,7 @@ export const FormContainer = styled.div`
 `;
 
 export const FormBanner = styled.header`
-    background:var(--darkerSecondary);
+    background:var(--color-primary-dark);
     margin-top:2.5rem;
     text-align:center;
     padding: 2rem 1rem;
@@ -17,7 +17,7 @@ export const FormBanner = styled.header`
     h1{
         font-size: clamp(1.4rem, 3vw, 2.35rem);
         font-weight:500;
-        color:var(--colorWhite);
+        color:var(--color-white);
     }
 `;
 
@@ -28,7 +28,7 @@ export const FormMain = styled.main`
 
 export const FormSubmit = styled.button`
     border:none;
-    background:var(--darkerSecondary);
+    background:var(--color-primary-dark);
     padding:.7rem 1.75rem;
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 13px;
@@ -38,7 +38,7 @@ export const FormSubmit = styled.button`
     p{
         font-size:1.1rem;
         font-weight:500;
-        color:var(--colorWhite);
+        color:var(--color-white);
         ${({isSubmitting}) => isSubmitting && `visibility: hidden`};
     }
     svg{
@@ -46,7 +46,7 @@ export const FormSubmit = styled.button`
         top:50%;
         left:50%;
         transform:translate(-50%,-50%);
-        fill:var(--colorWhite);
+        fill:var(--color-white);
         display:none;
         ${({isSubmitting}) => isSubmitting && `display:block`}; 
     }
@@ -64,8 +64,8 @@ export const QuestionsList = styled.ul`
 export const QuestionContainer = styled.li`
     box-shadow: 0px 3px 6px #00000066;
     border-radius:13px;
-    ${({error}) => error ? 'border: 2px solid #DB382C;' : 'border: 1px solid var(--darkerSecondary);'}
-    background:var(--colorWhite);
+    ${({error}) => error ? 'border: 2px solid #DB382C;' : 'border: 1px solid var(--color-primary-dark);'}
+    background:var(--color-white);
     text-align:start;
     padding: 1.8rem 1rem 1.4rem;
 `;
@@ -74,8 +74,8 @@ export const QuestionWrapper = styled.div`
     max-width:530px;
     margin:auto;
     h2{
-        color:var(--darkerSecondary);
-        font-weight:800;
+        color:var(--color-primary-dark);
+        font-weight:700;
         font-size:1rem;
         margin-bottom:2.3rem;
         position:relative;
@@ -111,11 +111,11 @@ export const FileContainer = styled.div`
     max-width:100%;
     ${({type}) => type && type.startsWith('audio') ? `
         border-radius:35px;
-        outline:3px solid var(--darkerSecondary);
+        outline:3px solid var(--color-primary-dark);
         width:100%;
     ` : `
         border-radius:13px;
-        outline:2px solid var(--darkerSecondary);
+        outline:2px solid var(--color-primary-dark);
         width:fit-content;
     `}
     img{
@@ -153,9 +153,9 @@ export const AnswerContainer = styled.li`
         font-size:.8rem;
         padding: .25rem .8rem;
         border-radius:13px;
-        border:1px solid var(--darkerSecondary);
+        border:1px solid var(--color-primary-dark);
         outline:none;
-        background:var(--colorDarkerWhite);
+        background:var(--color-white-dark);
         color:#676767;
         transition:max-width .3s ease;
         &:focus{
@@ -169,14 +169,14 @@ export const AnswerContainer = styled.li`
         position:relative;
         cursor:pointer;
         overflow:hidden;
-        border:2px solid var(--darkerSecondary);
+        border:2px solid var(--color-primary-dark);
         display:flex;
         justify-content:center;
         align-items:center;
         padding:2px;
         border-radius:1px;
         &:checked::before{
-            background:var(--darkerSecondary);
+            background:var(--color-primary-dark);
             content:'';
             width:100%;
             height:100%;
@@ -214,7 +214,7 @@ export const InputFieldLabel = styled.label`
         font-size:.75rem;
         background: #eaf4f5;
         border: none;
-        border-bottom: 1px solid var(--darkerSecondary);
+        border-bottom: 1px solid var(--color-primary-dark);
         outline:none;
         padding: .25rem .5rem;
         border-radius:3px 3px 0px 0px;

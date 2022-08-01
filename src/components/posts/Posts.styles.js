@@ -39,21 +39,31 @@ export const Nav = styled.nav`
 export const CustomNavLink = styled(NavLink)`
     box-shadow: 0px 3px 6px #00000066;
     border-radius:13px;
-    border:2px solid var(--colorSecondary);
+    border:2px solid var(--color-primary);
     display:block;
-    background:var(--colorWhite);
+    background:var(--color-white);
     text-align:center;
     padding: 25px 0px 18px;
-    p{
-        font-size:1rem;
-        color:var(--colorSecondary);
-        font-weight:500;
-        text-transform:uppercase;
-    }
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    gap:5px;
+    font-size:1rem;
+    color:var(--color-primary);
+    font-weight:500;
+    text-transform:uppercase;
     svg{
-        fill:var(--colorSecondary);
+        fill:var(--color-primary);
         width:30px;
         height:30px;
+    }
+    &.active{
+        background:var(--color-primary)!important;
+        color:var(--color-white)!important;
+        svg{
+            fill:var(--color-white)!important;
+        }
     }
 `;
 
@@ -61,7 +71,7 @@ export const Form = styled.form`
     margin-top:1rem;
     box-shadow: 0px 3px 6px #00000066;
     border-radius:13px;
-    background:var(--colorWhite);
+    background:var(--color-white);
     text-align:center;
     padding:1rem 1rem 1.8rem;
     position:relative;
@@ -97,7 +107,7 @@ export const Label = styled.label`
         width:100%;
         height:17ch;
         border-radius:13px;
-        border:2px solid var(--colorSecondary);
+        border:2px solid var(--color-primary);
         color:#676767;
         padding: .4rem .5rem;
         font-size:.8rem;
@@ -115,11 +125,11 @@ export const FileContainer = styled.div`
     label{
         display:flex;
         gap:.4rem;
-        background:var(--colorSecondary);
+        background:var(--color-primary);
         width:max-content;
         margin:auto;
         margin-top:1rem;
-        color:var(--colorWhite);
+        color:var(--color-white);
         font-weight:500;
         font-size:.9rem;
         align-items:center;
@@ -144,11 +154,11 @@ export const FileContainer = styled.div`
         overflow:hidden;
         ${({type}) => type && type.startsWith('audio') ? `
             border-radius:35px;
-            outline:3px solid var(--darkerSecondary);
+            outline:3px solid var(--color-primary-dark);
             width:100%;
         ` : `
             border-radius:13px;
-            outline:2px solid var(--darkerSecondary);
+            outline:2px solid var(--color-primary-dark);
             width:fit-content;
         `}
         img{
@@ -176,7 +186,7 @@ export const FileContainer = styled.div`
 export const SubmitButton = styled.button`
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
-    background: var(--darkerSecondary);
+    background: var(--color-primary-dark);
     border:none;
     padding:.7rem 3.5rem;
     cursor:pointer;
@@ -184,7 +194,7 @@ export const SubmitButton = styled.button`
     position:relative;
     p{
         font-size:1rem;
-        color:var(--colorWhite);
+        color:var(--color-white);
         font-weight:500;
         ${({loading}) => loading && `visibility: hidden`};
     }
@@ -194,14 +204,14 @@ export const SubmitButton = styled.button`
         top:50%;
         left:50%;
         transform:translate(-50%,-50%);
-        fill:var(--colorWhite);
+        fill:var(--color-white);
         display:none;
         ${({loading}) => loading && `display:block`}; 
     }
 `;
 
 export const SearchBar = styled.form`
-    background: var(--colorSecondary);
+    background: var(--color-primary);
     max-width:450px;
     width:100%;
     box-shadow: 0px 3px 6px #00000033;
@@ -216,7 +226,7 @@ export const SearchBar = styled.form`
         font-size:.7rem;
         border-radius:20px;
         border:none;
-        background:var(--colorDarkerWhite);
+        background:var(--color-white-dark);
         padding: 7px 0px 7px 20px;
         color: #676767;
     }
@@ -229,7 +239,7 @@ export const SearchBar = styled.form`
         background:none;
         border:none;
         cursor:pointer;
-        background: var(--colorWhite);
+        background: var(--color-white);
         img{
             display:block;
             width:.95rem;
@@ -262,7 +272,7 @@ export const PostsContainer = styled.ul`
 
 export const PostContainer = styled.div`
     box-shadow: 0px 3px 6px #00000066;
-    background:var(--colorWhite);
+    background:var(--color-white);
     border-radius:13px;
     text-align:center;
     padding:1rem 1rem 2rem;
@@ -323,7 +333,7 @@ export const AuthorInformations = styled.div`
         object-fit:cover;
         border-radius:50%;
         outline-offset:-1px;
-        outline:1px solid var(--colorSecondary);
+        outline:1px solid var(--color-primary);
     }
     h4{
         color:#676767;
@@ -371,6 +381,7 @@ export const DeleteButton = styled.button`
 
 export const ExpandButton = styled.button`
     transform:rotate(${({expanded}) => expanded ? '180deg' : '0deg'});
+    transition:transform .3s ease;
 `;
 
 export const Description = styled.p`
@@ -386,10 +397,10 @@ export const Description = styled.p`
 export const ContactButton = styled.button`
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
-    background: var(--colorSecondary);
+    background: var(--color-primary);
     border:none;
     padding:.5rem 3.5rem;
-    color:var(--colorWhite);
+    color:var(--color-white);
     font-size:1rem;
     font-weight:500;
     margin-top:2rem;
@@ -407,11 +418,11 @@ export const ContactButtonsContainer = styled.div`
         background: #DB382C;
     }
     button{
-        background:var(--colorSecondary);
+        background:var(--color-primary);
         border:none;
         box-shadow: 0px 3px 6px #00000029;
         padding:.5rem 3rem;
-        color:var(--colorWhite);
+        color:var(--color-white);
         border-radius:13px;
         font-size:1rem;
         font-weight:500;

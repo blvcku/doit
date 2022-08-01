@@ -1,6 +1,6 @@
-import AddFileIcon from '../../../../images/addfile.svg';
+import AddFileIcon from '../../../../images/add-file.svg';
 import FileIcon from '../../../../images/file.svg';
-import PlusIcon from '../../../../images/pluswhite.svg';
+import PlusIcon from '../../../../images/plus-white.svg';
 import MinusIcon from '../../../../images/minus.svg';
 import useError from "../../../../hooks/useError";
 import { TaskEditBodyContainer, Label, AddStepButton, AddFileLabel, StepsContainer, StepEdit } from "./Tasks.styles";
@@ -57,18 +57,18 @@ const TaskEditBody = ({steps, setSteps, setTitle, setDescription, setSelectedFil
                 <textarea spellCheck='false' maxLength='300' onChange={handleDescriptionChange} defaultValue={description} name='description' /> 
             </Label>
             <AddStepButton onClick={handleAddStep} type='button'>
-                <img src={PlusIcon} alt='Add' />
+                <img src={PlusIcon} alt='' />
                 Add Step
             </AddStepButton>
             <AddFileLabel file={selectedFile}>
                 {selectedFile ? (
                     <>
-                        <img src={FileIcon} alt='file' />
+                        <img src={FileIcon} alt='' />
                         <p>{selectedFile.name}</p>
                     </>
                 ) : (
                     <>
-                        <img src={AddFileIcon} alt='Add file' />
+                        <img src={AddFileIcon} alt='' />
                         Add File
                     </>
                 )}
@@ -80,7 +80,7 @@ const TaskEditBody = ({steps, setSteps, setTitle, setDescription, setSelectedFil
                         <div>{index + 1}</div>
                         <input maxLength='60' onChange={(e) => handleChangeStepContent(e, index)} type='text' name='step' value={content} />
                         <button onClick={(e) => handleDeleteStep(e, index)} type='button'>
-                            <img src={MinusIcon} alt='delete' />
+                            <img src={MinusIcon} alt='delete step' />
                         </button>
                     </StepEdit>
                 ))}

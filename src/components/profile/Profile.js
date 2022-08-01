@@ -127,7 +127,7 @@ const Profile = () => {
             <GridContainer>
                 <Aside>
                     <div>
-                        <img src={ProfileIcon} alt='Profile' />
+                        <img src={ProfileIcon} alt='' />
                         <h1>Account Settings</h1>
                     </div>
                 </Aside>

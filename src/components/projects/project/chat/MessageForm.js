@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { db, fb, functions, storage } from '../../../../firebase';
 import PhotoIcon from '../../../../images/photo.svg';
-import SendIcon from '../../../../images/sendmessage.svg';
+import SendIcon from '../../../../images/send.svg';
 
 import useAuth from '../../../../hooks/useAuth';
 import useError from '../../../../hooks/useError';

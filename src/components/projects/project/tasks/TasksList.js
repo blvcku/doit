@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../../../firebase';
-import AddIcon from '../../../../images/plusblue.svg';
+import AddIcon from '../../../../images/plus.svg';
 import { TasksListContainer, CreateTask, CreateTaskButton, TaskContainer } from "./Tasks.styles";
 import Task from './Task';
 import TaskEdit from './TaskEdit';
@@ -46,7 +46,7 @@ const TasksList = ({isOwner, id, members}) => {
                 ) : (
                     <CreateTask>
                         <CreateTaskButton onClick={toggleCreating} type='button'>
-                            <img src={AddIcon} alt='Create' />
+                            <img src={AddIcon} alt='' />
                             <p>Create Task</p>
                         </CreateTaskButton>
                     </CreateTask>

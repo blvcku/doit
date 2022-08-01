@@ -7,7 +7,7 @@ import useTitle from '../../../hooks/useTitle';
 import { Form, Container, SubContainer, MainContainer } from './Project.styles';
 import Banner from './Banner';
 import Aside from './Aside';
-import MembersList from './membersList/MembersList';
+import MembersList from './members-list/MembersList';
 import TasksList from './tasks/TasksList';
 import Chat from './chat/Chat';
 
@@ -92,7 +92,8 @@ const Project = () => {
                 project.title ? (
                     <Container>
                         <SubContainer>
-                            <Form id='main-form' noValidate onSubmit={handleSubmit}>
+                            {/* id used for date element outside form */}
+                            <Form id='main-form' noValidate onSubmit={handleSubmit}> 
                                 <Banner
                                     id={id}
                                     isOwner={isOwner}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import EditIcon from '../../images/editblue.svg';
-import ArrowIcon from '../../images/arrowblue.svg';
+import EditIcon from '../../images/edit.svg';
+import ArrowIcon from '../../images/arrow.svg';
 import DeleteIcon from '../../images/delete.svg';
 import { functions } from '../../firebase';
 import useAuth from "../../hooks/useAuth";
@@ -100,15 +100,15 @@ const Post = ({innerRef, title, authorID, author, createdAt, id, description, fi
                                 {isOwner && (
                                     <>
                                         <DeleteButton onClick={handleDeletePost} type='button'>
-                                            <img src={DeleteIcon} alt='delete' />
+                                            <img src={DeleteIcon} alt='delete post' />
                                         </DeleteButton>
                                         <button onClick={handleTurnOnEditing} type='button'>
-                                            <img src={EditIcon} alt='edit' />
+                                            <img src={EditIcon} alt='edit post' />
                                         </button>
                                     </>
                                 )}
                                 <ExpandButton onClick={handleToggleExpanded} expanded={expanded} type='button'>
-                                    <img src={ArrowIcon} alt='expand' />
+                                    <img src={ArrowIcon} alt='expand post' />
                                 </ExpandButton>
                             </ButtonsContainer>
                         </FlexContainer>

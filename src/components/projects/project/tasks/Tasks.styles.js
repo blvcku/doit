@@ -33,10 +33,10 @@ export const CreateTaskButton = styled.button`
     width:100%;
     border:none;
     padding: 30px 0px;
-    background:var(--colorWhite);
+    background:var(--color-white);
     border-radius:13px;
     box-shadow: 0px 3px 6px #00000029;
-    border:1px solid var(--darkerSecondary);
+    border:1px solid var(--color-primary-dark);
     cursor:pointer;
     img{
         width:40px;
@@ -44,7 +44,7 @@ export const CreateTaskButton = styled.button`
     }
     p{
         font-size:.8rem;
-        color:var(--colorSecondary);
+        color:var(--color-primary);
         font-weight:700;
         margin-top:7px;
     }
@@ -55,7 +55,7 @@ export const TaskContainer = styled.li`
     padding: 33px 20px 0px 20px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 13px;
-    background:var(--colorWhite);
+    background:var(--color-white);
     margin-bottom:1rem;
     position:relative;
     hr{
@@ -117,7 +117,7 @@ export const TaskEditHead = styled(TaskHead)`
             content:'Performer:';
             font-size:.7rem;
             font-weight:500;
-            color:var(--darkerSecondary);
+            color:var(--color-primary-dark);
             top:-.75rem;
             left:0;
         }
@@ -134,7 +134,7 @@ export const ImageContainer = styled.figure`
         aspect-ratio: 1/1;
         object-fit:cover;
         border-radius:50%;
-        outline:1px solid var(--darkerSecondary);
+        outline:1px solid var(--color-primary-dark);
     }
     figcaption{
         display:none;
@@ -146,7 +146,7 @@ export const ImageContainer = styled.figure`
         background: #333331;
         opacity: .8;
         font-size:.7rem;
-        color:var(--colorWhite);
+        color:var(--color-white);
         padding: 5px 10px;
         white-space:nowrap;
     }
@@ -165,7 +165,7 @@ export const StatusButton = styled.button`
     background: ${({color}) => color};
     border:none;
     font-size: .5rem;
-    color: var(--colorWhite);
+    color: var(--color-white);
     cursor:${({isOwner, isPerformer}) => isOwner || isPerformer ? 'pointer' : 'default'};
     display:flex;
     align-items:center;
@@ -181,10 +181,10 @@ export const SaveButton = styled.button`
     padding:7px 17px;
     border-radius:13px;
     box-shadow: 0px 3px 6px #00000029;
-    background: var(--darkerSecondary);
+    background: var(--color-primary-dark);
     border:none;
     font-size:12px;
-    color: var(--colorWhite);
+    color: var(--color-white);
     cursor:pointer;
     display:flex;
     align-items:center;
@@ -197,7 +197,7 @@ export const SaveButton = styled.button`
 
 export const SmallButton = styled.button`
     box-shadow: 0px 3px 6px #00000029;
-    background:${({color}) => color ? color : 'var(--darkerSecondary)'};
+    background:${({color}) => color ? color : 'var(--color-primary-dark)'};
     border:none;
     border-radius:12px;
     padding:4px 10px;
@@ -215,6 +215,7 @@ export const Button = styled.button`
     cursor:pointer;
     margin-top:4px;
     transform:rotate(${({expanded}) => expanded ? '180deg' : '0deg'});
+    transition:transform .3s ease;
 `;
 
 export const Step = styled.li`
@@ -234,14 +235,14 @@ export const Step = styled.li`
         min-width:1.1rem;
         height:1.1rem;
         appearance:none;
-        border: 2px solid var(--colorThird);
+        border: 2px solid var(--color-accent-dark);
         border-radius:2px;
         cursor:pointer;
         display:inline-block;
         position:relative;
         overflow:hidden;
         &::before{
-            box-shadow: inset 1em 1em var(--colorThird);
+            box-shadow: inset 1em 1em var(--color-accent-dark);
             content:'';
             position:absolute;
             width:80%;
@@ -257,7 +258,7 @@ export const Step = styled.li`
             position:absolute;
             left:0;
             top:0;
-            background:var(--colorWhite);
+            background:var(--color-white);
             transition:transform .2s ease;
         }
         &:checked::after{
@@ -367,14 +368,14 @@ export const Label = styled.label`
 `;
 
 export const AddStepButton = styled.button`
-    background: var(--colorThird);
+    background: var(--color-accent-dark);
     display:flex;
     align-items:center;
     justify-content:center;
     gap: 13px;
     font-size:.9rem;
     font-weight:500;
-    color:var(--colorWhite);
+    color:var(--color-white);
     padding: 9px 20px;
     box-shadow: 0px 3px 6px #0000004F;
     border-radius: 13px;
@@ -417,12 +418,12 @@ export const AddFileLabel = styled.label`
     grid-row: 5/6;
     margin-top:10px;
     ${({file}) => file ? `
-        background:var(--colorSecondary);
-        color:var(--colorWhite);
+        background:var(--color-primary);
+        color:var(--color-white);
     ` : `
-        background:var(--colorWhite);
-        color:var(--colorSecondary);
-        outline: 2px solid var(--colorSecondary);
+        background:var(--color-white);
+        color:var(--color-primary);
+        outline: 2px solid var(--color-primary);
         outline-offset: -2px;
     `}
 
@@ -466,14 +467,14 @@ export const DownloadFile = styled.a`
     min-width:170px;
     max-width:170px;
     width:100%;
-    background:var(--colorSecondary);
+    background:var(--color-primary);
     p{
         font-weight:500;
         text-overflow:ellipsis;
         max-width:100px;
         overflow:hidden;
         white-space:nowrap;
-        color:var(--colorWhite);
+        color:var(--color-white);
     }
     @media(min-width:480px){
         min-width:170px;
@@ -533,8 +534,8 @@ export const StepEdit = styled.li`
         }
     }
     div{
-        color:var(--colorWhite);
-        background:var(--colorThird);
+        color:var(--color-white);
+        background:var(--color-accent-dark);
         max-width:1.3rem;
         width:100%;
         height:1.3rem;

@@ -2,12 +2,12 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     :root{
-        --colorWhite: #F3FEFF;
-        --colorDarkerWhite: #E4F3F5;
-        --colorMain: #23ACA8;
-        --colorSecondary: #09728C;
-        --darkerSecondary: #155883;
-        --colorThird: #0e8e8c;
+        --color-white: #F3FEFF;
+        --color-white-dark: #E4F3F5;
+        --color-accent: #23ACA8;
+        --color-accent-dark: #0e8e8c;
+        --color-primary: #09728C;
+        --color-primary-dark: #155883;
     }
     *{
         box-sizing: border-box;
@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
     body{
-        background-color: var(--colorDarkerWhite);
+        background-color: var(--color-white-dark);
         h1,h2{
             font-weight: 700;
         }
@@ -32,56 +32,26 @@ const GlobalStyle = createGlobalStyle`
         }
     }
     html{
-        font-size:16px;
+        font-size:100%;
     }
-
-    .active{
-        background: #70cfca;
-    }
-    .activeFriends svg{
-        fill:var(--colorWhite)!important;
-    }
-    .activeFriends{
-        color:var(--colorWhite)!important;
-        background: var(--colorSecondary)!important;
-    }
-    .activeForm{
-        background: var(--darkerSecondary)!important;
-    }
-    .activeForm p{
-        color:var(--colorWhite)!important;
-    }
-    .activeForm svg{
-        fill:var(--colorWhite)!important;
-    }
-    .activePosts{
-        background:var(--colorSecondary)!important;
-    }
-    .activePosts svg{
-        fill:var(--colorWhite)!important;
-    }
-    .activePosts p{
-        color:var(--colorWhite)!important;
-    }
-    
     @media (min-width: 600px){
         html{
-            font-size:17px
+            font-size:calc(100% + 1px);
         }
     }
     @media (min-width: 768px){
         html{
-            font-size:18px
+            font-size:calc(100% + 2px);
         }
     }
     @media (min-width: 992px){
         html{
-            font-size:19px
+            font-size:calc(100% + 3px);
         }
     }
     @media (min-width: 1200px){
         html{
-            font-size:20px
+            font-size:calc(100% + 4px);
         }
     }
 `;

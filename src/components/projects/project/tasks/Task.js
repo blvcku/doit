@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import PendingIcon from '../../../../images/pending.svg';
-import InProgressIcon from '../../../../images/inprogress.svg';
-import CompletedIcon from '../../../../images/completed.svg';
+import PendingIcon from '../../../../images/pending-white.svg';
+import InProgressIcon from '../../../../images/inprogress-white.svg';
+import CompletedIcon from '../../../../images/completed-white.svg';
 import DeleteIcon from '../../../../images/delete.svg';
-import EditIcon from '../../../../images/editblue.svg';
-import ArrowIcon from '../../../../images/arrowblue.svg';
+import EditIcon from '../../../../images/edit.svg';
+import ArrowIcon from '../../../../images/arrow.svg';
 import FileIcon from '../../../../images/file.svg';
 import { db, functions } from '../../../../firebase';
 import useError from '../../../../hooks/useError';
@@ -13,7 +13,7 @@ import useAuth from '../../../../hooks/useAuth';
 import useUserProfile from '../../../../hooks/useUserProfile';
 import { TaskContainer, TaskHead, TaskBody, ImageContainer, StatusButton, SmallButton, Button, Step, DownloadFile, TaskHeadFirst, TaskHeadSecond } from "./Tasks.styles";
 import TaskEdit from './TaskEdit';
-import ChangeStatus from './changeStatus/ChangeStatus';
+import ChangeStatus from './change-status/ChangeStatus';
 import Loader from '../../../loading/Loader';
 
 const Task = ({isOwner, status, title, description, members, taskID, performer, id, file, steps = []}) => {
@@ -116,7 +116,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                         <TaskHead>
                             <TaskHeadFirst>
                                 <ImageContainer>
-                                    <img style={{cursor: 'pointer'}} onClick={openUserProfile} src={performer.photoURL} alt='Performer' />
+                                    <img style={{cursor: 'pointer'}} onClick={openUserProfile} src={performer.photoURL} alt='' />
                                     <figcaption>{performer.displayName}</figcaption>
                                 </ImageContainer>
                                 <h3>{title}</h3>
@@ -124,7 +124,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                             <TaskHeadSecond>
                                 <div>
                                     <StatusButton onClick={turnOnChangingStatus} isPerformer={isPerformer} isOwner={isOwner} color={{'pending': '#db382c', 'inprogress': '#db8a00', 'completed': '#018c5c'}[status]} >
-                                        <img src={{'pending': PendingIcon, 'inprogress': InProgressIcon, 'completed': CompletedIcon}[status]} alt='Pending' />
+                                        <img src={{'pending': PendingIcon, 'inprogress': InProgressIcon, 'completed': CompletedIcon}[status]} alt='' />
                                         {
                                             {
                                                 'inprogress': 'In progress'
@@ -133,18 +133,18 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                                     </StatusButton>
                                     {isOwner ? (
                                         <SmallButton onClick={handleDeleteTask} color='#DB382C'>
-                                            <img src={DeleteIcon} alt='Delete' />
+                                            <img src={DeleteIcon} alt='Delete task' />
                                         </SmallButton>
                                     ) : null}
                                 </div>
                                 <div>
                                     {isOwner ? (
                                         <Button onClick={turnOnEditing}>
-                                            <img src={EditIcon} alt='Edit' />
+                                            <img src={EditIcon} alt='Edit task' />
                                         </Button>
                                     ) : null}
-                                    <Button onClick={toggleExpanded} expanded={expanded}>
-                                        <img src={ArrowIcon} alt='Arrow' />
+                                    <Button onClick={toggleExpanded} aria-expanded={expanded} expanded={expanded}>
+                                        <img src={ArrowIcon} alt='expand or condense task' />
                                     </Button>
                                 </div>
                             </TaskHeadSecond>
@@ -172,7 +172,7 @@ const Task = ({isOwner, status, title, description, members, taskID, performer, 
                                     <div>
                                         <h6>Task Files:</h6>
                                         <DownloadFile href={file.url} download target='_blank'>
-                                            <img src={FileIcon} alt='file' />
+                                            <img src={FileIcon} alt='' />
                                             <p>{file.name}</p>
                                         </DownloadFile>
                                     </div>

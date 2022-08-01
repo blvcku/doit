@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteFriend, requestFriend, deleteRequest, declineInvite, acceptInvite } from "../../firebase";
+import { deleteFriend, requestFriend, deleteRequest, declineInvite, acceptInvite } from "../../services/Friends";
 import DefaultImage from '../../images/default.jpg';
 import AcceptIcon from '../../images/accept.svg';
 import RequestIcon from '../../images/request.svg';
@@ -101,7 +101,7 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
                         'friend':
                             <>
                                 <ApprovedButton disabled={loading} type='button'>
-                                    <img src={ApprovedIcon} alt='approved' />
+                                    <img src={ApprovedIcon} alt='' />
                                     Approved
                                 </ApprovedButton>
                                 <SmallButton disabled={loading} onClick={handleDeleteFriend} type='button'>
@@ -111,11 +111,11 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
                         'invite':
                             <>
                                 <Button disabled={loading} onClick={handleAcceptInvite} type='button'>
-                                    <img src={AcceptIcon} alt='accept' />
+                                    <img src={AcceptIcon} alt='' />
                                     Accept
                                 </Button>
                                 <SmallButton disabled={loading} onClick={handleDeclineInvite} type='button'>
-                                    <img src={DeleteIcon} alt='Decline' />
+                                    <img src={DeleteIcon} alt='Decline invite' />
                                 </SmallButton>
                             </>,
                         'request':
@@ -130,7 +130,7 @@ const Person = ({uid, photoURL = DefaultImage, displayName, status, innerRef}) =
                     }[status] ||
                             <>
                                 <Button disabled={loading} style={{gap: '6px'}} onClick={handleRequestFriend} type='button'>
-                                    <img src={RequestIcon} alt='request' />
+                                    <img src={RequestIcon} alt='' />
                                     Request Friend
                                 </Button>
                             </>
