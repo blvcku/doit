@@ -46,9 +46,7 @@ const ResetPassword = (props) => {
                     </Paragraph>
                     <SubmitButton loading={loading} type='submit'>Submit</SubmitButton>
                     <SuccessMessage>
-                        <p>
-                            {message}
-                        </p>
+                        {message}
                     </SuccessMessage>
                 </Form>
             </Wrapper>

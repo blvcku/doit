@@ -192,11 +192,12 @@ export const SubmitButton = styled.button`
     cursor:pointer;
     margin-top:2rem;
     position:relative;
-    p{
+    span{
+        display:block;
         font-size:1rem;
         color:var(--color-white);
         font-weight:500;
-        ${({loading}) => loading && `visibility: hidden`};
+        ${({$loading}) => $loading && `visibility: hidden`};
     }
 
     svg{
@@ -206,7 +207,7 @@ export const SubmitButton = styled.button`
         transform:translate(-50%,-50%);
         fill:var(--color-white);
         display:none;
-        ${({loading}) => loading && `display:block`}; 
+        ${({$loading}) => $loading && `display:block`}; 
     }
 `;
 

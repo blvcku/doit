@@ -42,7 +42,8 @@ export const CreateTaskButton = styled.button`
         width:40px;
         height:40px;
     }
-    p{
+    span{
+        display:block;
         font-size:.8rem;
         color:var(--color-primary);
         font-weight:700;

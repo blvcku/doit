@@ -35,7 +35,8 @@ export const FormSubmit = styled.button`
     margin-top:3.5rem;
     cursor:pointer;
     position:relative;
-    p{
+    span{
+        display:block;
         font-size:1.1rem;
         font-weight:500;
         color:var(--color-white);

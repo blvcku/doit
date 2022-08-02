@@ -30,7 +30,7 @@ export const ButtonsContainer = styled.div`
     margin:auto;
     gap:.7rem;
     width:max-content;
-    button{
+    button, label{
         width:max-content;
         font-weight:500;
         color:var(--color-white);
@@ -51,12 +51,8 @@ export const ButtonsContainer = styled.div`
         }
         transition: transform .3s ease;
         &:active{
-            transform:scale(0.95);
+            transform:scale(0.98);
         }
-    }
-    label{
-        font-weight:500;
-        cursor:pointer;
     }
     input{
         width:.9rem;
@@ -93,7 +89,7 @@ export const ButtonsContainer = styled.div`
     }
     @media(min-width:350px){
         grid-template-columns:1fr 1fr;
-        button:nth-child(3){
+        label:nth-child(3){
             grid-column: span 2;
             justify-self:center;
         }

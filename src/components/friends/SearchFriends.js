@@ -18,6 +18,7 @@ const SearchFriends = ({searchTerm}) => {
     const chunkSize = 8;
 
     useEffect(() => {
+        let isMounted = true;
         const getData = async () => {
             try{
                 setLoading(true);
@@ -36,6 +37,7 @@ const SearchFriends = ({searchTerm}) => {
                         uid: uid
                     })
                 })
+                if(!isMounted) return;
                 setPersons(prev => [...prev, ...usersArray]);
             }
             catch(error){
@@ -46,6 +48,7 @@ const SearchFriends = ({searchTerm}) => {
             setLoaderVisible(false);
         }
         getData();
+        return () => isMounted = false;
     }, [searchTerm, currentPage, currentUser, setHasMore, setLoading]);
 
     useEffect(() => {

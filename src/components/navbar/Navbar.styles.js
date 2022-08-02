@@ -34,21 +34,16 @@ export const Header = styled.header`
 `;
 
 export const Nav = styled.nav`
-
     display:${({expanded}) => expanded ? 'block' : 'none'};
-
     animation: nav-animation .8s forwards cubic-bezier(.73,.36,.53,1.31);
-
     @keyframes nav-animation{
         from{transform:translateX(-80vw)}
         to{transform:translateX(0)}
     }
-
     @media(min-width:900px){
         display:block;
         animation: none;
     }
-
     ul{
         list-style:none;
         margin-bottom:40px;
@@ -66,18 +61,16 @@ export const CustomNavLink = styled(NavLink)`
     font-size:1.1rem;
     display:flex;
     align-items:center;
-    gap:13px;
+    gap:.7rem;
     padding: 8px 45px;
     border-radius:15px;
     margin: 5px 0;
-
     &.active{
         background: #70cfca;
     }
-
     img{
-        width:30px;
-        height:30px;
+        width:1.5rem;
+        height:1.5rem;
     }
 `;
 
@@ -86,9 +79,7 @@ export const Button = styled.button`
     background:none;
     border:none;
     padding: 10px;
-
     transform: rotateX(${({expanded}) => expanded ? '0' : '180deg'});
-
     @media (min-width:900px){
         display:none;
     }

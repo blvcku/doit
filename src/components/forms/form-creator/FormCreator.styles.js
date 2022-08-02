@@ -112,7 +112,8 @@ export const CreateButton = styled.button`
     display:block;
     width:max-content;
     position:relative;
-    p{
+    span{
+        display:block;
         font-size:1rem;
         color:var(--color-white);
         font-weight:500;

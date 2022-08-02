@@ -35,37 +35,39 @@ const FormsList = () => {
 
     return(
         <Container>
-            <nav>
-                <SearchBar onSubmit={e => e.preventDefault()} noValidate>
-                    <input placeholder='Search' type='text' name='search' id='search' value={filter} onChange={handleFilterChange} />
-                    <img src={SearchIcon} alt='' />
-                </SearchBar>
-            </nav>
-            <FormsContainer>
-                <CreateForm>
-                    <Link to='/dashboard/forms/create'>
-                        <img src={PlusIcon} alt='' />
-                        <p>Create Form</p>
-                    </Link>
-                </CreateForm>
-                {filteredData.map(({id, title, createdAt}) => (
-                    <Form key={id}>
-                        <Link to={`/dashboard/forms/${id}`}>
-                            <img src={FormIcon} alt='' />
-                            <div>
-                                <p>{title}</p>
-                                <p>
-                                    {new Date(createdAt.toDate())
-                                        .toLocaleDateString('en-US', 
-                                            {day: 'numeric', month: 'short', year: 'numeric'}
-                                        )
-                                    }
-                                </p>
-                            </div>
+            <div>
+                <nav>
+                    <SearchBar onSubmit={e => e.preventDefault()} noValidate>
+                        <input placeholder='Search' type='text' name='search' id='search' value={filter} onChange={handleFilterChange} />
+                        <img src={SearchIcon} alt='' />
+                    </SearchBar>
+                </nav>
+                <FormsContainer>
+                    <CreateForm>
+                        <Link to='/dashboard/forms/create'>
+                            <img src={PlusIcon} alt='' />
+                            <p>Create Form</p>
                         </Link>
-                    </Form>
-                ))}
-            </FormsContainer>
+                    </CreateForm>
+                    {filteredData.map(({id, title, createdAt}) => (
+                        <Form key={id}>
+                            <Link to={`/dashboard/forms/${id}`}>
+                                <img src={FormIcon} alt='' />
+                                <div>
+                                    <p>{title}</p>
+                                    <p>
+                                        {new Date(createdAt.toDate())
+                                            .toLocaleDateString('en-US', 
+                                                {day: 'numeric', month: 'short', year: 'numeric'}
+                                            )
+                                        }
+                                    </p>
+                                </div>
+                            </Link>
+                        </Form>
+                    ))}
+                </FormsContainer>
+            </div>
         </Container>
     )
 }

@@ -5,6 +5,11 @@ export const Container = styled.section`
         margin:85px 20px 0px 0px;
     }
     margin:25px 20px;
+    @media(min-width:2100px){
+        & > div{
+            max-width:1250px;
+        }
+    }
 `;
 
 export const FormsContainer = styled.ul`

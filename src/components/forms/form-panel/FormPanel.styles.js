@@ -83,11 +83,12 @@ export const PauseButton = styled.button`
     flex-direction:column;
     gap:5px;
     margin-bottom: 1rem;
-    padding: 1.3rem;
+    padding:1.3rem;
     cursor:pointer;
     width:100%;
     background:${({isPaused}) => isPaused ? 'var(--color-primary-dark)' : 'var(--color-white)'};
-    p{
+    span{
+        display:block;
         font-size:1rem;
         color:${({isPaused}) => isPaused ? 'var(--color-white)' : 'var(--color-primary-dark)'};
         font-weight:400;

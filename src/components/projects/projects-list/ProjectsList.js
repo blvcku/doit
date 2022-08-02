@@ -80,40 +80,42 @@ const ProjectsList = () => {
 
     return(
         <Container>
-            <nav>
-                <SearchBar onSubmit={e => e.preventDefault()} noValidate>
-                    <input placeholder='Search' type='text' name='search' id='search' value={filter} onChange={handleFilterChange} />
-                    <img src={SearchIcon} alt='' />
-                </SearchBar>
-            </nav>
-            <ProjectsContainer>
-                <CreateProject>
-                    <button type='button' onClick={createProject}>
-                        <img src={PlusIcon} alt=''/>
-                        <p>Create Project</p>
-                    </button>
-                </CreateProject>
-                {filteredData.map(({title, id, photoURL, invite}, index) => {
-                    if(invite) return(
-                        <ProjectInvite 
-                            title={title} 
-                            id={id} 
-                            photoURL={photoURL} 
-                            index={index} 
-                            key={id}
-                            projectInvites={projectInvites}
-                            setProjectInvites={setProjectInvites}
-                        />
-                    )
-                    return(
-                        <Project background={photoURL || DefaultImage} key={id}>
-                            <Link to={`/dashboard/projects/${id}`}>
-                                <p>{title}</p>
-                            </Link>
-                        </Project>
-                    )
-                })}
-            </ProjectsContainer>
+            <div>
+                <nav>
+                    <SearchBar onSubmit={e => e.preventDefault()} noValidate>
+                        <input placeholder='Search' type='text' name='search' id='search' value={filter} onChange={handleFilterChange} />
+                        <img src={SearchIcon} alt='' />
+                    </SearchBar>
+                </nav>
+                <ProjectsContainer>
+                    <CreateProject>
+                        <button type='button' onClick={createProject}>
+                            <img src={PlusIcon} alt=''/>
+                            <span>Create Project</span>
+                        </button>
+                    </CreateProject>
+                    {filteredData.map(({title, id, photoURL, invite}, index) => {
+                        if(invite) return(
+                            <ProjectInvite 
+                                title={title} 
+                                id={id} 
+                                photoURL={photoURL} 
+                                index={index} 
+                                key={id}
+                                projectInvites={projectInvites}
+                                setProjectInvites={setProjectInvites}
+                            />
+                        )
+                        return(
+                            <Project background={photoURL || DefaultImage} key={id}>
+                                <Link to={`/dashboard/projects/${id}`}>
+                                    <p>{title}</p>
+                                </Link>
+                            </Project>
+                        )
+                    })}
+                </ProjectsContainer>
+            </div>
         </Container>
     )
 }

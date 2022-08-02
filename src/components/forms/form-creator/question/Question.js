@@ -12,7 +12,6 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
     const { setFile, FileElement } = useFileType();
 
     const handleAction = (e, type, answerIndex) => {
-        e.preventDefault();
         const tempQuestions = [...questions];
         switch(type){
             case 'deleteQuestion':
@@ -97,14 +96,14 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
                     <img src={PlusIcon} alt='' />
                     Add Answer
                 </button>
-                <button onClick={e => handleAction(e, 'toggleInputField')} type='button'>
-                    <input checked={inputField} type='checkbox' name='inputfield' />
-                    <label htmlFor='inputfield'>Input Field</label>
-                </button>
-                <button onClick={e => handleAction(e, 'toggleMultipleAnswers')} type='button'>
-                    <input checked={multipleAnswers} type='checkbox' name='multipleanswers' />
-                    <label htmlFor='multipleanswers'>Multiple Answers</label>
-                </button>
+                <label>
+                    <input onChange={e => handleAction(e, 'toggleInputField')} checked={inputField} type='checkbox' name='inputfield' />
+                    Input Field
+                </label>
+                <label>
+                    <input onChange={e => handleAction(e, 'toggleMultipleAnswers')} checked={multipleAnswers} type='checkbox' name='multipleanswers' />
+                    Multiple Answers
+                </label>
             </ButtonsContainer>
             <AnswersContainer>
                 {answers.map((answer, answerIndex) => (

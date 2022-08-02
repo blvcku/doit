@@ -110,12 +110,12 @@ const FormPanel = () => {
                                 {form.paused ? (
                                     <>
                                         <img src={UnpauseIcon} alt='' />
-                                        <p>Unpause form</p>
+                                        <span>Unpause form</span>
                                     </>
                                 ) : (
                                     <>
                                         <img src={PauseIcon} alt='' />
-                                        <p>Pause form</p>
+                                        <span>Pause form</span>
                                     </>
                                 )}
                             </PauseButton>

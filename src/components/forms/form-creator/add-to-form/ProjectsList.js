@@ -29,7 +29,7 @@ const ProjectsList = ({status, setForm, members}) => {
             <h2>Add from project</h2>
             <ListOfProjects>
                 {projects.map(({title, photoURL, members: projectMembers, id}) => (
-                    <Project id={id} title={title} photoURL={photoURL} projectMembers={projectMembers} members={members} setForm={setForm} />
+                    <Project key={id} id={id} title={title} photoURL={photoURL} projectMembers={projectMembers} members={members} setForm={setForm} />
                 ))}
             </ListOfProjects>
         </>

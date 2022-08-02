@@ -103,7 +103,7 @@ export const SignUpForm = styled(Form)`
     }
 `;
 
-export const SuccessMessage = styled.div`
+export const SuccessMessage = styled.p`
     font-size: .7rem;
     color: #018c5c;
     margin-top:5px;
@@ -111,7 +111,7 @@ export const SuccessMessage = styled.div`
     width:100%;
     bottom: -2rem;
     text-align:center;
-    @media (min-width:330px){
+    @media (min-width:360px){
         bottom:-1.3rem;
     }
 `;

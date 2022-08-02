@@ -15,13 +15,16 @@ const FriendsList = ({searchTerm}) => {
     const { handleNextSlide, handlePrevSlide, setSlides, hidePrev, hideNext, currentSlide } = useCarousel();
 
     useEffect(() => {
+        let isMounted = true;
         const getData = async () => {
             const getFriendsData = functions.httpsCallable('getFriendsData');
             const { data } = await getFriendsData({friends: friends, invites: invites, requests: requests});
+            if(!isMounted) return;
             setFriendsData(data);
             setLoading(false);
         }
         getData();
+        return () => isMounted = false;
     }, [friends, invites, requests])
 
     useEffect(() => {

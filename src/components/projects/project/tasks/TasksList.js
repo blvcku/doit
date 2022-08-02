@@ -47,7 +47,7 @@ const TasksList = ({isOwner, id, members}) => {
                     <CreateTask>
                         <CreateTaskButton onClick={toggleCreating} type='button'>
                             <img src={AddIcon} alt='' />
-                            <p>Create Task</p>
+                            <span>Create Task</span>
                         </CreateTaskButton>
                     </CreateTask>
                 )

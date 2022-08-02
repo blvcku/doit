@@ -220,7 +220,7 @@ export const ButtonsContainer = styled.div`
         }
         img{
             width:.8rem;
-            height:.8rem;
+            height:auto;
             display:block;
         }
         &:disabled{

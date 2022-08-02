@@ -5,6 +5,11 @@ export const Container = styled.section`
         margin:85px 20px 0px 0px;
     }
     margin:25px 20px;
+    @media(min-width:2100px){
+        & > div{
+            max-width:1250px;
+        }
+    }
 `;
 
 export const SearchBar = styled.form`
@@ -101,7 +106,8 @@ export const Project = styled.li`
 
 export const CreateProject = styled(Project)`
     background:var(--color-accent-dark);
-    p{
+    span{
+        display:block;
         margin-top:10px;
         color:var(--color-white);
         font-weight:700;
