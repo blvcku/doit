@@ -1,5 +1,4 @@
 # DOIT
-Project created to improve team work for small groups of people
 
 [Documentation in Polish](https://drive.google.com/file/d/1XtQCpkAJ2ZKXfdJMqxXz25Z4LwoA_Bo_/view?usp=sharing)
 
