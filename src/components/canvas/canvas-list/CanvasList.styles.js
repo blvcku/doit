@@ -12,7 +12,31 @@ export const Container = styled.section`
     }
 `;
 
-export const FormsContainer = styled.ul`
+export const SearchBar = styled.form`
+    background: var(--color-primary);
+    max-width:450px;
+    width:100%;
+    box-shadow: 0px 3px 6px #00000033;
+    border-radius:25px;
+    display:flex;
+    gap:8px;
+    padding: 14px 18px;
+    input{
+        width:100%;
+        max-width:300px;
+        font-size:.7rem;
+        border-radius:20px;
+        border:none;
+        background:var(--color-white-dark);
+        padding: 7px 0px 7px 20px;
+        color: #676767;
+    }
+    input:focus{
+        outline:none;
+    }
+`;
+
+export const CanvasListContainer = styled.ul`
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
     justify-content:center;
@@ -28,7 +52,7 @@ export const FormsContainer = styled.ul`
     @media(min-width:900px){
         justify-content:start;
         margin-left:10px;
-        margin-top:30px;
+        margin-top: 30px;
         gap:100px;
     }
     @media(min-width:1020px){
@@ -39,16 +63,18 @@ export const FormsContainer = styled.ul`
     }
 `;
 
-export const Form = styled.li`
-    background: var(--color-primary-dark);
+export const Canvas = styled.li`
+    background: url(${({background}) => background});
+    background-size:cover;
+    background-position: center center;
     box-shadow: 2px 3px 6px #00403F82;
     border-radius:30px;
     display:grid;
     overflow:hidden;
     height:max-content;
-    position:relative;
 
     &::before{
+        background:rgba(14, 142, 140, 0.8);
         content:'';
         display:block;
         padding-bottom:100%;
@@ -69,18 +95,25 @@ export const Form = styled.li`
     }
     p{
         color:var(--color-white);
-        font-weight:400;
+        font-weight:700;
         text-overflow: ellipsis;
         word-break:break-word;
         padding:0px 10px;
         text-align:center;
         text-shadow: 0px 3px 6px #00000063;
-        margin-top:5px;
-        font-size:.85rem;
     }
-    p:nth-child(1){
+`;
+
+export const CreateCanvas = styled(Canvas)`
+    background:var(--color-accent-dark);
+    &::before {
+        background:none;
+    }
+    span{
+        display:block;
+        margin-top:10px;
+        color:var(--color-white);
         font-weight:700;
-        margin:0;
         font-size:1rem;
     }
     img{
@@ -88,46 +121,17 @@ export const Form = styled.li`
         width:100%;
         height:auto;
         aspect-ratio: 1/1;
-        margin-bottom:1.1rem;
     }
-    div{
-        position:absolute;
-        bottom:.8rem;
-    }
-`;
-
-export const CreateForm = styled(Form)`
-    p{
-        margin-top:10px;
-        color:var(--color-white);
-        font-weight:700;
-        font-size:1rem;
-    }
-    img{
-        margin:0;
-    }
-`;
-
-export const SearchBar = styled.form`
-    background: var(--color-primary-dark);
-    max-width:450px;
-    width:100%;
-    box-shadow: 0px 3px 6px #00000033;
-    border-radius:25px;
-    display:flex;
-    gap:8px;
-    padding: 14px 18px;
-    input{
-        width:100%;
-        max-width:300px;
-        font-size:.7rem;
-        border-radius:20px;
+    button{
+        cursor:pointer;
+        background:none;
         border:none;
-        background:var(--color-white-dark);
-        padding: 7px 0px 7px 20px;
-        color: #676767;
-    }
-    input:focus{
-        outline:none;
+        display:block;
+        grid-area: 1 / 1 / 2 / 2;
+        border-radius:30px;
+        &:focus-visible{
+            outline-offset:-3px;
+            outline:2px solid black;
+        }
     }
 `;

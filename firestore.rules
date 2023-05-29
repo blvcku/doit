@@ -7,6 +7,13 @@ service cloud.firestore {
   function getOwner(project){
   	return get(/databases/$(database)/documents/projects/$(project)).data.authorID;
   }
+  	match /canvas/{canvas} {
+    	allow read: if request.auth.uid == resource.data.authorID;
+      allow update,delete: if request.auth.token.email_verified && request.auth.uid == resource.data.authorID;
+      allow create: if request.auth.token.email_verified && request.auth != null &&
+      	request.resource.data.createdAt == request.time &&
+      	request.auth.uid == request.resource.data.authorID;
+    }
     match /projects/{project} {
       allow read: if request.auth.uid in resource.data.members;
       allow update, delete: if request.auth.token.email_verified && request.auth.uid == resource.data.authorID;

@@ -39,7 +39,7 @@ const FriendsList = ({searchTerm}) => {
             result.push(filteredData.slice(i, i + chunkSize));
         }
         setPages(result);
-    }, [friendsData, searchTerm, setLoading]);
+    }, [friendsData, searchTerm]);
 
     useEffect(() => {
         setSlides(pages.length);
