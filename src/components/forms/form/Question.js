@@ -1,17 +1,30 @@
 import { useEffect } from 'react';
 import useFileType from '../../../hooks/useFileType';
-import { QuestionContainer, QuestionWrapper, FileContainer, AnswerContainer, InputFieldLabel } from "./Form.styles";
+import {
+    QuestionContainer,
+    QuestionWrapper,
+    FileContainer,
+    AnswerContainer,
+    InputFieldLabel,
+} from './Form.styles';
 
-const Question = ({title, file, answers, multipleAnswers, index, inputField, error}) => {
-
-    const { setFile, FileElement } = useFileType();   
+const Question = ({
+    title,
+    file,
+    answers,
+    multipleAnswers,
+    index,
+    inputField,
+    error,
+}) => {
+    const { setFile, FileElement } = useFileType();
 
     useEffect(() => {
-        setFile(file)
+        setFile(file);
     }, [file, setFile]);
 
-    return(
-        <QuestionContainer error={error === index} >
+    return (
+        <QuestionContainer error={error === index}>
             <QuestionWrapper>
                 <h2>{title}</h2>
                 {file && file.url && (
@@ -22,20 +35,29 @@ const Question = ({title, file, answers, multipleAnswers, index, inputField, err
                 <ul>
                     {answers.map((answer, answerIndex) => (
                         <AnswerContainer key={answerIndex}>
-                            <input type={multipleAnswers ? 'checkbox' : 'radio'} name={`answer${index}`} value={answer} />
-                            <label htmlFor='answer'>{answer}</label>
+                            <input
+                                type={multipleAnswers ? 'checkbox' : 'radio'}
+                                name={`answer${index}`}
+                                value={answer}
+                            />
+                            <label htmlFor="answer">{answer}</label>
                         </AnswerContainer>
                     ))}
                 </ul>
                 {inputField && (
                     <InputFieldLabel>
                         Other:
-                        <input maxLength='400' type='text' name={`answer${index}input`} placeholder='Write your answer...' />
+                        <input
+                            maxLength="400"
+                            type="text"
+                            name={`answer${index}input`}
+                            placeholder="Write your answer..."
+                        />
                     </InputFieldLabel>
                 )}
             </QuestionWrapper>
         </QuestionContainer>
-    )
-}
+    );
+};
 
 export default Question;

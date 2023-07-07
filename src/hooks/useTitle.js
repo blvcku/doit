@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const useTitle = () => {
-
     const [title, setTitle] = useState('DOIT');
 
     useEffect(() => {
@@ -9,7 +8,6 @@ const useTitle = () => {
     }, [title]);
 
     return { setTitle };
-
-}
+};
 
 export default useTitle;

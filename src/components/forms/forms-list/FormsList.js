@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import { db } from "../../../firebase";
-import PlusIcon from "../../../images/plus-white.svg";
-import SearchIcon from "../../../images/search-white.svg";
-import FormIcon from "../../../images/form.svg";
-import useAuth from "../../../hooks/useAuth";
-import useFilter from "../../../hooks/useFilter";
-import useTitle from "../../../hooks/useTitle";
-import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { db } from '../../../firebase';
+import PlusIcon from '../../../assets/icons/plus-white.svg';
+import SearchIcon from '../../../assets/icons/search-white.svg';
+import FormIcon from '../../../assets/icons/form.svg';
+import useAuth from '../../../hooks/useAuth';
+import useFilter from '../../../hooks/useFilter';
+import useTitle from '../../../hooks/useTitle';
+import { Link } from 'react-router-dom';
 import {
     Container,
     Form,
     CreateForm,
     FormsContainer,
     SearchBar,
-} from "./FormsList.styles";
+} from './FormsList.styles';
 
 const FormsList = () => {
     const {
@@ -29,13 +29,13 @@ const FormsList = () => {
 
     useEffect(() => {
         const unsubscribe = db
-            .collection("forms")
-            .where("authorID", "==", uid)
-            .orderBy("createdAt")
+            .collection('forms')
+            .where('authorID', '==', uid)
+            .orderBy('createdAt')
             .onSnapshot((snapshot) => {
                 const forms = [];
                 snapshot.forEach((form) =>
-                    forms.unshift({ ...form.data(), id: form.id })
+                    forms.unshift({ ...form.data(), id: form.id }),
                 );
                 setData(forms);
             });
@@ -43,7 +43,7 @@ const FormsList = () => {
     }, [uid, setData]);
 
     useEffect(() => {
-        setTitle("Forms");
+        setTitle('Forms');
     }, [setTitle]);
 
     return (
@@ -77,11 +77,11 @@ const FormsList = () => {
                                     <p>{title}</p>
                                     <p>
                                         {new Date(
-                                            createdAt.toDate()
-                                        ).toLocaleDateString("en-US", {
-                                            day: "numeric",
-                                            month: "short",
-                                            year: "numeric",
+                                            createdAt.toDate(),
+                                        ).toLocaleDateString('en-US', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric',
                                         })}
                                     </p>
                                 </div>

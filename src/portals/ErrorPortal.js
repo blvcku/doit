@@ -1,12 +1,6 @@
-import ReactDom from "react-dom";
+import ReactDom from 'react-dom';
 
-const ErrorPortal = ({children}) => (
-    ReactDom.createPortal(
-        <>
-            {children}
-        </>,
-        document.getElementById('error')
-    )
-)
+const ErrorPortal = ({ children }) =>
+    ReactDom.createPortal(<>{children}</>, document.getElementById('error'));
 
 export default ErrorPortal;

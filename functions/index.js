@@ -1,8 +1,8 @@
 const admin = require('firebase-admin');
-const functions = require("firebase-functions");
+const functions = require('firebase-functions');
 
 admin.initializeApp({
-    storageBucket: functions.config().app.bucket
+    storageBucket: functions.config().app.bucket,
 });
 
 const users = require('./src/users');

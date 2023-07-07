@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { Stage, Layer, Line } from "react-konva";
-import DeleteIcon from "../../../images/delete.svg";
+import { useState, useRef, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { Stage, Layer, Line } from 'react-konva';
+import DeleteIcon from '../../../assets/icons/delete.svg';
 import {
     CanvasRendererContainer,
     CanvasRendererToolsContainer,
@@ -10,12 +10,12 @@ import {
     CanvasRendererToolButton,
     CanvasRendererSizeSelector,
     CanvasRendererSizeSelectorContainer,
-} from "./CanvasRenderer.styles";
-import useElementSize from "../../../hooks/useElementSize";
-import useWindowSize from "../../../hooks/useWindowSize";
-import useError from "../../../hooks/useError";
-import useConfirmBox from "../../../hooks/useConfirmBox";
-import { db } from "../../../firebase";
+} from './CanvasRenderer.styles';
+import useElementSize from '../../../hooks/useElementSize';
+import useWindowSize from '../../../hooks/useWindowSize';
+import useError from '../../../hooks/useError';
+import useConfirmBox from '../../../hooks/useConfirmBox';
+import { db } from '../../../firebase';
 
 const CanvasRenderer = ({ defaultLines }) => {
     const containerRef = useRef();
@@ -25,7 +25,7 @@ const CanvasRenderer = ({ defaultLines }) => {
     const { setConfirmInfo } = useConfirmBox();
     const { width, height } = useElementSize(containerRef);
     const { width: windowWidth } = useWindowSize();
-    const [tool, setTool] = useState("pen");
+    const [tool, setTool] = useState('pen');
     const [toolSize, setToolSize] = useState(10);
     const [lines, setLines] = useState(defaultLines);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -40,7 +40,7 @@ const CanvasRenderer = ({ defaultLines }) => {
         if (!lines.length || lines === defaultLines) return;
         const updateLines = async () => {
             try {
-                await db.collection("canvas").doc(id).update({
+                await db.collection('canvas').doc(id).update({
                     lines: lines,
                 });
             } catch (error) {
@@ -88,17 +88,17 @@ const CanvasRenderer = ({ defaultLines }) => {
 
     const handleDeleteCanvas = async (e) => {
         e.preventDefault();
-        setConfirmInfo({ message: "delete this canvas", action: deleteCanvas });
+        setConfirmInfo({ message: 'delete this canvas', action: deleteCanvas });
     };
 
     const deleteCanvas = async () => {
-        dispatchError({ type: "reset" });
+        dispatchError({ type: 'reset' });
         setLoading(true);
         try {
-            await db.collection("canvas").doc(id).delete();
-            return history.push("/dashboard/canvas");
+            await db.collection('canvas').doc(id).delete();
+            return history.push('/dashboard/canvas');
         } catch (error) {
-            dispatchError({ type: "canvas/delete" });
+            dispatchError({ type: 'canvas/delete' });
         }
         setLoading(false);
     };
@@ -130,9 +130,9 @@ const CanvasRenderer = ({ defaultLines }) => {
                                     lineCap="round"
                                     lineJoin="round"
                                     globalCompositeOperation={
-                                        line.tool === "eraser"
-                                            ? "destination-out"
-                                            : "source-over"
+                                        line.tool === 'eraser'
+                                            ? 'destination-out'
+                                            : 'source-over'
                                     }
                                 />
                             ))}
@@ -149,8 +149,8 @@ const CanvasRenderer = ({ defaultLines }) => {
                     <img src={DeleteIcon} alt="Delete canvas" />
                 </CanvasRendererDeleteButton>
                 <CanvasRendererToolButton
-                    onClick={(e) => handleChangeTool(e, "pen")}
-                    active={tool === "pen"}
+                    onClick={(e) => handleChangeTool(e, 'pen')}
+                    active={tool === 'pen'}
                     type="button"
                 >
                     <svg
@@ -162,8 +162,8 @@ const CanvasRenderer = ({ defaultLines }) => {
                     </svg>
                 </CanvasRendererToolButton>
                 <CanvasRendererToolButton
-                    onClick={(e) => handleChangeTool(e, "eraser")}
-                    active={tool === "eraser"}
+                    onClick={(e) => handleChangeTool(e, 'eraser')}
+                    active={tool === 'eraser'}
                     type="button"
                 >
                     <svg aria-label="Eraser" viewBox="0 0 24 24" fill="none">
@@ -184,7 +184,7 @@ const CanvasRenderer = ({ defaultLines }) => {
                         value={toolSize}
                         onChange={handleChangeToolSize}
                         type="range"
-                        orient={windowWidth > 1300 ? "vertical" : "horizontal"}
+                        orient={windowWidth > 1300 ? 'vertical' : 'horizontal'}
                     />
                     <p>1</p>
                 </CanvasRendererSizeSelectorContainer>

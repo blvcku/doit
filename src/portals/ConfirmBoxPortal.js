@@ -1,12 +1,9 @@
-import ReactDom from "react-dom";
+import ReactDom from 'react-dom';
 
-const ConfirmBoxPortal = ({children}) => (
+const ConfirmBoxPortal = ({ children }) =>
     ReactDom.createPortal(
-        <>
-            {children}
-        </>,
-        document.getElementById('confirm-box')
-    )
-)
+        <>{children}</>,
+        document.getElementById('confirm-box'),
+    );
 
 export default ConfirmBoxPortal;

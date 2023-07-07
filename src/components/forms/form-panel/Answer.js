@@ -1,27 +1,45 @@
 import { useEffect, useState } from 'react';
-import { AnswerContainer, AnswerHead, AnswerScore } from "./FormPanel.styles";
+import { AnswerContainer, AnswerHead, AnswerScore } from './FormPanel.styles';
 
-const Answer = ({answer, index, answersSum, answers = 0}) => {
-
+const Answer = ({ answer, index, answersSum, answers = 0 }) => {
     const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const [percentage, setPercentage] = useState(0);
 
     useEffect(() => {
-        if(answersSum === 0) return;
+        if (answersSum === 0) return;
         setPercentage((answers / answersSum).toFixed(4) * 100);
-    }, [answersSum, answers])
+    }, [answersSum, answers]);
 
-    return(
+    return (
         <AnswerContainer>
             <AnswerHead>
                 <div>{alphabet[index]}</div>
                 <p>{answer}</p>
             </AnswerHead>
             <AnswerScore>
-                <svg viewBox='0 0 40 40'>
-                    <circle cx='20' cy='20' r='15.91549430918954' fill='var(--color-white)'></circle>
-                    <circle cx='20' cy='20' r='15.91549430918954' fill='transparent' strokeWidth='4' stroke='var(--color-white-dark)'></circle>
-                    <circle cx='20' cy='20' r='15.91549430918954' fill='transparent' strokeWidth='4' strokeDashoffset='25' stroke='var(--color-primary-dark)'
+                <svg viewBox="0 0 40 40">
+                    <circle
+                        cx="20"
+                        cy="20"
+                        r="15.91549430918954"
+                        fill="var(--color-white)"
+                    ></circle>
+                    <circle
+                        cx="20"
+                        cy="20"
+                        r="15.91549430918954"
+                        fill="transparent"
+                        strokeWidth="4"
+                        stroke="var(--color-white-dark)"
+                    ></circle>
+                    <circle
+                        cx="20"
+                        cy="20"
+                        r="15.91549430918954"
+                        fill="transparent"
+                        strokeWidth="4"
+                        strokeDashoffset="25"
+                        stroke="var(--color-primary-dark)"
                         strokeDasharray={`${percentage} ${100 - percentage}`}
                     ></circle>
                 </svg>
@@ -29,7 +47,7 @@ const Answer = ({answer, index, answersSum, answers = 0}) => {
                 <p>{answers} People</p>
             </AnswerScore>
         </AnswerContainer>
-    )
-}
+    );
+};
 
 export default Answer;

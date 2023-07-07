@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.section`
     @media (min-width: 900px) {
@@ -75,7 +75,7 @@ export const Project = styled.li`
 
     &::before {
         background: rgba(14, 142, 140, 0.8);
-        content: "";
+        content: '';
         display: block;
         padding-bottom: 100%;
         grid-area: 1 / 1 / 2 / 2;
@@ -150,7 +150,7 @@ export const ProjectInviteContainer = styled(Project)`
             gap: 12px;
             bottom: 14%;
             button {
-                opacity: ${({ loading }) => (loading ? "0.7" : "1")};
+                opacity: ${({ loading }) => (loading ? '0.7' : '1')};
                 font-size: 0.75rem;
                 font-weight: 700;
                 color: var(--color-white);

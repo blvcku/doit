@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Header = styled.header`
     width: 100%;
@@ -34,7 +34,7 @@ export const Header = styled.header`
 `;
 
 export const Nav = styled.nav`
-    display: ${({ expanded }) => (expanded ? "block" : "none")};
+    display: ${({ expanded }) => (expanded ? 'block' : 'none')};
     animation: nav-animation 0.8s forwards cubic-bezier(0.73, 0.36, 0.53, 1.31);
     @keyframes nav-animation {
         from {
@@ -83,7 +83,7 @@ export const Button = styled.button`
     background: none;
     border: none;
     padding: 10px;
-    transform: rotateX(${({ expanded }) => (expanded ? "0" : "180deg")});
+    transform: rotateX(${({ expanded }) => (expanded ? '0' : '180deg')});
     @media (min-width: 900px) {
         display: none;
     }

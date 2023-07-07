@@ -1,8 +1,8 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-import "firebase/compat/storage";
-import "firebase/compat/functions";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
+import 'firebase/compat/functions';
 //import { connectFunctionsEmulator } from "firebase/functions";
 //import { connectFirestoreEmulator } from "firebase/firestore";
 //import { connectAuthEmulator } from "firebase/auth";

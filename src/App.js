@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
 import SignUp from './pages/sign-up/SignUp';
 import ResetPassword from './pages/reset-password/ResetPassword';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -27,13 +32,28 @@ function App() {
                     <ConfirmBoxProvider>
                         <ImageProvider>
                             <Switch>
-                                <PrivateRoute path='/dashboard' component={Dashboard} />
-                                <Route exact path='/forms/success' component={FormSuccess} />
-                                <Route path='/forms/:id' component={Form} />
-                                <Route path='/signup' component={SignUp} />
-                                <Route path='/login' component={Login} />
-                                <Route path='/resetpassword' component={ResetPassword} />
-                                <Route path='*' render={() => <Redirect to='/dashboard/projects' />} />
+                                <PrivateRoute
+                                    path="/dashboard"
+                                    component={Dashboard}
+                                />
+                                <Route
+                                    exact
+                                    path="/forms/success"
+                                    component={FormSuccess}
+                                />
+                                <Route path="/forms/:id" component={Form} />
+                                <Route path="/signup" component={SignUp} />
+                                <Route path="/login" component={Login} />
+                                <Route
+                                    path="/resetpassword"
+                                    component={ResetPassword}
+                                />
+                                <Route
+                                    path="*"
+                                    render={() => (
+                                        <Redirect to="/dashboard/projects" />
+                                    )}
+                                />
                             </Switch>
                             <ErrorPortal>
                                 <Error />

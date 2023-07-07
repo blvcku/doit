@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const CanvasRendererContainer = styled.div`
     display: grid;
@@ -29,9 +29,9 @@ export const CanvasRendererToolsContainer = styled.div`
     justify-content: center;
     align-items: center;
     column-gap: 25px;
-    row-gap:35px;
+    row-gap: 35px;
     @media (min-width: 600px) {
-        row-gap:25px;
+        row-gap: 25px;
         display: flex;
         justify-content: center;
         align-items: start;
@@ -72,8 +72,9 @@ export const CanvasRendererToolButton = styled.button`
         display: block;
     }
 
-    @media(min-width:320px) {
-        img,svg {
+    @media (min-width: 320px) {
+        img,
+        svg {
             width: 40px;
         }
     }
@@ -127,7 +128,7 @@ export const CanvasRendererSizeSelector = styled.input`
     background: transparent;
     cursor: pointer;
     display: block;
-    width:100%;
+    width: 100%;
     &::-webkit-slider-runnable-track,
     &::-moz-range-track {
         outline: 2px solid var(--color-primary);

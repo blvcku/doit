@@ -3,20 +3,17 @@ import errorReducer from '../reducers/errorReducer';
 
 export const ErrorContext = React.createContext();
 
-const ErrorProvider = ({children}) => {
-
-    const [error, dispatchError] = useReducer(errorReducer, {error: ''});
+const ErrorProvider = ({ children }) => {
+    const [error, dispatchError] = useReducer(errorReducer, { error: '' });
 
     const value = {
         error,
-        dispatchError
-    }
+        dispatchError,
+    };
 
-    return(
-        <ErrorContext.Provider value={value}>
-            {children}
-        </ErrorContext.Provider>
-    )
-}
+    return (
+        <ErrorContext.Provider value={value}>{children}</ErrorContext.Provider>
+    );
+};
 
 export default ErrorProvider;

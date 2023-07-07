@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { db, fb } from "../../../firebase";
-import SearchIcon from "../../../images/search-white.svg";
-import PlusIcon from "../../../images/plus-white.svg";
-import CanvasImage from "../../../images/canvas-background.jpg";
-import useAuth from "../../../hooks/useAuth";
-import useError from "../../../hooks/useError";
-import useFilter from "../../../hooks/useFilter";
-import useTitle from "../../../hooks/useTitle";
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { db, fb } from '../../../firebase';
+import SearchIcon from '../../../assets/icons/search-white.svg';
+import PlusIcon from '../../../assets/icons/plus-white.svg';
+import CanvasImage from '../../../assets/images/canvas-background.jpg';
+import useAuth from '../../../hooks/useAuth';
+import useError from '../../../hooks/useError';
+import useFilter from '../../../hooks/useFilter';
+import useTitle from '../../../hooks/useTitle';
 import {
     Container,
     SearchBar,
     CanvasListContainer,
     CreateCanvas,
     Canvas,
-} from "./CanvasList.styles";
+} from './CanvasList.styles';
 
 const CanvasList = () => {
     const {
@@ -27,17 +27,17 @@ const CanvasList = () => {
 
     const createCanvas = async (e) => {
         e.preventDefault();
-        dispatchError({ type: "reset" });
+        dispatchError({ type: 'reset' });
         try {
-            const { id } = await db.collection("canvas").add({
-                title: "Canvas Title",
+            const { id } = await db.collection('canvas').add({
+                title: 'Canvas Title',
                 authorID: uid,
                 lines: [],
                 createdAt: fb.firestore.FieldValue.serverTimestamp(),
             });
             return history.push(`/dashboard/canvas/${id}`);
         } catch (error) {
-            dispatchError({ type: "canvas/create" });
+            dispatchError({ type: 'canvas/create' });
         }
     };
 
@@ -48,13 +48,13 @@ const CanvasList = () => {
 
     useEffect(() => {
         const unsubscribe = db
-            .collection("canvas")
-            .where("authorID", "==", uid)
-            .orderBy("createdAt")
+            .collection('canvas')
+            .where('authorID', '==', uid)
+            .orderBy('createdAt')
             .onSnapshot((snapshot) => {
                 const canvasList = [];
                 snapshot.forEach((canvas) =>
-                    canvasList.unshift({ ...canvas.data(), id: canvas.id })
+                    canvasList.unshift({ ...canvas.data(), id: canvas.id }),
                 );
                 setData(canvasList);
             });
@@ -62,7 +62,7 @@ const CanvasList = () => {
     }, [uid, setData]);
 
     useEffect(() => {
-        setTitle("Canvas");
+        setTitle('Canvas');
     }, [setTitle]);
 
     return (

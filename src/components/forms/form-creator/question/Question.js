@@ -1,19 +1,36 @@
 import { useEffect } from 'react';
-import PlusIcon from '../../../../images/plus-white.svg';
-import MinusIcon from '../../../../images/minus.svg';
+import PlusIcon from '../../../../assets/icons/plus-white.svg';
+import MinusIcon from '../../../../assets/icons/minus.svg';
 import useError from '../../../../hooks/useError';
 import useFileType from '../../../../hooks/useFileType';
-import { QuestionContainer, QuestionLabel, ButtonsContainer, FileContainer, AnswersContainer, Answer } from "./Question.styles";
+import {
+    QuestionContainer,
+    QuestionLabel,
+    ButtonsContainer,
+    FileContainer,
+    AnswersContainer,
+    Answer,
+} from './Question.styles';
 
-const Question = ({title, multipleAnswers, answers, file, index, inputField, error, setQuestions, questions, preventDeleteLast}) => {
-
+const Question = ({
+    title,
+    multipleAnswers,
+    answers,
+    file,
+    index,
+    inputField,
+    error,
+    setQuestions,
+    questions,
+    preventDeleteLast,
+}) => {
     const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const { dispatchError } = useError();
     const { setFile, FileElement } = useFileType();
 
     const handleAction = (e, type, answerIndex) => {
         const tempQuestions = [...questions];
-        switch(type){
+        switch (type) {
             case 'deleteQuestion':
                 tempQuestions.splice(index, 1);
                 break;
@@ -21,13 +38,16 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
                 tempQuestions[index].title = e.target.value;
                 break;
             case 'toggleInputField':
-                tempQuestions[index].inputField = !tempQuestions[index].inputField;
+                tempQuestions[index].inputField =
+                    !tempQuestions[index].inputField;
                 break;
             case 'toggleMultipleAnswers':
-                tempQuestions[index].multipleAnswers = !tempQuestions[index].multipleAnswers;
+                tempQuestions[index].multipleAnswers =
+                    !tempQuestions[index].multipleAnswers;
                 break;
             case 'addAnswer':
-                if(answers.length >= 8) return dispatchError({type: 'forms/max-answers'});
+                if (answers.length >= 8)
+                    return dispatchError({ type: 'forms/max-answers' });
                 tempQuestions[index].answers.push('');
                 break;
             case 'deleteAnswer':
@@ -40,68 +60,97 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
                 break;
         }
         setQuestions(tempQuestions);
-    }
+    };
 
-    const changeFile = e => {
+    const changeFile = (e) => {
         e.preventDefault();
-        dispatchError({type: 'reset'});
+        dispatchError({ type: 'reset' });
         const file = e.target.files[0];
-        if(!file) return;
-        if(!file.type.startsWith('audio') && !file.type.startsWith('video') && !file.type.startsWith('image')) return dispatchError({type: 'forms/wrong-file-type'});
+        if (!file) return;
+        if (
+            !file.type.startsWith('audio') &&
+            !file.type.startsWith('video') &&
+            !file.type.startsWith('image')
+        )
+            return dispatchError({ type: 'forms/wrong-file-type' });
         const reader = new FileReader();
-        reader.onloadend = async e => {
-            try{
+        reader.onloadend = async (e) => {
+            try {
                 const tempQuestions = [...questions];
-                tempQuestions[index].file = {url: e.target.result, name: file.name, type: file.type};
+                tempQuestions[index].file = {
+                    url: e.target.result,
+                    name: file.name,
+                    type: file.type,
+                };
                 setQuestions(tempQuestions);
-            }
-            catch(error){
+            } catch (error) {
                 console.error(error);
             }
-        }
+        };
         reader.readAsDataURL(file);
-    }
+    };
 
     useEffect(() => {
         setFile(file);
     }, [file, setFile]);
 
-    return(
+    return (
         <QuestionContainer error={error === index}>
             <QuestionLabel>
                 Form Question:
                 <div>
-                    <input maxLength='200' value={title} onChange={e => handleAction(e, 'changeQuestionTitle')} type='text' name='question' placeholder="Question" />
+                    <input
+                        maxLength="200"
+                        value={title}
+                        onChange={(e) => handleAction(e, 'changeQuestionTitle')}
+                        type="text"
+                        name="question"
+                        placeholder="Question"
+                    />
                     {!preventDeleteLast && (
-                        <button onClick={e => handleAction(e, 'deleteQuestion')} type='button'>
-                            <img src={MinusIcon} alt='delete question' />
+                        <button
+                            onClick={(e) => handleAction(e, 'deleteQuestion')}
+                            type="button"
+                        >
+                            <img src={MinusIcon} alt="delete question" />
                         </button>
                     )}
                 </div>
             </QuestionLabel>
-            <FileContainer type={file && file.type} >
+            <FileContainer type={file && file.type}>
                 <label>
-                    <img src={PlusIcon} alt='' />
+                    <img src={PlusIcon} alt="" />
                     Add File
-                    <input onChange={changeFile} type='file' name='file' />
+                    <input onChange={changeFile} type="file" name="file" />
                 </label>
-                {file && file.url && (
-                    <div>
-                        {FileElement}
-                    </div>
-                )}
+                {file && file.url && <div>{FileElement}</div>}
             </FileContainer>
             <ButtonsContainer>
-                <button onClick={e => handleAction(e, 'addAnswer')} type='button'>
-                    <img src={PlusIcon} alt='' />
+                <button
+                    onClick={(e) => handleAction(e, 'addAnswer')}
+                    type="button"
+                >
+                    <img src={PlusIcon} alt="" />
                     Add Answer
                 </button>
                 <label>
-                    <input onChange={e => handleAction(e, 'toggleInputField')} checked={inputField} type='checkbox' name='inputfield' />
+                    <input
+                        onChange={(e) => handleAction(e, 'toggleInputField')}
+                        checked={inputField}
+                        type="checkbox"
+                        name="inputfield"
+                    />
                     Input Field
                 </label>
                 <label>
-                    <input onChange={e => handleAction(e, 'toggleMultipleAnswers')} checked={multipleAnswers} type='checkbox' name='multipleanswers' />
+                    <input
+                        onChange={(e) =>
+                            handleAction(e, 'toggleMultipleAnswers')
+                        }
+                        checked={multipleAnswers}
+                        type="checkbox"
+                        name="multipleanswers"
+                    />
                     Multiple Answers
                 </label>
             </ButtonsContainer>
@@ -109,15 +158,33 @@ const Question = ({title, multipleAnswers, answers, file, index, inputField, err
                 {answers.map((answer, answerIndex) => (
                     <Answer key={answerIndex}>
                         <div>{alphabet[answerIndex]}</div>
-                        <input maxLength='100' value={answer} onChange={e => handleAction(e, 'changeAnswerContent', answerIndex)} type='text' name='answer' placeholder='Answer' />
-                        <button onClick={e => handleAction(e, 'deleteAnswer', answerIndex)} type='button'>
-                            <img src={MinusIcon} alt='delete answer' />
+                        <input
+                            maxLength="100"
+                            value={answer}
+                            onChange={(e) =>
+                                handleAction(
+                                    e,
+                                    'changeAnswerContent',
+                                    answerIndex,
+                                )
+                            }
+                            type="text"
+                            name="answer"
+                            placeholder="Answer"
+                        />
+                        <button
+                            onClick={(e) =>
+                                handleAction(e, 'deleteAnswer', answerIndex)
+                            }
+                            type="button"
+                        >
+                            <img src={MinusIcon} alt="delete answer" />
                         </button>
                     </Answer>
                 ))}
-            </AnswersContainer>             
+            </AnswersContainer>
         </QuestionContainer>
-    )
-}
+    );
+};
 
 export default Question;

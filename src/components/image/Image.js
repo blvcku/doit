@@ -2,15 +2,14 @@ import useImage from '../../hooks/useImage';
 import { Container, Wrapper } from './Image.styles';
 
 const EnlargedImage = () => {
-
     const { image, setImage } = useImage();
 
-    const handleCloseImage = e => {
+    const handleCloseImage = (e) => {
         e.preventDefault();
         setImage({});
-    }
+    };
 
-    return(
+    return (
         <>
             {image && image.url && image.name && (
                 <Container onClick={handleCloseImage}>
@@ -20,7 +19,7 @@ const EnlargedImage = () => {
                 </Container>
             )}
         </>
-    )
-}
+    );
+};
 
 export default EnlargedImage;

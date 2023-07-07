@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import ProjectsLogo from "../../images/projects.svg";
-import FriendsLogo from "../../images/friends.svg";
-import AccountLogo from "../../images/account.svg";
-import ArrowIcon from "../../images/nav-arrow.svg";
-import FormsLogo from "../../images/forms.svg";
-import PostsLogo from "../../images/posts.svg";
-import CanvasLogo from "../../images/canvas.svg";
-import Logo from "../../images/logo-white.svg";
-import { Header, Nav, CustomNavLink, Button, Heading } from "./Navbar.styles";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ProjectsLogo from '../../assets/icons/projects.svg';
+import FriendsLogo from '../../assets/icons/friends.svg';
+import AccountLogo from '../../assets/icons/account.svg';
+import ArrowIcon from '../../assets/icons/nav-arrow.svg';
+import FormsLogo from '../../assets/icons/forms.svg';
+import PostsLogo from '../../assets/icons/posts.svg';
+import CanvasLogo from '../../assets/icons/canvas.svg';
+import Logo from '../../assets/icons/logo-white.svg';
+import { Header, Nav, CustomNavLink, Button, Heading } from './Navbar.styles';
 
 const Navbar = () => {
     const [expanded, setExpanded] = useState(false);

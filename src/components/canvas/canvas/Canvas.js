@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-import { useParams, Redirect } from "react-router-dom";
-import { db } from "../../../firebase";
-import useTitle from "../../../hooks/useTitle";
-import { Banner, Container, Wrapper } from "./Canvas.styles";
-import CanvasRenderer from "../canvas-renderer/CanvasRenderer";
+import { useState, useEffect, useRef } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
+import { db } from '../../../firebase';
+import useTitle from '../../../hooks/useTitle';
+import { Banner, Container, Wrapper } from './Canvas.styles';
+import CanvasRenderer from '../canvas-renderer/CanvasRenderer';
 
 const Canvas = () => {
     const { id } = useParams();
@@ -22,7 +22,7 @@ const Canvas = () => {
         if (!canvasTitle) return;
         const updateTitle = async () => {
             try {
-                await db.collection("canvas").doc(id).update({
+                await db.collection('canvas').doc(id).update({
                     title: canvasTitle,
                 });
             } catch (error) {
@@ -46,21 +46,21 @@ const Canvas = () => {
 
     useEffect(() => {
         const unsubscribe = db
-            .collection("canvas")
+            .collection('canvas')
             .doc(id)
             .onSnapshot(
                 (canvas) => {
                     setCanvasData({ ...canvas.data(), id: canvas.id });
                     setLoading(false);
                 },
-                (error) => setLoading(false)
+                (error) => setLoading(false),
             );
 
         return unsubscribe;
     }, [id]);
 
     useEffect(() => {
-        setTitle(canvasData.title || "DOIT");
+        setTitle(canvasData.title || 'DOIT');
     }, [canvasData.title, setTitle]);
 
     return (
