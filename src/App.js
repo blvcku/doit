@@ -10,18 +10,18 @@ import ResetPassword from './pages/reset-password/ResetPassword';
 import Dashboard from './pages/dashboard/Dashboard';
 import Login from './pages/login/Login';
 import Form from './pages/form/Form';
-import FormSuccess from './components/forms/form-success/FormSuccess';
-import AuthProvider from './contexts/AuthContext';
-import ErrorProvider from './contexts/ErrorContext';
-import ConfirmBoxProvider from './contexts/ConfirmBoxContext';
+import FormSuccess from './pages/form-success/FormSuccess';
+import AuthProvider from './contexts/auth-context/AuthContext';
+import ErrorProvider from './contexts/error-context/ErrorContext';
+import ConfirmBoxProvider from './contexts/confirm-box-context/ConfirmBoxContext';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import Error from './components/error/Error';
 import ErrorPortal from './portals/ErrorPortal';
 import ConfirmBoxPortal from './portals/ConfirmBoxPortal';
 import ConfirmBox from './components/confirm-box/ConfirmBox';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle from './styles/GlobalStyle';
 import ImagePortal from './portals/ImagePortal';
-import ImageProvider from './contexts/ImageContext';
+import ImageProvider from './contexts/image-context/ImageContext';
 import Image from './components/image/Image';
 
 function App() {

@@ -1,4 +1,4 @@
-import useConfirmBox from '../../hooks/useConfirmBox';
+import useConfirmBox from '../../contexts/confirm-box-context/useConfirmBox';
 import { Container } from './ConfirmBox.styles';
 import { Box } from './ConfirmBox.styles';
 
@@ -20,18 +20,10 @@ const ConfirmBox = () => {
                 <Container>
                     <Box role="alertdialog">
                         <p>Are you sure you want to {confirmInfo.message}?</p>
-                        <button
-                            aria-label="decline"
-                            onClick={handleDecline}
-                            type="button"
-                        >
+                        <button onClick={handleDecline} type="button">
                             No
                         </button>
-                        <button
-                            aria-label="accept"
-                            onClick={handleAccept}
-                            type="button"
-                        >
+                        <button onClick={handleAccept} type="button">
                             Yes
                         </button>
                     </Box>

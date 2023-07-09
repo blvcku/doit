@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import useError from '../../hooks/useError';
+import useAuth from '../../contexts/auth-context/useAuth';
+import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
 import {
     Container,
@@ -10,7 +10,7 @@ import {
     Paragraph,
     SubmitButton,
     SuccessMessage,
-} from '../../components/auth/Auth.styles';
+} from '../../styles/Auth.styles';
 
 const ResetPassword = (props) => {
     const emailRef = useRef();

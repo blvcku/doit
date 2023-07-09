@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Redirect, useHistory } from 'react-router-dom';
-import { db } from '../../firebase';
-import useAuth from '../../hooks/useAuth';
-import useError from '../../hooks/useError';
+import { db } from '../../services/firebase';
+import useAuth from '../../contexts/auth-context/useAuth';
+import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
 import {
     FormBanner,
@@ -10,8 +10,8 @@ import {
     FormMain,
     FormSubmit,
     QuestionsList,
-} from '../../components/forms/form/Form.styles';
-import Question from '../../components/forms/form/Question';
+} from './Form.styles';
+import Question from './components/form-question/FormQuestion';
 
 const Form = () => {
     const history = useHistory();

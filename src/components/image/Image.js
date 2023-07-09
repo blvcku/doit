@@ -1,4 +1,4 @@
-import useImage from '../../hooks/useImage';
+import useImage from '../../contexts/image-context/useImage';
 import { Container, Wrapper } from './Image.styles';
 
 const EnlargedImage = () => {

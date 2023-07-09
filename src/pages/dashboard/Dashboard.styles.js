@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const DashboardContainer = styled.div`
     position: relative;
     @media (min-width: 900px) {
         grid-template-columns: 300px 1fr;
@@ -13,18 +13,19 @@ export const Container = styled.div`
     @media (min-width: 1500px) {
         gap: 7rem;
     }
+`;
+
+export const DashboardContentContainer = styled.main`
     @media (min-width: 2100px) {
-        & > main {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            & > section {
-                display: flex;
-                justify-content: center;
-                & > div {
-                    width: 100%;
-                }
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        & > section {
+            display: flex;
+            justify-content: center;
+            & > div {
+                width: 100%;
             }
         }
     }

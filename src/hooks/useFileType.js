@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useImage from './useImage';
+import useImage from '../contexts/image-context/useImage';
 
 const useFileType = (callback) => {
     const [file, setFile] = useState(null);

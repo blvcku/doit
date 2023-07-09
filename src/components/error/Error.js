@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Triangle from '../../assets/icons/triangle.svg';
 import CloseIcon from '../../assets/icons/close-grey.svg';
-import useError from '../../hooks/useError';
+import useError from '../../contexts/error-context/useError';
 import { Wrapper, Card } from './Error.styles';
 
 const Error = () => {
