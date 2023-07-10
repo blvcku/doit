@@ -3,9 +3,15 @@ import { functions } from '../../../../../services/firebase';
 import { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import useError from '../../../../../contexts/error-context/useError';
-import { ProjectInviteContainer } from './ProjectInvite.styles';
+import {
+    ProjectsListInviteButton,
+    ProjectsListInviteButtonsContainer,
+    ProjectsListInviteContainer,
+    ProjectsListInviteTitle,
+    ProjectsListInviteWrapper,
+} from './ProjectsListInvite.styles';
 
-const ProjectInvite = ({
+const ProjectsListInvite = ({
     title,
     id,
     index,
@@ -55,23 +61,28 @@ const ProjectInvite = ({
     };
 
     return (
-        <ProjectInviteContainer
-            loading={loading}
-            background={photoURL || DefaultImage}
-        >
-            <div>
-                <p>{title}</p>
-                <div>
-                    <button onClick={handleDeclineInvite} type="button">
+        <ProjectsListInviteWrapper background={photoURL || DefaultImage}>
+            <ProjectsListInviteContainer>
+                <ProjectsListInviteTitle>{title}</ProjectsListInviteTitle>
+                <ProjectsListInviteButtonsContainer>
+                    <ProjectsListInviteButton
+                        loading={loading}
+                        onClick={handleDeclineInvite}
+                        type="button"
+                    >
                         Decline
-                    </button>
-                    <button onClick={handleAcceptInvite} type="button">
+                    </ProjectsListInviteButton>
+                    <ProjectsListInviteButton
+                        loading={loading}
+                        onClick={handleAcceptInvite}
+                        type="button"
+                    >
                         Accept
-                    </button>
-                </div>
-            </div>
-        </ProjectInviteContainer>
+                    </ProjectsListInviteButton>
+                </ProjectsListInviteButtonsContainer>
+            </ProjectsListInviteContainer>
+        </ProjectsListInviteWrapper>
     );
 };
 
-export default ProjectInvite;
+export default ProjectsListInvite;

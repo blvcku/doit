@@ -1,6 +1,6 @@
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import ProjectsList from './components/projects-list/ProjectsList';
-import Project from './project/Project';
+import Project from './components/project/Project';
 
 const Projects = () => {
     const { path } = useRouteMatch();

@@ -1,10 +1,4 @@
-import PlusIcon from '../../../../assets/icons/plus-green.svg';
-import MinusIcon from '../../../../assets/icons/minus.svg';
-import useUserProfile from '../../contexts/user-profile-context/useUserProfile';
-import {
-    MemberContainer,
-    MemberButton,
-} from '../../projects/project/members-list/Members.styles';
+import Member from '../../components/member/Member';
 
 const Person = ({
     isAdded,
@@ -14,37 +8,16 @@ const Person = ({
     deleteFromForm,
     addToForm,
 }) => {
-    const { setUserID } = useUserProfile();
-
-    const openUserProfile = (e) => {
-        e.preventDefault();
-        setUserID(uid);
-    };
-
     return (
-        <MemberContainer>
-            <div>
-                <img
-                    onClick={openUserProfile}
-                    style={{ cursor: 'pointer' }}
-                    src={photoURL}
-                    alt={displayName}
-                />
-                <p>{displayName}</p>
-            </div>
-            {isAdded ? (
-                <MemberButton
-                    onClick={(e) => deleteFromForm(e, uid)}
-                    type="button"
-                >
-                    <img src={MinusIcon} alt="Delete from form" />
-                </MemberButton>
-            ) : (
-                <MemberButton onClick={(e) => addToForm(e, uid)} type="button">
-                    <img src={PlusIcon} alt="Add to form" />
-                </MemberButton>
-            )}
-        </MemberContainer>
+        <Member
+            uid={uid}
+            displayName={displayName}
+            photoURL={photoURL}
+            buttonType={isAdded ? 'delete' : 'add'}
+            buttonClickHandler={(e) =>
+                isAdded ? deleteFromForm(e, uid) : addToForm(e, uid)
+            }
+        />
     );
 };
 

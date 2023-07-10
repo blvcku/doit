@@ -4,18 +4,20 @@ import AssingIcon from '../../../../../assets/icons/assign.svg';
 import { db, fb, functions, storage } from '../../../../../services/firebase';
 import useAuth from '../../../../../contexts/auth-context/useAuth';
 import useError from '../../../../../contexts/error-context/useError';
+import { ProjectTaskEditorHeading, ProjectTaskEditorButton, ProjectTaskEditorButtonIcon, ProjectTaskEditorContainer } from './ProjectTaskEditor.styles';
 import {
-    TaskEditHead,
-    ImageContainer,
-    SmallButton,
-    SaveButton,
-    TaskHeadFirst,
-    TaskHeadSecond,
-} from './Tasks.styles';
-import SelectPerformer from './select-performer/SelectPerformer';
-import TaskEditBody from './TaskEditBody';
+    ProjectTaskHeadContainer,
+    ProjectTaskPerformerContainer,
+    ProjectTaskPerformerProfileImage,
+    ProjectTaskSmallButton,
+    ProjectTaskSmallButtonIcon,
+    ProjectTaskButtonsContainer,
+    ProjectTaskPerformerWrapper,
+} from '../project-task/ProjectTask.styles';
+import ProjectTaskPerformerSelect from '../project-task-performer-select/ProjectTaskPerformerSelect';
+import ProjectTaskEditorBody from '../project-task-editor-body/ProjectTaskEditorBody';
 
-const TaskEdit = ({
+const ProjectTaskEditor = ({
     setLoading,
     performer = {},
     members: membersIDs,
@@ -146,48 +148,48 @@ const TaskEdit = ({
     }, [setLoading]);
 
     return (
-        <form onSubmit={createUpdateTask} noValidate>
+        <ProjectTaskEditorContainer onSubmit={createUpdateTask} noValidate>
             {isSelectingPerformer ? (
-                <SelectPerformer
+                <ProjectTaskPerformerSelect
                     members={members}
                     setSelectedPerformer={setSelectedPerformer}
                     setIsSelectingPerformer={setIsSelectingPerformer}
                 />
             ) : (
                 <>
-                    <TaskEditHead>
-                        <TaskHeadFirst>
-                            <ImageContainer>
-                                <img
+                    <ProjectTaskHeadContainer>
+                        <ProjectTaskPerformerWrapper>
+                            <ProjectTaskPerformerContainer>
+                                <ProjectTaskPerformerProfileImage
                                     src={
                                         selectedPerformer &&
                                         selectedPerformer.photoURL
                                     }
                                     alt="Performer"
                                 />
-                            </ImageContainer>
-                            <h3>
+                            </ProjectTaskPerformerContainer>
+                            <ProjectTaskEditorHeading>
                                 {selectedPerformer &&
                                     selectedPerformer.displayName}
-                            </h3>
-                        </TaskHeadFirst>
-                        <TaskHeadSecond>
-                            <SmallButton
+                            </ProjectTaskEditorHeading>
+                        </ProjectTaskPerformerWrapper>
+                        <ProjectTaskButtonsContainer>
+                            <ProjectTaskSmallButton
                                 onClick={toggleOnSelectingPerformer}
                                 type="button"
                             >
-                                <img
+                                <ProjectTaskSmallButtonIcon
                                     src={AssingIcon}
                                     alt="open the menu with option of choosing the performer of the task"
                                 />
-                            </SmallButton>
-                            <SaveButton type="submit">
-                                <img src={SaveIcon} alt="" />
+                            </ProjectTaskSmallButton>
+                            <ProjectTaskEditorButton type="submit">
+                                <ProjectTaskEditorButtonIcon src={SaveIcon} alt="" />
                                 Save
-                            </SaveButton>
-                        </TaskHeadSecond>
-                    </TaskEditHead>
-                    <TaskEditBody
+                            </ProjectTaskEditorButton>
+                        </ProjectTaskButtonsContainer>
+                    </ProjectTaskHeadContainer>
+                    <ProjectTaskEditorBody
                         steps={steps}
                         setSteps={setSteps}
                         setTitle={setTitle}
@@ -199,8 +201,8 @@ const TaskEdit = ({
                     />
                 </>
             )}
-        </form>
+        </ProjectTaskEditorContainer>
     );
 };
 
-export default TaskEdit;
+export default ProjectTaskEditor;

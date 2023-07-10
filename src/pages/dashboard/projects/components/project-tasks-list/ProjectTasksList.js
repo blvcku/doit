@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react';
 import { db } from '../../../../../services/firebase';
 import AddIcon from '../../../../../assets/icons/plus.svg';
 import {
-    TasksListContainer,
-    CreateTask,
-    CreateTaskButton,
-    TaskContainer,
-} from './Tasks.styles';
-import Task from './Task';
-import TaskEdit from './TaskEdit';
+    ProjectTasksListContainer,
+    ProjectTasksListTaskCreatorContainer,
+    ProjectTasksListTaskCreateButton,
+    ProjectTasksListTaskCreateButtonIcon,
+    ProjectTasksListTaskCreateButtonText,
+} from './ProjectTasksList.styles';
+import { ProjectTaskContainer } from '../project-task/ProjectTask.styles';
+import ProjectTask from '../project-task/ProjectTask';
+import ProjectTaskEditor from '../project-task-editor/ProjectTaskEditor';
 import Loader from '../../../../../components/loading/Loader';
 
-const TasksList = ({ isOwner, id, members }) => {
+const ProjectTasksList = ({ isOwner, id, members }) => {
     const [isCreating, setIsCreating] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,12 +40,12 @@ const TasksList = ({ isOwner, id, members }) => {
     }, [id]);
 
     return (
-        <TasksListContainer>
+        <ProjectTasksListContainer>
             {isOwner ? (
                 isCreating ? (
-                    <TaskContainer>
+                    <ProjectTaskContainer>
                         {loading && <Loader />}
-                        <TaskEdit
+                        <ProjectTaskEditor
                             creating={true}
                             members={members}
                             title={''}
@@ -52,17 +54,22 @@ const TasksList = ({ isOwner, id, members }) => {
                             setIsEditing={setIsCreating}
                             setLoading={setLoading}
                         />
-                    </TaskContainer>
+                    </ProjectTaskContainer>
                 ) : (
-                    <CreateTask>
-                        <CreateTaskButton
+                    <ProjectTasksListTaskCreatorContainer>
+                        <ProjectTasksListTaskCreateButton
                             onClick={toggleCreating}
                             type="button"
                         >
-                            <img src={AddIcon} alt="" />
-                            <span>Create Task</span>
-                        </CreateTaskButton>
-                    </CreateTask>
+                            <ProjectTasksListTaskCreateButtonIcon
+                                src={AddIcon}
+                                alt=""
+                            />
+                            <ProjectTasksListTaskCreateButtonText>
+                                Create Task
+                            </ProjectTasksListTaskCreateButtonText>
+                        </ProjectTasksListTaskCreateButton>
+                    </ProjectTasksListTaskCreatorContainer>
                 )
             ) : null}
             {tasks.map(
@@ -75,7 +82,7 @@ const TasksList = ({ isOwner, id, members }) => {
                     file,
                     steps,
                 }) => (
-                    <Task
+                    <ProjectTask
                         key={taskID}
                         isOwner={isOwner}
                         status={status}
@@ -90,8 +97,8 @@ const TasksList = ({ isOwner, id, members }) => {
                     />
                 ),
             )}
-        </TasksListContainer>
+        </ProjectTasksListContainer>
     );
 };
 
-export default TasksList;
+export default ProjectTasksList;

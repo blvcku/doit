@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const ProjectTaskPerformerSelectContainer = styled.div`
     position: relative;
     text-align: center;
     padding-bottom: 10px;
-    h2 {
-        font-size: 1rem;
-        color: var(--color-primary);
-        font-weight: 700;
-        margin-bottom: 15px;
-    }
 `;
 
-export const CloseButton = styled.button`
+export const ProjectTaskPerformerSelectIcon = styled.img``;
+
+export const ProjectTaskPerfomerSelectHeading = styled.h2`
+    font-size: 1rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 15px;
+`;
+
+export const ProjectTaskPerformerSelectCloseButton = styled.button`
     background: none;
     border: none;
     position: absolute;
@@ -20,17 +23,18 @@ export const CloseButton = styled.button`
     top: -1.5rem;
     cursor: pointer;
     padding: 5px;
-    img {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
     @media (min-width: 560px) {
         left: -1.3rem;
         top: -1rem;
     }
 `;
 
-export const Wrapper = styled.ul`
+export const ProjectTaskPerformerSelectCloseButtonIcon = styled.img`
+    width: 1.5rem;
+    height: 1.5rem;
+`;
+
+export const ProjectTaskPerformerSelectMembersList = styled.ul`
     list-style: none;
     display: grid;
     grid-template-columns: 1fr;

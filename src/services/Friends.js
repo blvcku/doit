@@ -1,4 +1,4 @@
-import { functions } from '../services/firebase';
+import { functions } from './firebase';
 
 export const deleteFriend = async (uid) => {
     try {

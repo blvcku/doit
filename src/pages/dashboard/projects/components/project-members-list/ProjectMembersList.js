@@ -5,17 +5,22 @@ import PeopleAssignedIcon from '../../../../../assets/icons/people-assigned.svg'
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../../../../contexts/auth-context/useAuth';
 import {
-    MembersContainer,
-    CloseButton,
-    MembersWrapper,
-    MembersGroup,
-    List,
-    OverflowContainer,
-} from './Members.styles';
+    ProjectMembersListContainer,
+    ProjectMembersListCloseButton,
+    ProjectMembersListCloseButtonIcon,
+    ProjectMembersListHeading,
+    ProjectMembersListIcon,
+    ProjectMembersListWrapper,
+    ProjectMembersListGroup,
+    ProjectMembersListGroupHeading,
+    ProjectMembersListOverflowContainer,
+    ProjectMembersListGroupHeadingSmall,
+    ProjectMembersListList,
+} from './ProjectMembersList.styles';
 import Loader from '../../../../../components/loading/Loader';
-import Member from './Member';
+import ProjectMember from '../project-member/ProjectMember';
 
-const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
+const ProjectMembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
     const [members, setMembers] = useState([]);
     const [friendsData, setFriendsData] = useState([]);
     const [loadingMembers, setLoadingMembers] = useState(true);
@@ -60,23 +65,23 @@ const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
     };
 
     return (
-        <MembersContainer>
+        <ProjectMembersListContainer>
             {(loadingMembers || loadingFriends) && <Loader />}
-            <CloseButton onClick={handleClose} type="button">
-                <img src={CloseIcon} alt="Close members list window" />
-            </CloseButton>
-            <img src={PeopleAssignedIcon} alt="" />
-            <h2>People Assigned</h2>
-            <MembersWrapper isOwner={isOwner}>
-                <MembersGroup>
-                    <h3>Participants</h3>
-                    <OverflowContainer isOwner={isOwner}>
-                        <h4>Owner</h4>
-                        <List>
+            <ProjectMembersListCloseButton onClick={handleClose} type="button">
+                <ProjectMembersListCloseButtonIcon src={CloseIcon} alt="Close members list window" />
+            </ProjectMembersListCloseButton>
+            <ProjectMembersListIcon src={PeopleAssignedIcon} alt="" />
+            <ProjectMembersListHeading>People Assigned</ProjectMembersListHeading>
+            <ProjectMembersListWrapper isOwner={isOwner}>
+                <ProjectMembersListGroup>
+                    <ProjectMembersListGroupHeading>Participants</ProjectMembersListGroupHeading>
+                    <ProjectMembersListOverflowContainer isOwner={isOwner}>
+                        <ProjectMembersListGroupHeadingSmall>Owner</ProjectMembersListGroupHeadingSmall>
+                        <ProjectMembersListList>
                             {members.map(({ photoURL, displayName, uid }) => {
                                 if (uid !== authorID) return null;
                                 return (
-                                    <Member
+                                    <ProjectMember
                                         projectID={projectID}
                                         isOwner={isOwner}
                                         key={uid}
@@ -87,13 +92,13 @@ const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
                                     />
                                 );
                             })}
-                        </List>
-                        <h5>Members</h5>
-                        <List emptyInformation="No members">
+                        </ProjectMembersListList>
+                        <ProjectMembersListGroupHeadingSmall as='h5'>Members</ProjectMembersListGroupHeadingSmall>
+                        <ProjectMembersListList emptyInformation="No members">
                             {members.map(({ photoURL, displayName, uid }) => {
                                 if (uid === authorID) return null;
                                 return (
-                                    <Member
+                                    <ProjectMember
                                         projectID={projectID}
                                         isOwner={isOwner}
                                         key={uid}
@@ -104,22 +109,22 @@ const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
                                     />
                                 );
                             })}
-                        </List>
-                    </OverflowContainer>
-                </MembersGroup>
+                        </ProjectMembersListList>
+                    </ProjectMembersListOverflowContainer>
+                </ProjectMembersListGroup>
                 {isOwner ? (
-                    <MembersGroup>
-                        <h3>Add to project</h3>
-                        <OverflowContainer isOwner={isOwner}>
-                            <h4>Friends</h4>
-                            <List emptyInformation="No friends">
+                    <ProjectMembersListGroup>
+                        <ProjectMembersListGroupHeading>Add to project</ProjectMembersListGroupHeading>
+                        <ProjectMembersListOverflowContainer isOwner={isOwner}>
+                            <ProjectMembersListGroupHeadingSmall>Friends</ProjectMembersListGroupHeadingSmall>
+                            <ProjectMembersListList emptyInformation="No friends">
                                 {friendsData.map(
                                     ({ photoURL, displayName, uid }) => {
                                         if (membersIDs.includes(uid))
                                             return null;
                                         if (invites.includes(uid))
                                             return (
-                                                <Member
+                                                <ProjectMember
                                                     isOwner={isOwner}
                                                     projectID={projectID}
                                                     key={uid}
@@ -130,7 +135,7 @@ const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
                                                 />
                                             );
                                         return (
-                                            <Member
+                                            <ProjectMember
                                                 projectID={projectID}
                                                 isOwner={isOwner}
                                                 key={uid}
@@ -142,13 +147,13 @@ const MembersList = ({ membersIDs, isOwner, authorID, invites, projectID }) => {
                                         );
                                     },
                                 )}
-                            </List>
-                        </OverflowContainer>
-                    </MembersGroup>
+                            </ProjectMembersListList>
+                        </ProjectMembersListOverflowContainer>
+                    </ProjectMembersListGroup>
                 ) : null}
-            </MembersWrapper>
-        </MembersContainer>
+            </ProjectMembersListWrapper>
+        </ProjectMembersListContainer>
     );
 };
 
-export default MembersList;
+export default ProjectMembersList;

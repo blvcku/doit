@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { db, fb, functions } from '../../../../../services/firebase';
 import SearchIcon from '../../../../../assets/icons/search-white.svg';
 import PlusIcon from '../../../../../assets/icons/plus-white.svg';
@@ -9,13 +9,22 @@ import useError from '../../../../../contexts/error-context/useError';
 import useFilter from '../../../../../hooks/useFilter';
 import useTitle from '../../../../../hooks/useTitle';
 import {
-    Container,
-    SearchBar,
+    ProjectsListWrapper,
+    ProjectsListSearchContainer,
+    ProjectsListSearchInput,
     ProjectsContainer,
-    CreateProject,
-    Project,
+    ProjectsListContainer,
+    ProjectsListSearchIcon,
+    ProjectsListSearchWrapper,
+    ProjectsListProjectWrapper,
+    ProjectsListProjectContainer,
+    ProjectsListProjectTitle,
+    ProjectsListCreateProjectButton,
+    ProjectsListCreateProjectContainer,
+    ProjectsListCreateProjectButtonIcon,
+    ProjectsListCreateProjectButtonText,
 } from './ProjectsList.styles';
-import ProjectInvite from '../project-invite/ProjectInvite';
+import ProjectsListInvite from '../projects-list-invite/ProjectsListInvite';
 
 const ProjectsList = () => {
     const {
@@ -89,11 +98,11 @@ const ProjectsList = () => {
     }, [setTitle]);
 
     return (
-        <Container>
-            <div>
-                <nav>
-                    <SearchBar onSubmit={(e) => e.preventDefault()} noValidate>
-                        <input
+        <ProjectsListWrapper>
+            <ProjectsListContainer>
+                <ProjectsListSearchWrapper>
+                    <ProjectsListSearchContainer onSubmit={(e) => e.preventDefault()} noValidate>
+                        <ProjectsListSearchInput
                             placeholder="Search"
                             type="text"
                             name="search"
@@ -101,21 +110,21 @@ const ProjectsList = () => {
                             value={filter}
                             onChange={handleFilterChange}
                         />
-                        <img src={SearchIcon} alt="" />
-                    </SearchBar>
-                </nav>
+                        <ProjectsListSearchIcon src={SearchIcon} alt="" />
+                    </ProjectsListSearchContainer>
+                </ProjectsListSearchWrapper>
                 <ProjectsContainer>
-                    <CreateProject>
-                        <button type="button" onClick={createProject}>
-                            <img src={PlusIcon} alt="" />
-                            <span>Create Project</span>
-                        </button>
-                    </CreateProject>
+                    <ProjectsListCreateProjectContainer>
+                        <ProjectsListCreateProjectButton type="button" onClick={createProject}>
+                            <ProjectsListCreateProjectButtonIcon src={PlusIcon} alt="" />
+                            <ProjectsListCreateProjectButtonText>Create Project</ProjectsListCreateProjectButtonText>
+                        </ProjectsListCreateProjectButton>
+                    </ProjectsListCreateProjectContainer>
                     {filteredData.map(
                         ({ title, id, photoURL, invite }, index) => {
                             if (invite)
                                 return (
-                                    <ProjectInvite
+                                    <ProjectsListInvite
                                         title={title}
                                         id={id}
                                         photoURL={photoURL}
@@ -126,20 +135,20 @@ const ProjectsList = () => {
                                     />
                                 );
                             return (
-                                <Project
+                                <ProjectsListProjectWrapper
                                     background={photoURL || DefaultImage}
                                     key={id}
                                 >
-                                    <Link to={`/dashboard/projects/${id}`}>
-                                        <p>{title}</p>
-                                    </Link>
-                                </Project>
+                                    <ProjectsListProjectContainer to={`/dashboard/projects/${id}`}>
+                                        <ProjectsListProjectTitle>{title}</ProjectsListProjectTitle>
+                                    </ProjectsListProjectContainer>
+                                </ProjectsListProjectWrapper>
                             );
                         },
                     )}
                 </ProjectsContainer>
-            </div>
-        </Container>
+            </ProjectsListContainer>
+        </ProjectsListWrapper>
     );
 };
 

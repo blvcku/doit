@@ -6,21 +6,21 @@ import {
     useRouteMatch,
     Redirect,
 } from 'react-router-dom';
-import { db } from '../../../../services/firebase';
-import useAuth from '../../../../contexts/auth-context/useAuth';
-import useError from '../../../../contexts/error-context/useError';
-import useTitle from '../../../../hooks/useTitle';
+import { db } from '../../../../../services/firebase';
+import useAuth from '../../../../../contexts/auth-context/useAuth';
+import useError from '../../../../../contexts/error-context/useError';
+import useTitle from '../../../../../hooks/useTitle';
 import {
     ProjectWrapper,
     ProjectContainer,
     ProjectForm,
     ProjectContentContainer,
 } from './Project.styles';
-import ProjectBanner from '../components/project-banner/ProjectBanner';
-import ProjectAside from '../components/project-aside/ProjectAside';
-import MembersList from './members-list/MembersList';
-import TasksList from './tasks/TasksList';
-import ProjectChat from '../components/project-chat/ProjectChat';
+import ProjectBanner from '../project-banner/ProjectBanner';
+import ProjectAside from '../project-aside/ProjectAside';
+import ProjectMembersList from '../project-members-list/ProjectMembersList';
+import ProjectTasksList from '../project-tasks-list/ProjectTasksList';
+import ProjectChat from '../project-chat/ProjectChat';
 
 const Project = () => {
     const { id } = useParams();
@@ -137,7 +137,7 @@ const Project = () => {
                                         exact
                                         path={`${path}/members`}
                                         render={() => (
-                                            <MembersList
+                                            <ProjectMembersList
                                                 authorID={project.authorID}
                                                 isOwner={isOwner}
                                                 membersIDs={project.members}
@@ -159,7 +159,7 @@ const Project = () => {
                                     <Route
                                         path={path}
                                         render={() => (
-                                            <TasksList
+                                            <ProjectTasksList
                                                 members={project.members}
                                                 isOwner={isOwner}
                                                 id={id}

@@ -12,23 +12,40 @@ import useConfirmBox from '../../../../../contexts/confirm-box-context/useConfir
 import useAuth from '../../../../../contexts/auth-context/useAuth';
 import useUserProfile from '../../../contexts/user-profile-context/useUserProfile';
 import {
-    TaskContainer,
-    TaskHead,
-    TaskBody,
-    ImageContainer,
-    StatusButton,
-    SmallButton,
-    Button,
-    Step,
-    DownloadFile,
-    TaskHeadFirst,
-    TaskHeadSecond,
-} from './Tasks.styles';
-import TaskEdit from './TaskEdit';
-import ChangeStatus from './change-status/ChangeStatus';
+    ProjectTaskContainer,
+    ProjectTaskHeadContainer,
+    ProjectTaskPerformerContainer,
+    ProjectTaskPerformerProfileImage,
+    ProjectTaskPerformerName,
+    ProjectTaskHeadHeading,
+    ProjectTaskSmallButton,
+    ProjectTaskSmallButtonIcon,
+    ProjectTaskPerformerWrapper,
+    ProjectTaskButtonsContainer,
+    ProjectTaskStatusButton,
+    ProjectTaskStatusButtonIcon,
+    ProjectTaskBodyContainer,
+    ProjectTaskButton,
+    ProjectTaskButtonIcon,
+    ProjectTaskStepContainer,
+    ProjectTaskStepInput,
+    ProjectTaskStepLabel,
+    ProjectTaskBodyHeading,
+    ProjectTaskBodyDescription,
+    ProjectTaskBodyStepsContainer,
+    ProjectTaskFileDownloadButton,
+    ProjectTaskFileDownloadButtonIcon,
+    ProjectTaskFileDownloadButtonText,
+    ProjectTaskButtonsWrapper,
+    ProjectTaskBodyDescriptionContainer,
+    ProjectTaskBodyStepsWrapper,
+    ProjectTaskFileDownloadContainer,
+} from './ProjectTask.styles';
+import ProjectTaskEditor from '../project-task-editor/ProjectTaskEditor';
+import ProjectTaskStatusChange from '../project-task-status-change/ProjectTaskStatusChange';
 import Loader from '../../../../../components/loading/Loader';
 
-const Task = ({
+const ProjectTask = ({
     isOwner,
     status,
     title,
@@ -52,7 +69,7 @@ const Task = ({
 
     const handleChangeStepStatus = async (index) => {
         dispatchError({ type: 'reset' });
-        if (!isPerformer && !isOwner) return;
+        if (!isPerformer) return;
         try {
             const setStepStatus = functions.httpsCallable('setStepStatus');
             await setStepStatus({ id: taskID, index: index });
@@ -106,10 +123,10 @@ const Task = ({
     }, [currentUser, performer]);
 
     return (
-        <TaskContainer>
+        <ProjectTaskContainer>
             {loading && <Loader />}
             {isEditing ? (
-                <TaskEdit
+                <ProjectTaskEditor
                     performer={performer}
                     members={members}
                     title={title}
@@ -123,7 +140,7 @@ const Task = ({
                     steps={steps}
                 />
             ) : isChangingStatus ? (
-                <ChangeStatus
+                <ProjectTaskStatusChange
                     setIsChangingStatus={setIsChangingStatus}
                     taskID={taskID}
                     isOwner={isOwner}
@@ -131,22 +148,26 @@ const Task = ({
                 />
             ) : (
                 <>
-                    <TaskHead>
-                        <TaskHeadFirst>
-                            <ImageContainer>
-                                <img
+                    <ProjectTaskHeadContainer>
+                        <ProjectTaskPerformerWrapper>
+                            <ProjectTaskPerformerContainer>
+                                <ProjectTaskPerformerProfileImage
                                     style={{ cursor: 'pointer' }}
                                     onClick={openUserProfile}
                                     src={performer.photoURL}
                                     alt=""
                                 />
-                                <figcaption>{performer.displayName}</figcaption>
-                            </ImageContainer>
-                            <h3>{title}</h3>
-                        </TaskHeadFirst>
-                        <TaskHeadSecond>
-                            <div>
-                                <StatusButton
+                                <ProjectTaskPerformerName>
+                                    {performer.displayName}
+                                </ProjectTaskPerformerName>
+                            </ProjectTaskPerformerContainer>
+                            <ProjectTaskHeadHeading>
+                                {title}
+                            </ProjectTaskHeadHeading>
+                        </ProjectTaskPerformerWrapper>
+                        <ProjectTaskButtonsContainer>
+                            <ProjectTaskButtonsWrapper>
+                                <ProjectTaskStatusButton
                                     onClick={turnOnChangingStatus}
                                     isPerformer={isPerformer}
                                     isOwner={isOwner}
@@ -158,7 +179,7 @@ const Task = ({
                                         }[status]
                                     }
                                 >
-                                    <img
+                                    <ProjectTaskStatusButtonIcon
                                         src={
                                             {
                                                 pending: PendingIcon,
@@ -171,99 +192,110 @@ const Task = ({
                                     {{
                                         inprogress: 'In progress',
                                     }[status] || status}
-                                </StatusButton>
+                                </ProjectTaskStatusButton>
                                 {isOwner ? (
-                                    <SmallButton
+                                    <ProjectTaskSmallButton
                                         onClick={handleDeleteTask}
                                         color="#DB382C"
                                     >
-                                        <img
+                                        <ProjectTaskSmallButtonIcon
                                             src={DeleteIcon}
                                             alt="Delete task"
                                         />
-                                    </SmallButton>
+                                    </ProjectTaskSmallButton>
                                 ) : null}
-                            </div>
-                            <div>
+                            </ProjectTaskButtonsWrapper>
+                            <ProjectTaskButtonsWrapper>
                                 {isOwner ? (
-                                    <Button onClick={turnOnEditing}>
-                                        <img src={EditIcon} alt="Edit task" />
-                                    </Button>
+                                    <ProjectTaskButton onClick={turnOnEditing}>
+                                        <ProjectTaskButtonIcon
+                                            src={EditIcon}
+                                            alt="Edit task"
+                                        />
+                                    </ProjectTaskButton>
                                 ) : null}
-                                <Button
+                                <ProjectTaskButton
                                     onClick={toggleExpanded}
                                     aria-expanded={expanded}
                                     expanded={expanded}
                                 >
-                                    <img
+                                    <ProjectTaskButtonIcon
                                         src={ArrowIcon}
                                         alt="expand or condense task"
                                     />
-                                </Button>
-                            </div>
-                        </TaskHeadSecond>
-                    </TaskHead>
+                                </ProjectTaskButton>
+                            </ProjectTaskButtonsWrapper>
+                        </ProjectTaskButtonsContainer>
+                    </ProjectTaskHeadContainer>
                     {expanded ? (
-                        <TaskBody>
-                            <div>
-                                <h4>Description:</h4>
-                                <p>{description}</p>
-                            </div>
+                        <ProjectTaskBodyContainer>
+                            <ProjectTaskBodyDescriptionContainer>
+                                <ProjectTaskBodyHeading>
+                                    Description:
+                                </ProjectTaskBodyHeading>
+                                <ProjectTaskBodyDescription>
+                                    {description}
+                                </ProjectTaskBodyDescription>
+                            </ProjectTaskBodyDescriptionContainer>
                             {steps.length !== 0 && (
-                                <div>
-                                    <h5>Steps:</h5>
-                                    <ul>
+                                <ProjectTaskBodyStepsWrapper>
+                                    <ProjectTaskBodyHeading as="h5">
+                                        Steps:
+                                    </ProjectTaskBodyHeading>
+                                    <ProjectTaskBodyStepsContainer>
                                         {steps.map(
                                             ({ content, checked }, index) => (
-                                                <Step
+                                                <ProjectTaskStepContainer
                                                     key={`${index}${checked}`}
                                                 >
-                                                    <input
+                                                    <ProjectTaskStepInput
                                                         onChange={() =>
                                                             handleChangeStepStatus(
                                                                 index,
                                                             )
                                                         }
                                                         defaultChecked={checked}
-                                                        disabled={
-                                                            !(
-                                                                isOwner ||
-                                                                isPerformer
-                                                            )
-                                                        }
+                                                        disabled={!isPerformer}
                                                         type="checkbox"
                                                         id={`step${index}`}
                                                     />
-                                                    <label
+                                                    <ProjectTaskStepLabel
                                                         htmlFor={`step${index}`}
                                                     >
                                                         {content}
-                                                    </label>
-                                                </Step>
+                                                    </ProjectTaskStepLabel>
+                                                </ProjectTaskStepContainer>
                                             ),
                                         )}
-                                    </ul>
-                                </div>
+                                    </ProjectTaskBodyStepsContainer>
+                                </ProjectTaskBodyStepsWrapper>
                             )}
                             {file && (
-                                <div>
-                                    <h6>Task Files:</h6>
-                                    <DownloadFile
+                                <ProjectTaskFileDownloadContainer>
+                                    <ProjectTaskBodyHeading as="h6">
+                                        Task Files:
+                                    </ProjectTaskBodyHeading>
+                                    <ProjectTaskFileDownloadButton
                                         href={file.url}
                                         download
                                         target="_blank"
                                     >
-                                        <img src={FileIcon} alt="" />
-                                        <p>{file.name}</p>
-                                    </DownloadFile>
-                                </div>
+                                        <ProjectTaskFileDownloadButtonIcon
+                                            src={FileIcon}
+                                            alt=""
+                                        />
+                                        <ProjectTaskFileDownloadButtonText>
+                                            {file.name}
+                                        </ProjectTaskFileDownloadButtonText>
+                                    </ProjectTaskFileDownloadButton>
+                                </ProjectTaskFileDownloadContainer>
                             )}
-                        </TaskBody>
+                        </ProjectTaskBodyContainer>
                     ) : null}
                 </>
             )}
-        </TaskContainer>
+        </ProjectTaskContainer>
     );
 };
 
-export default Task;
+export default ProjectTask;

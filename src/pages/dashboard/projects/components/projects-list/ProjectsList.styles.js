@@ -1,18 +1,22 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Container = styled.section`
+export const ProjectsListWrapper = styled.section`
     @media (min-width: 900px) {
         margin: 85px 20px 0px 0px;
     }
     margin: 25px 20px;
+`;
+
+export const ProjectsListContainer = styled.div`
     @media (min-width: 2100px) {
-        & > div {
-            max-width: 1250px;
-        }
+        max-width: 1250px;
     }
 `;
 
-export const SearchBar = styled.form`
+export const ProjectsListSearchWrapper = styled.nav``;
+
+export const ProjectsListSearchContainer = styled.form`
     background: var(--color-primary);
     max-width: 450px;
     width: 100%;
@@ -21,20 +25,23 @@ export const SearchBar = styled.form`
     display: flex;
     gap: 8px;
     padding: 14px 18px;
-    input {
-        width: 100%;
-        max-width: 300px;
-        font-size: 0.7rem;
-        border-radius: 20px;
-        border: none;
-        background: var(--color-white-dark);
-        padding: 7px 0px 7px 20px;
-        color: #676767;
-    }
-    input:focus {
+`;
+
+export const ProjectsListSearchInput = styled.input`
+    width: 100%;
+    max-width: 300px;
+    font-size: 0.7rem;
+    border-radius: 20px;
+    border: none;
+    background: var(--color-white-dark);
+    padding: 7px 0px 7px 20px;
+    color: #676767;
+    &:focus {
         outline: none;
     }
 `;
+
+export const ProjectsListSearchIcon = styled.img``;
 
 export const ProjectsContainer = styled.ul`
     display: grid;
@@ -63,7 +70,7 @@ export const ProjectsContainer = styled.ul`
     }
 `;
 
-export const Project = styled.li`
+export const ProjectsListProjectWrapper = styled.li`
     background: url(${({ background }) => background});
     background-size: cover;
     background-position: center center;
@@ -80,58 +87,66 @@ export const Project = styled.li`
         padding-bottom: 100%;
         grid-area: 1 / 1 / 2 / 2;
     }
-    a {
-        grid-area: 1 / 1 / 2 / 2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        text-decoration: none;
-        border-radius: 30px;
-        &:focus-visible {
-            outline-offset: -3px;
-            outline: 2px solid black;
-        }
-    }
-    p {
-        color: var(--color-white);
-        font-weight: 700;
-        text-overflow: ellipsis;
-        word-break: break-word;
-        padding: 0px 10px;
-        text-align: center;
-        text-shadow: 0px 3px 6px #00000063;
+`;
+
+export const ProjectsListProjectContainer = styled(Link)`
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 30px;
+    &:focus-visible {
+        outline-offset: -3px;
+        outline: 2px solid black;
     }
 `;
 
-export const CreateProject = styled(Project)`
+export const ProjectsListProjectTitle = styled.h2`
+    font-size: 1rem;
+    color: var(--color-white);
+    font-weight: 700;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    padding: 0px 10px;
+    text-align: center;
+    text-shadow: 0px 3px 6px #00000063;
+`;
+
+export const ProjectsListCreateProjectContainer = styled(
+    ProjectsListProjectWrapper,
+)`
     background: var(--color-accent-dark);
     &::before {
         background: none;
     }
-    span {
-        display: block;
-        margin-top: 10px;
-        color: var(--color-white);
-        font-weight: 700;
-        font-size: 1rem;
+`;
+
+export const ProjectsListCreateProjectButton = styled.button`
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: block;
+    grid-area: 1 / 1 / 2 / 2;
+    border-radius: 30px;
+    &:focus-visible {
+        outline-offset: -3px;
+        outline: 2px solid black;
     }
-    img {
-        max-width: 3.5rem;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1/1;
-    }
-    button {
-        cursor: pointer;
-        background: none;
-        border: none;
-        display: block;
-        grid-area: 1 / 1 / 2 / 2;
-        border-radius: 30px;
-        &:focus-visible {
-            outline-offset: -3px;
-            outline: 2px solid black;
-        }
-    }
+`;
+
+export const ProjectsListCreateProjectButtonIcon = styled.img`
+    max-width: 3.5rem;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+`;
+
+export const ProjectsListCreateProjectButtonText = styled.span`
+    display: block;
+    margin-top: 10px;
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 1rem;
 `;
