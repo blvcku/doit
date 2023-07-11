@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import ProfileIcon from '../../../assets/icons/account.svg';
+import AccountIcon from '../../../assets/icons/account.svg';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../../contexts/auth-context/useAuth';
 import useError from '../../../contexts/error-context/useError';
 import useConfirmBox from '../../../contexts/confirm-box-context/useConfirmBox';
 import useTitle from '../../../hooks/useTitle';
 import {
-    Container,
-    GridContainer,
-    Aside,
-    Form,
-    InputsWrapper,
-    Button,
-    SuccesMessage,
-    Figure,
-    Label,
-    ButtonsContainer,
+    ProfileWrapper,
+    ProfileContainer,
+    ProfileImageContainer,
+    ProfileButtonsContainer,
+    ProfileImage,
+    ProfileName,
+    ProfileHeading,
+    ProfileIcon,
+    ProfileAsideContainer,
+    ProfileAsideWrapper,
+    ProfileFileLabel,
+    ProfileFileInput,
 } from './Profile.styles';
 import Loader from '../../../components/loading/Loader';
+import { ProfileFormContainer } from './components/profile-form/ProfileForm.styles';
+import ProfileButton from './components/profile-button/ProfileButton';
+import ProfileForm from './components/profile-form/ProfileForm';
 
 const Profile = () => {
     const {
@@ -33,11 +38,44 @@ const Profile = () => {
     const { setConfirmInfo } = useConfirmBox();
     const { setTitle } = useTitle();
     const history = useHistory();
-    const [passwordLoading, setPasswordLoading] = useState(false);
-    const [emailLoading, setEmailLoading] = useState(false);
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState('');
     const [emailMessage, setEmailMessage] = useState('');
+
+    const personalInformationInputs = [
+        {
+            label: 'Username',
+            name: 'username',
+            defaultValue: displayName,
+            maxLength: 20,
+            type: 'text',
+            placeholder: 'Name',
+        },
+        {
+            label: 'E-mail',
+            name: 'email',
+            defaultValue: email,
+            type: 'email',
+            placeholder: 'E-mail',
+        },
+    ];
+
+    const passwordInformationInputs = [
+        {
+            label: 'Password',
+            name: 'password',
+            type: 'password',
+            autoComplete: 'off',
+            placeholder: 'Password',
+        },
+        {
+            label: 'Confirm',
+            name: 'confirm',
+            type: 'password',
+            autoComplete: 'off',
+            placeholder: 'Confirm Password',
+        },
+    ];
 
     useEffect(() => {
         setTitle('Account');
@@ -58,7 +96,6 @@ const Profile = () => {
 
     const handleSubmitEmail = async (e) => {
         e.preventDefault();
-        if (emailLoading) return;
         dispatchError({ type: 'reset' });
         setEmailMessage('');
         const form = e.target;
@@ -69,7 +106,6 @@ const Profile = () => {
         if (username.trim().length < 6)
             return dispatchError({ type: 'auth/username-too-short' });
         try {
-            setEmailLoading(true);
             await updateUsername(username);
             setEmailMessage('Success! Your username has been changed!');
             if (newEmail.trim() !== email) {
@@ -81,12 +117,10 @@ const Profile = () => {
         } catch (error) {
             dispatchError({ type: error.code });
         }
-        setEmailLoading(false);
     };
 
     const handleSubmitPassword = async (e) => {
         e.preventDefault();
-        if (passwordLoading) return;
         dispatchError({ type: 'reset' });
         setPasswordMessage('');
         const form = e.target;
@@ -97,14 +131,12 @@ const Profile = () => {
         if (password.trim() !== confirm.trim())
             return dispatchError({ type: 'auth/passwords-not-match' });
         try {
-            setPasswordLoading(true);
             await updatePassword(password);
             form.reset();
             setPasswordMessage('Success! Your password has been changed!');
         } catch (error) {
             dispatchError({ type: error.code });
         }
-        setPasswordLoading(false);
     };
 
     const handleChangeImage = async (e) => {
@@ -143,94 +175,56 @@ const Profile = () => {
     };
 
     return (
-        <Container>
-            <GridContainer>
-                <Aside>
-                    <div>
-                        <img src={ProfileIcon} alt="" />
-                        <h1>Account Settings</h1>
-                    </div>
-                </Aside>
-                <Form onSubmit={handleSubmitEmail} noValidate>
-                    {emailLoading && <Loader />}
-                    <h3>Personal Information</h3>
-                    <InputsWrapper>
-                        <label htmlFor="username">Username</label>
-                        <input
-                            maxLength="20"
-                            defaultValue={displayName}
-                            type="text"
-                            name="username"
-                            id="username"
-                            placeholder="Name"
-                        />
-                        <label htmlFor="email">E-mail</label>
-                        <input
-                            defaultValue={email}
-                            type="email"
-                            name="email"
-                            id="email"
-                            placeholder="E-mail"
-                        />
-                        <SuccesMessage>{emailMessage}</SuccesMessage>
-                    </InputsWrapper>
-                    <Button type="submit">Save</Button>
-                </Form>
-                <Form noValidate>
+        <ProfileWrapper>
+            <ProfileContainer>
+                <ProfileAsideContainer>
+                    <ProfileAsideWrapper>
+                        <ProfileIcon src={AccountIcon} alt="" />
+                        <ProfileHeading>Account Settings</ProfileHeading>
+                    </ProfileAsideWrapper>
+                </ProfileAsideContainer>
+                <ProfileForm
+                    title="Personal Information"
+                    submitHandler={handleSubmitEmail}
+                    successMessage={emailMessage}
+                    inputs={personalInformationInputs}
+                />
+                <ProfileFormContainer noValidate>
                     {logoutLoading && <Loader />}
-                    <Figure>
-                        <img src={photoURL} alt={displayName} />
-                        <figcaption>{displayName}</figcaption>
-                    </Figure>
-                    <Label htmlFor="profilePicture">
+                    <ProfileImageContainer>
+                        <ProfileImage src={photoURL} alt={displayName} />
+                        <ProfileName>{displayName}</ProfileName>
+                    </ProfileImageContainer>
+                    <ProfileFileLabel htmlFor="profilePicture">
                         Change profile picture
-                    </Label>
-                    <input
+                    </ProfileFileLabel>
+                    <ProfileFileInput
                         onChange={handleChangeImage}
-                        style={{ display: 'none' }}
                         type="file"
                         id="profilePicture"
                         name="profilePicture"
                     />
-                    <ButtonsContainer>
-                        <Button type="button" onClick={handleLogout}>
+                    <ProfileButtonsContainer>
+                        <ProfileButton type="button" onClick={handleLogout}>
                             Log out
-                        </Button>
-                        <Button
+                        </ProfileButton>
+                        <ProfileButton
                             style={{ background: '#DB382C' }}
                             type="button"
                             onClick={handleDeleteAccount}
                         >
                             Delete Account
-                        </Button>
-                    </ButtonsContainer>
-                </Form>
-                <Form onSubmit={handleSubmitPassword} noValidate>
-                    {passwordLoading && <Loader />}
-                    <h3>Password Information</h3>
-                    <InputsWrapper>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            autoComplete="off"
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="Password"
-                        />
-                        <label htmlFor="confirm">Confirm</label>
-                        <input
-                            autoComplete="off"
-                            type="password"
-                            name="confirm"
-                            id="confirm"
-                            placeholder="Confirm Password"
-                        />
-                        <SuccesMessage>{passwordMessage}</SuccesMessage>
-                    </InputsWrapper>
-                    <Button type="submit">Save</Button>
-                </Form>
-            </GridContainer>
-        </Container>
+                        </ProfileButton>
+                    </ProfileButtonsContainer>
+                </ProfileFormContainer>
+                <ProfileForm
+                    title="Password Information"
+                    submitHandler={handleSubmitPassword}
+                    successMessage={passwordMessage}
+                    inputs={passwordInformationInputs}
+                />
+            </ProfileContainer>
+        </ProfileWrapper>
     );
 };
 

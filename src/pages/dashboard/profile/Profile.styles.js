@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.section`
+export const ProfileWrapper = styled.section`
     margin: 20px 20px 20px 20px;
     @media (min-width: 900px) {
         margin: 80px 30px 20px 0;
     }
 `;
 
-export const GridContainer = styled.div`
+export const ProfileContainer = styled.div`
     display: grid;
     gap: 30px;
     @media (min-width: 1300px) {
@@ -16,112 +16,41 @@ export const GridContainer = styled.div`
         grid-template-columns: 5fr 4fr;
         grid-template-rows: 260px 90px 380px;
     }
-    form:nth-child(2) {
-        @media (min-width: 1300px) {
-            grid-row: span 2;
-        }
-    }
-    form:nth-child(3) {
-        order: -1;
-        @media (min-width: 1300px) {
-            grid-row: span 2;
-            order: 0;
-        }
-    }
-    aside {
-        order: -1;
-    }
 `;
 
-export const Aside = styled.aside`
+export const ProfileAsideContainer = styled.aside`
+    order: -1;
     background: var(--color-primary);
     border-radius: 43px 43px 13px 13px;
     box-shadow: 0px 3px 6px #00000066;
     display: grid;
     place-items: center;
     text-align: center;
-    img {
-        width: 45px;
-        height: 45px;
-        @media (min-width: 360px) {
-            width: 60px;
-            height: 60px;
-        }
-    }
-    h1 {
-        color: var(--color-white);
-        font-size: 1.6rem;
-        @media (min-width: 360px) {
-            font-size: 2rem;
-        }
-    }
     @media (max-width: 1300px) {
         padding: 60px 0;
     }
 `;
 
-export const Form = styled.form`
-    background: var(--color-white);
-    box-shadow: 0px 3px 6px #00000066;
-    border-radius: 13px;
-    text-align: center;
-    padding: 45px 0px;
-    position: relative;
-    overflow: hidden;
-    h3 {
-        color: var(--color-primary);
-        font-size: 1.2rem;
-        font-weight: 700;
-        padding: 0px 15px;
-        @media (min-width: 360px) {
-            font-size: 1.4rem;
-        }
+export const ProfileAsideWrapper = styled.div``;
+
+export const ProfileIcon = styled.img`
+    width: 45px;
+    height: 45px;
+    @media (min-width: 360px) {
+        width: 60px;
+        height: 60px;
     }
 `;
 
-export const InputsWrapper = styled.div`
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    max-width: 430px;
-    width: 100%;
-    margin: auto;
-    margin-top: 30px;
-    padding: 0px 15px;
-    inset: 0;
-    text-align: start;
-    row-gap: 7px;
-    align-items: center;
-    label {
-        font-weight: 500;
-        color: var(--color-primary);
-        font-size: 1.1rem;
-        margin-top: 10px;
-        @media (min-width: 400px) {
-            margin-top: 0px;
-        }
-    }
-    input {
-        font-size: 0.8rem;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 13px;
-        background: #d1f8fd;
-        font-weight: 500;
-        outline: none;
-        color: #676767;
-    }
-    @media (min-width: 290px) {
-        padding: 0px 30px;
-    }
-    @media (min-width: 400px) {
-        grid-template-columns: 120px 1fr;
-        row-gap: 40px;
-        margin-top: 60px;
+export const ProfileHeading = styled.h2`
+    color: var(--color-white);
+    font-size: 1.6rem;
+    @media (min-width: 360px) {
+        font-size: 2rem;
     }
 `;
 
-export const ButtonsContainer = styled.div`
+export const ProfileButtonsContainer = styled.div`
     max-width: 220px;
     margin: auto;
     margin-top: 25px;
@@ -137,75 +66,42 @@ export const ButtonsContainer = styled.div`
     }
 `;
 
-export const Button = styled.button`
-    background: #0e8e8c;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    color: var(--color-white);
-    border: none;
-    padding: 9px 50px;
-    margin-top: 35px;
-    cursor: pointer;
-    font-weight: 400;
-    @media (min-width: 400px) {
-        margin-top: 50px;
-    }
-    transition: transform 0.3s ease;
-    &:active {
-        transform: scale(0.95);
-    }
-`;
-
-export const SuccesMessage = styled.p`
-    position: absolute;
-    left: 50%;
-    bottom: -30px;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    color: #018c5c;
-    width: 100%;
-    padding: 0 5px;
-    text-align: center;
-    @media (min-width: 400px) {
-        bottom: -40px;
-    }
-`;
-
-export const Figure = styled.figure`
+export const ProfileImageContainer = styled.figure`
     margin-top: 20px;
-    img {
-        object-fit: cover;
-        width: 150px;
-        height: 150px;
-        aspect-ratio: 1/1;
-        outline: 2px solid var(--color-primary);
-        border-radius: 50%;
-        @media (min-width: 400px) {
-            width: 200px;
-            height: 200px;
-        }
+`;
+
+export const ProfileName = styled.figcaption`
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-top: 6px;
+    word-break: break-word;
+    @media (min-width: 310px) {
+        font-size: 1.35rem;
     }
-    figcaption {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--color-primary);
-        margin-top: 6px;
-        word-break: break-word;
-        @media (min-width: 310px) {
-            font-size: 1.35rem;
-        }
-        @media (min-width: 400px) {
-            font-size: 1.9rem;
-        }
-        @media (min-width: 1500px) {
-            font-size: 2.1rem;
-        }
-        padding: 0px 10px;
+    @media (min-width: 400px) {
+        font-size: 1.9rem;
+    }
+    @media (min-width: 1500px) {
+        font-size: 2.1rem;
+    }
+    padding: 0px 10px;
+`;
+
+export const ProfileImage = styled.img`
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1/1;
+    outline: 2px solid var(--color-primary);
+    border-radius: 50%;
+    @media (min-width: 400px) {
+        width: 200px;
+        height: 200px;
     }
 `;
 
-export const Label = styled.label`
+export const ProfileFileLabel = styled.label`
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: underline;
@@ -213,4 +109,8 @@ export const Label = styled.label`
     cursor: pointer;
     display: block;
     margin-top: 3px;
+`;
+
+export const ProfileFileInput = styled.input`
+    display: none;
 `;
