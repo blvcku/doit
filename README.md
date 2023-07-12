@@ -1,4 +1,5 @@
 # DOIT
+WARNING! Codebase is under major refactor, see the development branch for progress
 
 [Documentation in Polish](https://drive.google.com/file/d/1XtQCpkAJ2ZKXfdJMqxXz25Z4LwoA_Bo_/view?usp=sharing)
 
