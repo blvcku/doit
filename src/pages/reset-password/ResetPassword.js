@@ -1,24 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
-import {
-    Container,
-    Form,
-    Wrapper,
-    Paragraph,
-    SubmitButton,
-    SuccessMessage,
-} from '../../styles/Auth.styles';
+import AuthPage from '../../components/auth-page/AuthPage';
+import { AuthPageLink } from '../../components/auth-page/AuthPage.styles';
+import { resetPasswordInputs } from './ResetPassword.config';
 
 const ResetPassword = (props) => {
-    const emailRef = useRef();
+    const [successMessage, setSuccessMessage] = useState('');
     const { resetPassword } = useAuth();
     const { dispatchError } = useError();
     const { setTitle } = useTitle();
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         setTitle('Reset Password');
@@ -27,42 +19,27 @@ const ResetPassword = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatchError({ type: 'reset' });
-        if (!emailRef.current.value.trim())
-            return dispatchError({ type: 'auth/invalid-email' });
+        setSuccessMessage('');
+        const form = e.target;
+        const { value: email } = form.elements['email'];
+        if (!email.trim()) return dispatchError({ type: 'auth/invalid-email' });
         try {
-            setMessage('');
-            setLoading(true);
-            await resetPassword(emailRef.current.value);
-            setMessage('Success! Check your inbox for further instructions.');
+            await resetPassword(email);
+            setSuccessMessage('Success! Check your inbox for further instructions.');
         } catch (error) {
             dispatchError({ type: 'auth/resetpassword-failed' });
         }
-        setLoading(false);
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <h1>Reset Password</h1>
-                <Form onSubmit={handleSubmit} noValidate>
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        placeholder="example@mail.com"
-                        type="email"
-                        name="email"
-                        id="email"
-                        ref={emailRef}
-                    />
-                    <Paragraph>
-                        <Link to="/login">Back to Log In</Link>
-                    </Paragraph>
-                    <SubmitButton loading={loading} type="submit">
-                        Submit
-                    </SubmitButton>
-                    <SuccessMessage>{message}</SuccessMessage>
-                </Form>
-            </Wrapper>
-        </Container>
+        <AuthPage
+            title="Reset Password"
+            inputs={resetPasswordInputs}
+            submitHandler={handleSubmit}
+            successMessage={successMessage}
+        >
+            <AuthPageLink to="/login">Back to Log In</AuthPageLink>
+        </AuthPage>
     );
 };
 

@@ -1,25 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
-import {
-    Container,
-    SignUpForm,
-    Wrapper,
-    Paragraph,
-    SubmitButton,
-} from '../../styles/Auth.styles';
+import { AuthPageLink } from '../../components/auth-page/AuthPage.styles';
+import { SignUpAuthPage } from './SignUp.styles';
+import { signUpInputs } from './SignUp.config';
 
 const SignUp = (props) => {
     const history = useHistory();
     const { signUp } = useAuth();
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const confirmPasswordRef = useRef();
     const { dispatchError } = useError();
     const { setTitle } = useTitle();
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setTitle('Sign Up');
@@ -28,63 +20,32 @@ const SignUp = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatchError({ type: 'reset' });
-        if (!emailRef.current.value.trim())
-            return dispatchError({ type: 'auth/invalid-email' });
-        if (passwordRef.current.value.length < 6)
+        const form = e.target;
+        const { value: email } = form.elements['email'];
+        const { value: password } = form.elements['password'];
+        const { value: confirmPassword } = form.elements['confirm-password'];
+        if (!email.trim()) return dispatchError({ type: 'auth/invalid-email' });
+        if (password.length < 6)
             return dispatchError({ type: 'auth/password-too-short' });
-        if (passwordRef.current.value !== confirmPasswordRef.current.value)
+        if (password !== confirmPassword)
             return dispatchError({ type: 'auth/passwords-not-match' });
         try {
-            setLoading(true);
-            await signUp(emailRef.current.value, passwordRef.current.value);
+            await signUp(email, password);
             return history.push('/dashboard');
         } catch (error) {
             dispatchError({ type: error.code });
         }
-        setLoading(false);
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <h1>Sign Up</h1>
-                <SignUpForm onSubmit={handleSubmit} noValidate>
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        placeholder="example@mail.com"
-                        type="email"
-                        name="email"
-                        id="email"
-                        ref={emailRef}
-                    />
-                    <label htmlFor="password">Password</label>
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        autoComplete="off"
-                        name="password"
-                        id="password"
-                        ref={passwordRef}
-                    />
-                    <label htmlFor="confirmPassword">Confirm Password</label>
-                    <input
-                        placeholder="Confirm Password"
-                        type="password"
-                        autoComplete="off"
-                        name="ConfirmPassword"
-                        id="ConfirmPassword"
-                        ref={confirmPasswordRef}
-                    />
-                    <Paragraph>
-                        Already have an account?&nbsp;
-                        <Link to="/login">Log In</Link>
-                    </Paragraph>
-                    <SubmitButton loading={loading} type="submit">
-                        Submit
-                    </SubmitButton>
-                </SignUpForm>
-            </Wrapper>
-        </Container>
+        <SignUpAuthPage
+            title="Sign Up"
+            inputs={signUpInputs}
+            submitHandler={handleSubmit}
+        >
+            Already have an account?&nbsp;
+            <AuthPageLink to="/login">Log In</AuthPageLink>
+        </SignUpAuthPage>
     );
 };
 

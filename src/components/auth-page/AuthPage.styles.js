@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import BackgroundImage from '../assets/images/background.png';
+import { Link } from 'react-router-dom';
+import BackgroundImage from '../../assets/images/background.png';
 
-export const Container = styled.main`
+export const AuthPageContainer = styled.main`
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -12,7 +13,7 @@ export const Container = styled.main`
     padding: 1rem;
 `;
 
-export const Wrapper = styled.div`
+export const AuthPageBox = styled.div`
     box-shadow: 0px 3px 6px #00000040;
     background: var(--color-white);
     opacity: 0.9;
@@ -25,85 +26,80 @@ export const Wrapper = styled.div`
     @media (min-width: 600px) {
         padding: 110px 80px 60px;
     }
-
-    h1 {
-        font-weight: 500;
-        color: var(--color-primary);
-        font-size: 2rem;
-        text-align: center;
-    }
 `;
 
-export const Form = styled.form`
+export const AuthPageTitle = styled.h1`
+    font-weight: 500;
+    color: var(--color-primary);
+    font-size: 2rem;
+    text-align: center;
+`;
+
+export const AuthPageForm = styled.form`
     display: flex;
     flex-direction: column;
     position: relative;
-    label {
-        margin-top: 70px;
+`;
+
+export const AuthPageLabel = styled.label`
+    margin-top: 70px;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1rem;
+`;
+
+export const AuthPageInput = styled.input`
+    width: 100%;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    padding: 16px 22px;
+    font-size: 1rem;
+    margin-top: 10px;
+
+    &::placeholder {
         color: var(--color-primary);
-        font-weight: 700;
-        font-size: 1rem;
     }
-    input {
-        width: 100%;
-        color: var(--color-primary);
-        border: 2px solid var(--color-primary);
-        border-radius: 10px;
-        padding: 16px 22px;
-        font-size: 1rem;
-        margin-top: 10px;
 
-        &::placeholder {
-            color: var(--color-primary);
-        }
-
-        &:focus {
-            outline: none;
-        }
+    &:focus {
+        outline: none;
     }
 `;
 
-export const Paragraph = styled.p`
+export const AuthPageParagraph = styled.p`
     font-size: 0.8rem;
     margin-top: 30px;
     color: var(--color-primary);
     font-weight: 700;
-    a {
-        color: var(--color-primary);
-        text-decoration: underline;
-    }
 `;
 
-export const SubmitButton = styled.button`
+export const AuthPageLink = styled(Link)`
+    color: var(--color-primary);
+    text-decoration: underline;
+`;
+
+export const AuthPageButton = styled.button`
     width: max-content;
     align-self: center;
     margin-top: 30px;
     font-size: 1rem;
     padding: 10px 35px;
     font-weight: 700;
-    background: ${({ loading }) =>
-        loading ? 'var(--color-accent)' : 'var(--color-primary)'};
+    background-color: var(--color-primary);
     border: none;
     color: var(--color-white);
     border-radius: 10px;
     transition: transform 0.3s ease;
     cursor: pointer;
-
+    &:disabled {
+        background-color: var(--color-accent);
+    }
     &:active {
         transform: scale(0.95);
     }
 `;
 
-export const SignUpForm = styled(Form)`
-    label {
-        margin-top: 30px;
-        color: var(--color-primary);
-        font-weight: 700;
-        font-size: 1rem;
-    }
-`;
-
-export const SuccessMessage = styled.p`
+export const AuthPageSuccessMessage = styled.p`
     font-size: 0.7rem;
     color: #018c5c;
     margin-top: 5px;

@@ -1,24 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
-import {
-    Container,
-    Form,
-    Wrapper,
-    Paragraph,
-    SubmitButton,
-} from '../../styles/Auth.styles';
+import AuthPage from '../../components/auth-page/AuthPage';
+import { AuthPageLink } from '../../components/auth-page/AuthPage.styles';
+import { loginInputs } from './Login.config';
 
 const Login = () => {
     const history = useHistory();
     const { login } = useAuth();
-    const emailRef = useRef();
-    const passwordRef = useRef();
     const { dispatchError } = useError();
     const { setTitle } = useTitle();
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setTitle('Log In');
@@ -27,52 +20,31 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatchError({ type: 'reset' });
-        if (!passwordRef.current.value)
-            return dispatchError({ type: 'auth/invalid-password' });
+        const form = e.target;
+        const { value: email } = form.elements['email'];
+        const { value: password } = form.elements['password'];
+        if (!password) return dispatchError({ type: 'auth/invalid-password' });
         try {
-            setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value);
+            await login(email, password);
             return history.push('/dashboard');
         } catch (error) {
             dispatchError({ type: error.code });
         }
-        setLoading(false);
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <h1>Login</h1>
-                <Form onSubmit={handleSubmit} noValidate>
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        placeholder="example@mail.com"
-                        type="email"
-                        name="email"
-                        id="email"
-                        ref={emailRef}
-                    />
-                    <label htmlFor="password">Password</label>
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        autoComplete="on"
-                        name="password"
-                        id="password"
-                        ref={passwordRef}
-                    />
-                    <Paragraph>
-                        Don't have an account?&nbsp;
-                        <Link to="/signup">Sign Up</Link>
-                        <br />
-                        <Link to="/resetpassword">I forgot my password</Link>
-                    </Paragraph>
-                    <SubmitButton loading={loading} type="submit">
-                        Submit
-                    </SubmitButton>
-                </Form>
-            </Wrapper>
-        </Container>
+        <AuthPage
+            title='Login'
+            inputs={loginInputs}
+            submitHandler={handleSubmit}
+        >
+            Don't have an account?&nbsp;
+            <AuthPageLink to="/signup">Sign Up</AuthPageLink>
+            <br />
+            <AuthPageLink to="/resetpassword">
+                I forgot my password
+            </AuthPageLink>
+        </AuthPage>
     );
 };
 
