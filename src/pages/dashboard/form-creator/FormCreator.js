@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useRouteMatch, Switch, Route, useHistory } from 'react-router-dom';
 import { db, functions, storage, fb } from '../../../services/firebase';
 import useError from '../../../contexts/error-context/useError';
 import useAuth from '../../../contexts/auth-context/useAuth';
 import useTitle from '../../../hooks/useTitle';
+import useFocus from '../../../hooks/useFocus';
 import {
     Container,
     Form,
@@ -19,7 +20,6 @@ const FormCreator = () => {
     const {
         currentUser: { uid },
     } = useAuth();
-    const { setTitle } = useTitle();
     const [isCreating, setIsCreating] = useState(false);
     const [error, setError] = useState(null);
     const titleRef = useRef();
@@ -39,19 +39,13 @@ const FormCreator = () => {
             inputField: false,
         },
     ]);
+    useTitle(form.title);
+    useFocus(titleRef);
 
     const handleTitleChange = (e) => {
         e.preventDefault();
         setForm((prev) => ({ ...prev, title: e.target.value }));
     };
-
-    useEffect(() => {
-        titleRef.current.focus();
-    }, []);
-
-    useEffect(() => {
-        setTitle(form.title || 'DOIT');
-    }, [setTitle, form.title]);
 
     const validateData = () => {
         if (!form.title.trim()) {

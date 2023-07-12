@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
@@ -10,11 +10,7 @@ const ResetPassword = (props) => {
     const [successMessage, setSuccessMessage] = useState('');
     const { resetPassword } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
-
-    useEffect(() => {
-        setTitle('Reset Password');
-    }, [setTitle]);
+    useTitle('Reset Password');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +21,9 @@ const ResetPassword = (props) => {
         if (!email.trim()) return dispatchError({ type: 'auth/invalid-email' });
         try {
             await resetPassword(email);
-            setSuccessMessage('Success! Check your inbox for further instructions.');
+            setSuccessMessage(
+                'Success! Check your inbox for further instructions.',
+            );
         } catch (error) {
             dispatchError({ type: 'auth/resetpassword-failed' });
         }

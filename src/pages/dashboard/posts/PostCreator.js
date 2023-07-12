@@ -5,6 +5,8 @@ import { db, fb, storage, functions } from '../../../services/firebase';
 import useFileType from '../../../hooks/useFileType';
 import useError from '../../../contexts/error-context/useError';
 import useAuth from '../../../contexts/auth-context/useAuth';
+import useFocus from '../../../hooks/useFocus';
+import useTitle from '../../../hooks/useTitle';
 import {
     Form,
     Label,
@@ -16,7 +18,7 @@ import {
 const PostCreator = ({
     setIsEditing,
     isCreating = true,
-    initialTitle = 'POST TITLE',
+    initialTitle = 'Post Title',
     initialDescription = '',
     initialFile = { url: null, type: null, name: null },
     postID,
@@ -31,6 +33,8 @@ const PostCreator = ({
         currentUser: { uid, photoURL, displayName },
     } = useAuth();
     const history = useHistory();
+    useTitle(title);
+    useFocus(titleRef);
 
     const handleChangeTitle = (e) => {
         e.preventDefault();
@@ -66,10 +70,6 @@ const PostCreator = ({
         };
         reader.readAsDataURL(file);
     };
-
-    useEffect(() => {
-        titleRef.current.focus();
-    }, [titleRef]);
 
     useEffect(() => {
         if (isCreating) return;

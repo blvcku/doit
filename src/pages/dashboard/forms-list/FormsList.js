@@ -20,7 +20,7 @@ const FormsList = () => {
         currentUser: { uid },
     } = useAuth();
     const { setData, filter, setFilter, filteredData } = useFilter();
-    const { setTitle } = useTitle();
+    useTitle('Forms');
 
     const handleFilterChange = (e) => {
         e.preventDefault();
@@ -41,10 +41,6 @@ const FormsList = () => {
             });
         return unsubscribe;
     }, [uid, setData]);
-
-    useEffect(() => {
-        setTitle('Forms');
-    }, [setTitle]);
 
     return (
         <Container>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
@@ -11,11 +10,7 @@ const Login = () => {
     const history = useHistory();
     const { login } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
-
-    useEffect(() => {
-        setTitle('Log In');
-    }, [setTitle]);
+    useTitle('Log In');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +29,7 @@ const Login = () => {
 
     return (
         <AuthPage
-            title='Login'
+            title="Login"
             inputs={loginInputs}
             submitHandler={handleSubmit}
         >

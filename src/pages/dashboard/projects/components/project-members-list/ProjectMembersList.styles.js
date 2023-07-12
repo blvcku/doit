@@ -131,21 +131,21 @@ export const ProjectMembersListOverflowContainer = styled.div`
     ${({ isOwner }) =>
         isOwner
             ? css`
-        @media(min-width:720px){
-            height:350px;
-        }
-        @media(min-width:900px){
-            height:auto;
-        }
-        @media(min-width:1000px){
-            height:350px;
-        }
-    `
+                  @media (min-width: 720px) {
+                      height: 350px;
+                  }
+                  @media (min-width: 900px) {
+                      height: auto;
+                  }
+                  @media (min-width: 1000px) {
+                      height: 350px;
+                  }
+              `
             : css`
-        @media(min-width:1300px){
-            height:350px;
-        }
-    `}
+                  @media (min-width: 1300px) {
+                      height: 350px;
+                  }
+              `}
 `;
 
 export const ProjectMembersListGroupHeadingSmall = styled.h4`

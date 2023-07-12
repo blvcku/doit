@@ -31,11 +31,11 @@ const ProjectsList = () => {
         currentUser: { uid },
     } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
     const history = useHistory();
     const [projects, setProjects] = useState([]);
     const [projectInvites, setProjectInvites] = useState([]);
     const { setData, filter, setFilter, filteredData } = useFilter();
+    useTitle('Projects');
 
     const createProject = async (e) => {
         e.preventDefault();
@@ -93,15 +93,14 @@ const ProjectsList = () => {
         setData([...projectInvites, ...projects]);
     }, [projects, projectInvites, setData]);
 
-    useEffect(() => {
-        setTitle('Projects');
-    }, [setTitle]);
-
     return (
         <ProjectsListWrapper>
             <ProjectsListContainer>
                 <ProjectsListSearchWrapper>
-                    <ProjectsListSearchContainer onSubmit={(e) => e.preventDefault()} noValidate>
+                    <ProjectsListSearchContainer
+                        onSubmit={(e) => e.preventDefault()}
+                        noValidate
+                    >
                         <ProjectsListSearchInput
                             placeholder="Search"
                             type="text"
@@ -115,9 +114,17 @@ const ProjectsList = () => {
                 </ProjectsListSearchWrapper>
                 <ProjectsContainer>
                     <ProjectsListCreateProjectContainer>
-                        <ProjectsListCreateProjectButton type="button" onClick={createProject}>
-                            <ProjectsListCreateProjectButtonIcon src={PlusIcon} alt="" />
-                            <ProjectsListCreateProjectButtonText>Create Project</ProjectsListCreateProjectButtonText>
+                        <ProjectsListCreateProjectButton
+                            type="button"
+                            onClick={createProject}
+                        >
+                            <ProjectsListCreateProjectButtonIcon
+                                src={PlusIcon}
+                                alt=""
+                            />
+                            <ProjectsListCreateProjectButtonText>
+                                Create Project
+                            </ProjectsListCreateProjectButtonText>
                         </ProjectsListCreateProjectButton>
                     </ProjectsListCreateProjectContainer>
                     {filteredData.map(
@@ -139,8 +146,12 @@ const ProjectsList = () => {
                                     background={photoURL || DefaultImage}
                                     key={id}
                                 >
-                                    <ProjectsListProjectContainer to={`/dashboard/projects/${id}`}>
-                                        <ProjectsListProjectTitle>{title}</ProjectsListProjectTitle>
+                                    <ProjectsListProjectContainer
+                                        to={`/dashboard/projects/${id}`}
+                                    >
+                                        <ProjectsListProjectTitle>
+                                            {title}
+                                        </ProjectsListProjectTitle>
                                     </ProjectsListProjectContainer>
                                 </ProjectsListProjectWrapper>
                             );

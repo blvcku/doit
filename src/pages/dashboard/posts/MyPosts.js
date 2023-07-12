@@ -3,6 +3,7 @@ import { db } from '../../../services/firebase';
 import SearchIcon from '../../../assets/icons/search.svg';
 import useAuth from '../../../contexts/auth-context/useAuth';
 import useFilter from '../../../hooks/useFilter';
+import useTitle from '../../../hooks/useTitle';
 import { SearchBar, PostsContainer } from './Posts.styles';
 import Post from './Post';
 
@@ -11,6 +12,7 @@ const MyPosts = () => {
         currentUser: { uid },
     } = useAuth();
     const { setData, setFilter, filteredData } = useFilter();
+    useTitle('My Posts');
 
     const handleChangeFilter = (e) => {
         e.preventDefault();

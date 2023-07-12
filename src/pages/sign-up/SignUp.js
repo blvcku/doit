@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
@@ -11,11 +10,7 @@ const SignUp = (props) => {
     const history = useHistory();
     const { signUp } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
-
-    useEffect(() => {
-        setTitle('Sign Up');
-    }, [setTitle]);
+    useTitle('Sign Up');
 
     const handleSubmit = async (e) => {
         e.preventDefault();

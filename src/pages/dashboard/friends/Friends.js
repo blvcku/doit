@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useRouteMatch, Switch, Route, Redirect } from 'react-router-dom';
 import SearchIcon from '../../../assets/icons/search.svg';
 import useTitle from '../../../hooks/useTitle';
@@ -14,9 +14,9 @@ import FriendsSearch from './friends-search/FriendsSearch';
 
 const Friends = () => {
     const { path } = useRouteMatch();
-    const { setTitle } = useTitle();
     const [searchTerm, setSearchTerm] = useState('');
     const searchRef = useRef();
+    useTitle('Friends');
 
     const handleChangeSearch = (e) => {
         e.preventDefault();
@@ -27,10 +27,6 @@ const Friends = () => {
         searchRef.current.value = '';
         setSearchTerm('');
     };
-
-    useEffect(() => {
-        setTitle('Friends');
-    }, [setTitle]);
 
     return (
         <Container>

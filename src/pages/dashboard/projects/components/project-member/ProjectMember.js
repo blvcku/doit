@@ -63,20 +63,32 @@ const ProjectMember = ({
         }
     };
 
-    const memberData = { photoURL, displayName, uid }
+    const memberData = { photoURL, displayName, uid };
 
     return (
         <>
             {
                 {
                     member: (
-                        <Member {...memberData} buttonType={isOwner ? 'delete' : null} buttonClickHandler={handleDeleteMember}/>
+                        <Member
+                            {...memberData}
+                            buttonType={isOwner ? 'delete' : null}
+                            buttonClickHandler={handleDeleteMember}
+                        />
                     ),
                     friend: (
-                        <Member {...memberData} buttonType={isOwner ? 'add' : null} buttonClickHandler={handleInvite}/>
+                        <Member
+                            {...memberData}
+                            buttonType={isOwner ? 'add' : null}
+                            buttonClickHandler={handleInvite}
+                        />
                     ),
                     invited: (
-                        <Member {...memberData} buttonType={isOwner ? 'delete' : null} buttonClickHandler={handleDeleteInvite}/>
+                        <Member
+                            {...memberData}
+                            buttonType={isOwner ? 'delete' : null}
+                            buttonClickHandler={handleDeleteInvite}
+                        />
                     ),
                     owner: <Member {...memberData} buttonType={null} />,
                 }[status]

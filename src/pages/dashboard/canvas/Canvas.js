@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { db } from '../../../services/firebase';
 import useTitle from '../../../hooks/useTitle';
+import useFocus from '../../../hooks/useFocus';
 import { Banner, Container, Wrapper } from './Canvas.styles';
 import CanvasRenderer from './components/canvas-renderer/CanvasRenderer';
 
@@ -10,8 +11,9 @@ const Canvas = () => {
     const [loading, setLoading] = useState(true);
     const [canvasData, setCanvasData] = useState({});
     const [canvasTitle, setCanvasTitle] = useState(null);
-    const { setTitle } = useTitle();
     const titleRef = useRef();
+    useTitle(canvasData.title);
+    useFocus(titleRef, !loading);
 
     const handleTitleChange = (e) => {
         e.preventDefault();
@@ -39,12 +41,6 @@ const Canvas = () => {
     }, [canvasTitle, id]);
 
     useEffect(() => {
-        if (!loading) {
-            titleRef.current.focus();
-        }
-    }, [loading]);
-
-    useEffect(() => {
         const unsubscribe = db
             .collection('canvas')
             .doc(id)
@@ -58,10 +54,6 @@ const Canvas = () => {
 
         return unsubscribe;
     }, [id]);
-
-    useEffect(() => {
-        setTitle(canvasData.title || 'DOIT');
-    }, [canvasData.title, setTitle]);
 
     return (
         <>

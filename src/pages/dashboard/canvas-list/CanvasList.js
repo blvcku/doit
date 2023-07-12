@@ -21,9 +21,9 @@ const CanvasList = () => {
         currentUser: { uid },
     } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
     const history = useHistory();
     const { setData, filter, setFilter, filteredData } = useFilter();
+    useTitle('Canvas');
 
     const createCanvas = async (e) => {
         e.preventDefault();
@@ -60,10 +60,6 @@ const CanvasList = () => {
             });
         return unsubscribe;
     }, [uid, setData]);
-
-    useEffect(() => {
-        setTitle('Canvas');
-    }, [setTitle]);
 
     return (
         <Container>

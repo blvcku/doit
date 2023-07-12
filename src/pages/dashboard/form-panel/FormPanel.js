@@ -35,9 +35,9 @@ const FormPanel = () => {
     const { dispatchError } = useError();
     const [questions, setQuestions] = useState([]);
     const { setConfirmInfo } = useConfirmBox();
-    const { setTitle } = useTitle();
     const history = useHistory();
     const [deletingForm, setDeletingForm] = useState(false);
+    useTitle(form.title);
 
     useEffect(() => {
         const unsubscribe = db
@@ -75,10 +75,6 @@ const FormPanel = () => {
             setForm({});
         }
     }, [uid, form.authorID]);
-
-    useEffect(() => {
-        setTitle(form.title || 'DOIT');
-    }, [setTitle, form.title]);
 
     const handleTogglePaused = async (e) => {
         e.preventDefault();

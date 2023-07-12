@@ -1,4 +1,7 @@
-import { ProfileFormInputElement, ProfileFormLabel } from './ProfileFormInput.styles';
+import {
+    ProfileFormInputElement,
+    ProfileFormLabel,
+} from './ProfileFormInput.styles';
 
 const ProfileFormInput = ({ name, label, ...inputProps }) => {
     return (

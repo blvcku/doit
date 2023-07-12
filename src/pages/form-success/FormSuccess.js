@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Logo from '../../assets/icons/logo.svg';
 import Smile from '../../assets/icons/smile.svg';
 import { Link } from 'react-router-dom';
@@ -6,11 +5,7 @@ import useTitle from '../../hooks/useTitle';
 import { Container, Wrapper } from './FormSuccess.styles';
 
 const FormSuccess = () => {
-    const { setTitle } = useTitle();
-
-    useEffect(() => {
-        setTitle('Success');
-    }, [setTitle]);
+    useTitle('Success');
 
     return (
         <Wrapper>

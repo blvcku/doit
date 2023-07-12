@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProfileButtonContainer = styled.button`
     background: #0e8e8c;

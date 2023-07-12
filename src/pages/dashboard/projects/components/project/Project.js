@@ -10,6 +10,7 @@ import { db } from '../../../../../services/firebase';
 import useAuth from '../../../../../contexts/auth-context/useAuth';
 import useError from '../../../../../contexts/error-context/useError';
 import useTitle from '../../../../../hooks/useTitle';
+import useFocus from '../../../../../hooks/useFocus';
 import {
     ProjectWrapper,
     ProjectContainer,
@@ -27,12 +28,13 @@ const Project = () => {
     const { path } = useRouteMatch();
     const { currentUser } = useAuth();
     const { dispatchError } = useError();
-    const { setTitle } = useTitle();
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
     const [isOwner, setIsOwner] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const titleRef = useRef();
+    useTitle(project.title);
+    useFocus(titleRef, isEditing);
 
     useEffect(() => {
         const unsubscribe = db
@@ -56,16 +58,6 @@ const Project = () => {
             setIsOwner(false);
         }
     }, [project, currentUser]);
-
-    useEffect(() => {
-        if (isEditing) {
-            titleRef.current.focus();
-        }
-    }, [isEditing]);
-
-    useEffect(() => {
-        setTitle(project.title || 'DOIT');
-    }, [project.title, setTitle]);
 
     const turnOnEdit = (e) => {
         e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AccountIcon from '../../../assets/icons/account.svg';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../../contexts/auth-context/useAuth';
@@ -36,11 +36,11 @@ const Profile = () => {
     } = useAuth();
     const { dispatchError } = useError();
     const { setConfirmInfo } = useConfirmBox();
-    const { setTitle } = useTitle();
     const history = useHistory();
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState('');
     const [emailMessage, setEmailMessage] = useState('');
+    useTitle('Account');
 
     const personalInformationInputs = [
         {
@@ -76,10 +76,6 @@ const Profile = () => {
             placeholder: 'Confirm Password',
         },
     ];
-
-    useEffect(() => {
-        setTitle('Account');
-    }, [setTitle]);
 
     const handleLogout = async (e) => {
         e.preventDefault();

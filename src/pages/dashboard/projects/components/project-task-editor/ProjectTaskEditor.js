@@ -4,7 +4,12 @@ import AssingIcon from '../../../../../assets/icons/assign.svg';
 import { db, fb, functions, storage } from '../../../../../services/firebase';
 import useAuth from '../../../../../contexts/auth-context/useAuth';
 import useError from '../../../../../contexts/error-context/useError';
-import { ProjectTaskEditorHeading, ProjectTaskEditorButton, ProjectTaskEditorButtonIcon, ProjectTaskEditorContainer } from './ProjectTaskEditor.styles';
+import {
+    ProjectTaskEditorHeading,
+    ProjectTaskEditorButton,
+    ProjectTaskEditorButtonIcon,
+    ProjectTaskEditorContainer,
+} from './ProjectTaskEditor.styles';
 import {
     ProjectTaskHeadContainer,
     ProjectTaskPerformerContainer,
@@ -184,7 +189,10 @@ const ProjectTaskEditor = ({
                                 />
                             </ProjectTaskSmallButton>
                             <ProjectTaskEditorButton type="submit">
-                                <ProjectTaskEditorButtonIcon src={SaveIcon} alt="" />
+                                <ProjectTaskEditorButtonIcon
+                                    src={SaveIcon}
+                                    alt=""
+                                />
                                 Save
                             </ProjectTaskEditorButton>
                         </ProjectTaskButtonsContainer>

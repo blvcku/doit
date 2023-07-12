@@ -17,13 +17,13 @@ const Form = () => {
     const history = useHistory();
     const { dispatchError } = useError();
     const { currentUser = null } = useAuth();
-    const { setTitle } = useTitle();
     const { id } = useParams();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState({});
     const [questions, setQuestions] = useState([]);
     const [error, setError] = useState(null);
+    useTitle(form.title);
 
     useEffect(() => {
         const unsubscribe = db
@@ -57,10 +57,6 @@ const Form = () => {
             });
         return unsubscribe;
     }, [id]);
-
-    useEffect(() => {
-        setTitle(form.title || 'DOIT');
-    }, [setTitle, form.title]);
 
     const handleSubmitForm = async (e) => {
         e.preventDefault();

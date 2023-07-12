@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import useTitle from '../../../hooks/useTitle';
 import { Container, SubContainer, Nav, CustomNavLink } from './Posts.styles';
@@ -7,12 +6,8 @@ import MyPosts from './MyPosts';
 import GlobalPosts from './GlobalPosts';
 
 const Posts = () => {
-    const { setTitle } = useTitle();
     const { path } = useRouteMatch();
-
-    useEffect(() => {
-        setTitle('Posts');
-    }, [setTitle]);
+    useTitle('Posts');
 
     return (
         <Container>
