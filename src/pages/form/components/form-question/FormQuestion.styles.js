@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const QuestionContainer = styled.li`
+export const FormQuestionContainer = styled.li`
     box-shadow: 0px 3px 6px #00000066;
     border-radius: 13px;
     ${({ error }) =>
@@ -12,39 +12,41 @@ export const QuestionContainer = styled.li`
     padding: 1.8rem 1rem 1.4rem;
 `;
 
-export const QuestionWrapper = styled.div`
+export const FormQuestionWrapper = styled.div`
     max-width: 530px;
     margin: auto;
-    h2 {
-        color: var(--color-primary-dark);
-        font-weight: 700;
-        font-size: 1rem;
-        margin-bottom: 2.3rem;
-        position: relative;
-        word-break: break-word;
-        &::before {
-            content: '';
-            position: absolute;
-            height: 1px;
-            width: 100%;
-            background: #676767;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -1.3rem;
-            @media (min-width: 600px) {
-                width: 105%;
-            }
-            @media (min-width: 700px) {
-                width: 115%;
-            }
+`;
+
+export const FormQuestionHeading = styled.h2`
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 2.3rem;
+    position: relative;
+    word-break: break-word;
+    &::before {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 100%;
+        background: #676767;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -1.3rem;
+        @media (min-width: 600px) {
+            width: 105%;
         }
-    }
-    ul {
-        list-style: none;
+        @media (min-width: 700px) {
+            width: 115%;
+        }
     }
 `;
 
-export const FileContainer = styled.div`
+export const FormQuestionAnswersContainer = styled.ul`
+    list-style: none;
+`;
+
+export const FormQuestionFileContainer = styled.div`
     overflow: hidden;
     text-align: center;
     outline-offset: -1px;
@@ -84,31 +86,43 @@ export const FileContainer = styled.div`
     }
 `;
 
-export const AnswerContainer = styled.li`
+export const FormQuestionAnswerContainer = styled.li`
     margin-top: 0.35rem;
     display: grid;
     grid-template-columns: max-content 1fr;
     align-items: center;
     column-gap: 0.8rem;
     row-gap: 0.2rem;
-    input[type='text'] {
-        grid-column: 2 / 2;
+`;
+
+export const FormQuestionAnswerLabel = styled.label`
+    color: #676767;
+    font-weight: 400;
+    font-size: 0.9rem;
+    word-break: break-word;
+`;
+
+export const FormQuestionInput = styled.input`
+    &[type='text'] {
+        display: block;
         max-width: 250px;
         width: 100%;
-        font-size: 0.8rem;
-        padding: 0.25rem 0.8rem;
-        border-radius: 13px;
-        border: 1px solid var(--color-primary-dark);
-        outline: none;
-        background: var(--color-white-dark);
-        color: #676767;
         transition: max-width 0.3s ease;
+        font-size: 0.75rem;
+        background: #eaf4f5;
+        border: none;
+        border-bottom: 1px solid var(--color-primary-dark);
+        outline: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px 3px 0px 0px;
+        color: #676767;
+        margin-top: 0.2rem;
         &:focus {
             max-width: 350px;
         }
     }
-    input[type='checkbox'],
-    input[type='radio'] {
+    &[type='checkbox'],
+    &[type='radio'] {
         width: 1rem;
         height: 1rem;
         appearance: none;
@@ -129,46 +143,22 @@ export const AnswerContainer = styled.li`
             border-radius: 1px;
         }
     }
-    input[type='radio'] {
+    &[type='radio'] {
         border-radius: 50%;
         &:checked::before {
             border-radius: 50%;
         }
     }
-    input[type='checkbox']:checked + label,
-    input[type='radio']:checked + label {
+    &[type='checkbox']:checked + label,
+    &[type='radio']:checked + label {
         font-weight: 500;
-    }
-    label {
-        color: #676767;
-        font-weight: 400;
-        font-size: 0.9rem;
-        word-break: break-word;
     }
 `;
 
-export const InputFieldLabel = styled.label`
+export const FormQuestionTextAnswerLabel = styled.label`
     font-weight: 400;
     font-size: 0.9rem;
     color: #676767;
     margin-top: 0.7rem;
     display: block;
-    input {
-        display: block;
-        max-width: 250px;
-        width: 100%;
-        transition: max-width 0.3s ease;
-        font-size: 0.75rem;
-        background: #eaf4f5;
-        border: none;
-        border-bottom: 1px solid var(--color-primary-dark);
-        outline: none;
-        padding: 0.25rem 0.5rem;
-        border-radius: 3px 3px 0px 0px;
-        color: #676767;
-        margin-top: 0.2rem;
-        &:focus {
-            max-width: 350px;
-        }
-    }
 `;

@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import useFileType from '../../../../hooks/useFileType';
 import {
-    QuestionContainer,
-    QuestionWrapper,
-    FileContainer,
-    AnswerContainer,
-    InputFieldLabel,
+    FormQuestionContainer,
+    FormQuestionWrapper,
+    FormQuestionFileContainer,
+    FormQuestionAnswerContainer,
+    FormQuestionHeading,
+    FormQuestionAnswersContainer,
+    FormQuestionTextAnswerLabel,
+    FormQuestionInput,
+    FormQuestionAnswerLabel,
 } from './FormQuestion.styles';
 
-const Question = ({
+const FormQuestion = ({
     title,
     file,
     answers,
@@ -23,41 +27,43 @@ const Question = ({
         setFile(file);
     }, [file, setFile]);
 
+    const answerInputType = multipleAnswers ? 'checkbox' : 'radio';
+
     return (
-        <QuestionContainer error={error === index}>
-            <QuestionWrapper>
-                <h2>{title}</h2>
+        <FormQuestionContainer error={error === index}>
+            <FormQuestionWrapper>
+                <FormQuestionHeading>{title}</FormQuestionHeading>
                 {file && file.url && (
-                    <FileContainer type={file && file.type}>
+                    <FormQuestionFileContainer type={file && file.type}>
                         {FileElement}
-                    </FileContainer>
+                    </FormQuestionFileContainer>
                 )}
-                <ul>
+                <FormQuestionAnswersContainer>
                     {answers.map((answer, answerIndex) => (
-                        <AnswerContainer key={answerIndex}>
-                            <input
-                                type={multipleAnswers ? 'checkbox' : 'radio'}
+                        <FormQuestionAnswerContainer key={answerIndex}>
+                            <FormQuestionInput
+                                type={answerInputType}
                                 name={`answer${index}`}
                                 value={answer}
                             />
-                            <label htmlFor="answer">{answer}</label>
-                        </AnswerContainer>
+                            <FormQuestionAnswerLabel htmlFor="answer">{answer}</FormQuestionAnswerLabel>
+                        </FormQuestionAnswerContainer>
                     ))}
-                </ul>
+                </FormQuestionAnswersContainer>
                 {inputField && (
-                    <InputFieldLabel>
+                    <FormQuestionTextAnswerLabel>
                         Other:
-                        <input
+                        <FormQuestionInput
                             maxLength="400"
                             type="text"
                             name={`answer${index}input`}
                             placeholder="Write your answer..."
                         />
-                    </InputFieldLabel>
+                    </FormQuestionTextAnswerLabel>
                 )}
-            </QuestionWrapper>
-        </QuestionContainer>
+            </FormQuestionWrapper>
+        </FormQuestionContainer>
     );
 };
 
-export default Question;
+export default FormQuestion;

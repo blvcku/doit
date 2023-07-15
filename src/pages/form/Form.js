@@ -5,13 +5,15 @@ import useAuth from '../../contexts/auth-context/useAuth';
 import useError from '../../contexts/error-context/useError';
 import useTitle from '../../hooks/useTitle';
 import {
-    FormBanner,
     FormContainer,
-    FormMain,
-    FormSubmit,
-    QuestionsList,
+    FormContentContainer,
+    FormElement,
+    FormHeaderContainer,
+    FormQuestionsContainer,
+    FormTitle,
 } from './Form.styles';
-import Question from './components/form-question/FormQuestion';
+import FormQuestion from './components/form-question/FormQuestion';
+import FormButton from './components/form-button/FormButton';
 
 const Form = () => {
     const history = useHistory();
@@ -129,65 +131,29 @@ const Form = () => {
             {!loading ? (
                 form.title ? (
                     <FormContainer>
-                        <FormBanner>
-                            <h1>{form.title}</h1>
-                        </FormBanner>
-                        <FormMain>
-                            <form noValidate onSubmit={handleSubmitForm}>
-                                <QuestionsList>
-                                    {questions.map(
-                                        (
-                                            {
-                                                title,
-                                                answers,
-                                                file,
-                                                id,
-                                                multipleAnswers,
-                                                inputField,
-                                            },
-                                            index,
-                                        ) => (
-                                            <Question
-                                                inputField={inputField}
-                                                index={index}
-                                                key={id}
-                                                multipleAnswers={
-                                                    multipleAnswers
-                                                }
-                                                title={title}
-                                                answers={answers}
-                                                file={file}
-                                                error={error}
-                                            />
-                                        ),
-                                    )}
-                                </QuestionsList>
-                                <FormSubmit
-                                    disabled={isSubmitting}
-                                    isSubmitting={isSubmitting}
+                        <FormHeaderContainer>
+                            <FormTitle>{form.title}</FormTitle>
+                        </FormHeaderContainer>
+                        <FormContentContainer>
+                            <FormElement noValidate onSubmit={handleSubmitForm}>
+                                <FormQuestionsContainer>
+                                    {questions.map(({ id, ...rest }, index) => (
+                                        <FormQuestion
+                                            index={index}
+                                            key={id}
+                                            {...rest}
+                                            error={error}
+                                        />
+                                    ))}
+                                </FormQuestionsContainer>
+                                <FormButton
                                     type="submit"
+                                    disabled={isSubmitting}
                                 >
-                                    <span>Submit Form</span>
-                                    <svg
-                                        version="1.1"
-                                        width="40px"
-                                        height="40px"
-                                        viewBox="0 0 50 50"
-                                    >
-                                        <path d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                                            <animateTransform
-                                                attributeName="transform"
-                                                type="rotate"
-                                                from="0 25 25"
-                                                to="360 25 25"
-                                                dur="0.6s"
-                                                repeatCount="indefinite"
-                                            />
-                                        </path>
-                                    </svg>
-                                </FormSubmit>
-                            </form>
-                        </FormMain>
+                                    Submit Form
+                                </FormButton>
+                            </FormElement>
+                        </FormContentContainer>
                     </FormContainer>
                 ) : (
                     <Redirect to="/" />
