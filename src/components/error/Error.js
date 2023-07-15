@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Triangle from '../../assets/icons/triangle.svg';
+import TriangleIcon from '../../assets/icons/triangle.svg';
 import CloseIcon from '../../assets/icons/close-grey.svg';
 import useError from '../../contexts/error-context/useError';
-import { Wrapper, Card } from './Error.styles';
+import {
+    ErrorWrapper,
+    ErrorContainer,
+    ErrorButton,
+    ErrorButtonIcon,
+    ErrorIcon,
+    ErrorContentContainer,
+    ErrorProgressBar,
+} from './Error.styles';
+import { errorDurationMs } from './Error.config';
 
 const Error = () => {
     const { error, dispatchError } = useError();
@@ -18,7 +27,7 @@ const Error = () => {
             setResetAnimation(true);
             const timer = setTimeout(() => {
                 dispatchError({ type: 'reset' });
-            }, 10000);
+            }, errorDurationMs);
             return () => {
                 clearTimeout(timer);
             };
@@ -35,16 +44,26 @@ const Error = () => {
         <>
             {error && error.error
                 ? !resetAnimation && (
-                      <Wrapper>
-                          <Card>
-                              <button onClick={handleCloseError} type="button">
-                                  <img src={CloseIcon} alt="Close error box" />
-                              </button>
-                              <img src={Triangle} alt="Error" />
-                              <p role="alert">{error.error}</p>
-                              <div className="error-bar"></div>
-                          </Card>
-                      </Wrapper>
+                      <ErrorWrapper>
+                          <ErrorContainer>
+                              <ErrorButton
+                                  onClick={handleCloseError}
+                                  type="button"
+                              >
+                                  <ErrorButtonIcon
+                                      src={CloseIcon}
+                                      alt="Close error box"
+                                  />
+                              </ErrorButton>
+                              <ErrorIcon src={TriangleIcon} alt="Error" />
+                              <ErrorContentContainer role="alert">
+                                  {error.error}
+                              </ErrorContentContainer>
+                              <ErrorProgressBar
+                                  errorDurationMs={errorDurationMs}
+                              />
+                          </ErrorContainer>
+                      </ErrorWrapper>
                   )
                 : null}
         </>
