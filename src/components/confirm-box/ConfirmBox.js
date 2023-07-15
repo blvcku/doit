@@ -1,6 +1,10 @@
 import useConfirmBox from '../../contexts/confirm-box-context/useConfirmBox';
-import { Container } from './ConfirmBox.styles';
-import { Box } from './ConfirmBox.styles';
+import {
+    ConfirmBoxButton,
+    ConfirmBoxContainer,
+    ConfirmBoxTitle,
+    ConfirmBoxWrapper,
+} from './ConfirmBox.styles';
 
 const ConfirmBox = () => {
     const { confirmInfo, setConfirmInfo } = useConfirmBox();
@@ -17,17 +21,19 @@ const ConfirmBox = () => {
     return (
         <>
             {confirmInfo && (
-                <Container>
-                    <Box role="alertdialog">
-                        <p>Are you sure you want to {confirmInfo.message}?</p>
-                        <button onClick={handleDecline} type="button">
+                <ConfirmBoxWrapper>
+                    <ConfirmBoxContainer role="alertdialog">
+                        <ConfirmBoxTitle>
+                            Are you sure you want to {confirmInfo.message}?
+                        </ConfirmBoxTitle>
+                        <ConfirmBoxButton onClick={handleDecline} type="button">
                             No
-                        </button>
-                        <button onClick={handleAccept} type="button">
+                        </ConfirmBoxButton>
+                        <ConfirmBoxButton onClick={handleAccept} type="button">
                             Yes
-                        </button>
-                    </Box>
-                </Container>
+                        </ConfirmBoxButton>
+                    </ConfirmBoxContainer>
+                </ConfirmBoxWrapper>
             )}
         </>
     );
