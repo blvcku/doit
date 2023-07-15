@@ -46,7 +46,9 @@ const FormQuestion = ({
                                 name={`answer${index}`}
                                 value={answer}
                             />
-                            <FormQuestionAnswerLabel htmlFor="answer">{answer}</FormQuestionAnswerLabel>
+                            <FormQuestionAnswerLabel htmlFor="answer">
+                                {answer}
+                            </FormQuestionAnswerLabel>
                         </FormQuestionAnswerContainer>
                     ))}
                 </FormQuestionAnswersContainer>

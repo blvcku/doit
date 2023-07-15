@@ -13,7 +13,7 @@ export const FormButtonLoadingIcon = styled.svg`
     left: 50%;
     transform: translate(-50%, -50%);
     fill: var(--color-white);
-    display:none;
+    display: none;
 `;
 
 export const FormButtonContainer = styled.button`
@@ -30,7 +30,7 @@ export const FormButtonContainer = styled.button`
             visibility: hidden;
         }
         ${FormButtonLoadingIcon} {
-            display:block;
+            display: block;
         }
     }
 `;
